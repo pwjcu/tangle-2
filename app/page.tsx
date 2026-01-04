@@ -15,7 +15,7 @@ export default function Home() {
     <div className="min-h-screen bg-white flex flex-col items-center p-6">
       <header className="w-full max-w-md flex justify-between items-center py-4 mb-2">
         <h1 className="text-2xl font-extrabold text-pink-500">Tangle</h1>
-        <span className="text-gray-400 text-sm">로그인</span>
+        <span className="text-gray-400 text-sm">새로운 나를 입다</span>
       </header>
 
       <main className="w-full max-w-md flex flex-col gap-6">
@@ -46,7 +46,7 @@ export default function Home() {
           <h3 className="text-lg font-bold text-gray-800 mb-4">시술 정보 찾아보기</h3>
           <div className="grid grid-cols-2 gap-3">
             {categories.map((cat) => (
-              // ★ 여기를 Link로 감싸서 클릭하면 이동하게 변경했습니다!
+              // ★ https://blog.naver.com/manner_maketh_beauty 여기를 Link로 감싸서 클릭하면 이동하게 변경했습니다!
               <Link href={`/category/${cat.name}`} key={cat.name} className="block">
                 <div className="border border-gray-100 rounded-xl p-5 hover:shadow-md transition-shadow cursor-pointer bg-white h-full">
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-2xl mb-3 ${cat.color}`}>

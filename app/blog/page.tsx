@@ -8,7 +8,7 @@ interface BlogPost {
   id: number;
   title: string;
   summary: string;
-  original_url: string;
+  original_url: string | null; // url이 없을 수도 있으니 null 허용
   created_at: string;
 }
 
@@ -16,12 +16,15 @@ export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // ★ 선생님의 블로그 메인 주소
+  const MAIN_BLOG_URL = "https://blog.naver.com/manner_maketh_beauty";
+
   useEffect(() => {
     const fetchPosts = async () => {
       const { data, error } = await supabase
         .from('blog_posts')
         .select('*')
-        .order('created_at', { ascending: false }); // 최신글 순서
+        .order('created_at', { ascending: false });
 
       if (!error && data) {
         setPosts(data);
@@ -52,8 +55,9 @@ export default function BlogPage() {
                 {post.summary}
               </p>
               <div className="flex justify-end">
+                {/* ★ 여기가 핵심 수정 부분! */}
                 <a 
-                  href={post.original_url} 
+                  href={post.original_url || MAIN_BLOG_URL} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-pink-500 text-sm font-bold flex items-center gap-1 hover:underline"
