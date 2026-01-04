@@ -36,7 +36,12 @@ export default function Home() {
             🔍 AI 맞춤 시술 찾기
           </button>
         </Link>
-
+{/* ★ 추가: 블로그 매거진 버튼 (새로 추가된 부분) */}
+        <Link href="/blog" className="w-full">
+          <button className="w-full bg-white border border-pink-100 text-pink-500 font-bold py-3 rounded-xl shadow-sm hover:bg-pink-50 transition-colors flex items-center justify-center gap-2">
+            📖 시술 전 필독! 꿀팁 매거진
+          </button>
+        </Link>
         <section className="mt-4">
           <h3 className="text-lg font-bold text-gray-800 mb-4">시술 정보 찾아보기</h3>
           <div className="grid grid-cols-2 gap-3">
