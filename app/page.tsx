@@ -12,9 +12,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center p-6">
-      <header className="w-full max-w-md flex justify-between items-center py-4 mb-2">
+<header className="w-full max-w-md flex justify-between items-center py-4 mb-2">
         <h1 className="text-2xl font-extrabold text-pink-500">Tangle</h1>
-        <span className="text-gray-400 text-sm">로그인</span>
+        {/* 수정된 부분: 로그인 -> 내 견적 확인 링크 */}
+        <Link href="/my" className="text-sm font-bold text-gray-500 hover:text-pink-500 border border-gray-200 px-3 py-1 rounded-full bg-white">
+          내 견적함 📬
+        </Link>
       </header>
 
       <main className="w-full max-w-md flex flex-col gap-4"> {/* 간격 조절 */}
