@@ -8,6 +8,7 @@ export async function GET(request: Request) {
 
   if (code) {
     const cookieStore = cookies()
+
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -17,10 +18,12 @@ export async function GET(request: Request) {
             return cookieStore.get(name)?.value
           },
           set(name: string, value: string, options: CookieOptions) {
-            cookieStore.set({ name, value, ...options })
+            // 여기에 'as any'를 붙여서 빨간 줄을 강제로 없앱니다.
+            cookieStore.set({ name, value, ...options } as any)
           },
           remove(name: string, options: CookieOptions) {
-            cookieStore.set({ name, value: '', ...options })
+            // 여기도 마찬가지입니다.
+            cookieStore.set({ name, value: '', ...options } as any)
           },
         },
       }
