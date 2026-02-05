@@ -131,7 +131,9 @@ export default function RecommendPage() {
             </p>
 
             <div className="space-y-4 mb-8">
-              {result.items.map((item: any, idx: number) => (
+              {/* ★ 여기가 수정되었습니다! items 뒤에 물음표(?) 추가 */ }
+              {/* items가 아예 없으면 빈 배열([])로 처리해서 에러 방지 */}
+              {(result.items || []).map((item: any, idx: number) => (
                 <div key={idx} className="flex justify-between items-center bg-white border border-gray-100 p-5 rounded-xl shadow-sm">
                   <div>
                     <h4 className="font-bold text-lg text-gray-800">{item.name}</h4>
@@ -140,6 +142,7 @@ export default function RecommendPage() {
                   <span className="font-bold text-pink-500">{item.price}만원</span>
                 </div>
               ))}
+
               <div className="flex justify-between items-center p-5 bg-slate-900 text-white rounded-xl shadow-lg">
                 <span className="font-bold">총 예상 금액</span>
                 <span className="text-xl font-extrabold text-yellow-400">{result.totalPrice}만원</span>
