@@ -127,7 +127,7 @@ export default function Home() {
                 </span>
               </div>
               <p className="mt-1 text-[13px] text-stone-500 sm:text-[14px]">
-                가격만 싼 시술이 아니라, 지금의 고민과 예산에 맞는 선택을 찾는 뷰티 의사결정 플랫폼
+                탱글은 개인 맞춤형 시술 추천과 견적 비교를 연결하는 뷰티 플랫폼입니다.
               </p>
             </div>
           </div>
@@ -181,16 +181,15 @@ export default function Home() {
             <div className="grid gap-5 lg:grid-cols-[1.12fr_0.88fr] lg:items-end">
               <div>
                 <h2 className="balance text-[2.1rem] font-semibold leading-[1.02] text-stone-950 sm:text-[2.8rem] lg:text-[3.35rem]" data-display="true">
-                  시술 탐색을
+                  Tangle: 탱글
                   <br />
-                  스크롤형 정보 모음이 아니라
+                  개인 맞춤형 시술 추천과
                   <br />
-                  한 번에 읽히는 판단 보드로
+                  견적 비교를 한 곳에서
                 </h2>
                 <p className="mt-4 max-w-2xl text-[14px] leading-7 text-stone-600 sm:text-[15px]">
-                  Tangle은 예산과 고민에 맞춘 추천을 먼저 정리하고, 그 조합을 병원 제안 비교로
-                  바로 연결합니다. 추천 결과가 왜 나왔는지, 총액은 어느 정도인지, 회복 부담은 어떤지
-                  한 화면 안에서 읽히게 만드는 것이 핵심입니다.
+                  예산, 고민, 연령대, 회복 허용도를 바탕으로 나에게 맞는 시술 조합을 추천하고,
+                  바로 병원 견적 비교까지 이어주는 것이 탱글의 핵심입니다.
                 </p>
 
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row">
