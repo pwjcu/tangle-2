@@ -101,15 +101,15 @@ export default function HospitalPage() {
   };
 
   return (
-    <div className="pb-16 pt-5 sm:pt-7">
+    <div className="pb-10 pt-4 sm:pt-5">
       <div className="shell">
-        <header className="panel mb-6 flex flex-col gap-3 px-6 py-6 sm:flex-row sm:items-end sm:justify-between">
+        <header className="panel mb-4 flex flex-col gap-3 px-5 py-5 sm:px-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="eyebrow mb-3">partner center</p>
-            <h1 className="text-3xl font-bold text-stone-950" data-display="true">
+            <h1 className="type-title !text-[2rem] sm:!text-[2.3rem]" data-display="true">
               병원 제안 관리
             </h1>
-            <p className="mt-2 text-sm leading-6 text-stone-600">
+            <p className="mt-2 text-[14px] leading-6 text-stone-600">
               가격만 적는 입찰이 아니라 추천 시술, 제안 이유, 예약 안내까지 함께 보내는 구조를
               기준으로 정리합니다.
             </p>
@@ -119,7 +119,7 @@ export default function HospitalPage() {
           </div>
         </header>
 
-        <main className="space-y-5">
+        <main className="space-y-4">
           {loading ? (
             <div className="panel px-6 py-12 text-center text-sm text-stone-500">
               요청서를 불러오는 중입니다.
@@ -135,9 +135,9 @@ export default function HospitalPage() {
               return (
                 <section
                   key={request.id}
-                  className="panel grid gap-5 px-6 py-6 lg:grid-cols-[0.82fr_1.18fr]"
+                  className="panel grid gap-4 px-5 py-5 sm:px-6 xl:grid-cols-[0.8fr_1.2fr]"
                 >
-                  <article className="rounded-[24px] border border-stone-200 bg-white p-5">
+                  <article className="rounded-[22px] border border-stone-200 bg-white p-5">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="rounded-full bg-rose-100 px-3 py-1 text-xs font-semibold text-rose-700">
                         {request.category}
@@ -147,21 +147,34 @@ export default function HospitalPage() {
                       </span>
                     </div>
 
-                    <h2 className="mt-4 text-2xl font-bold text-stone-900">
+                    <h2 className="mt-4 text-[1.2rem] font-semibold text-stone-900 sm:text-[1.35rem]">
                       예산 {request.budget}만원 / 선호 지역 {request.preferred_area || "미정"}
                     </h2>
-                    <p className="mt-4 rounded-2xl bg-stone-50 px-4 py-4 text-sm leading-7 text-stone-600">
+                    <p className="mt-4 rounded-[18px] bg-stone-50 px-4 py-4 text-[13px] leading-7 text-stone-600">
                       {request.symptom}
                     </p>
-                    <p className="mt-4 text-xs uppercase tracking-[0.16em] text-stone-400">
-                      고객 식별 이메일
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-stone-700">{request.user_email}</p>
+
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+                      <div className="metric-tile">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
+                          고객 식별 이메일
+                        </p>
+                        <p className="mt-2 text-[13px] font-medium text-stone-700">{request.user_email}</p>
+                      </div>
+                      <div className="metric-tile">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
+                          요청일
+                        </p>
+                        <p className="mt-2 text-[13px] font-medium text-stone-700">
+                          {new Date(request.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
                   </article>
 
-                  <article className="rounded-[24px] border border-stone-200 bg-white p-5">
-                    <h3 className="text-xl font-bold text-stone-900">제안서 작성</h3>
-                    <p className="mt-2 text-sm leading-6 text-stone-600">
+                  <article className="rounded-[22px] border border-stone-200 bg-white p-5">
+                    <h3 className="text-[1.1rem] font-semibold text-stone-900">제안서 작성</h3>
+                    <p className="mt-2 text-[13px] leading-6 text-stone-600">
                       추천 시술과 이유를 함께 적어야 고객이 가격만으로 판단하지 않고 비교할 수
                       있습니다.
                     </p>
@@ -213,7 +226,7 @@ export default function HospitalPage() {
 
                     <button
                       onClick={() => submitBid(request.id)}
-                      className="mt-5 w-full rounded-[20px] bg-stone-900 px-6 py-4 text-base font-semibold text-white hover:-translate-y-0.5 hover:bg-stone-800"
+                      className="mt-5 w-full rounded-[18px] bg-stone-900 px-6 py-3.5 text-[15px] font-semibold text-white hover:-translate-y-0.5 hover:bg-stone-800"
                     >
                       제안서 발송
                     </button>
