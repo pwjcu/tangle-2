@@ -127,7 +127,7 @@ export default function Home() {
                 </span>
               </div>
               <p className="mt-1 text-[13px] text-stone-500 sm:text-[14px]">
-                탱글은 개인 맞춤형 시술 추천과 견적 비교를 연결하는 뷰티 플랫폼입니다.
+                개인 맞춤형 시술 추천부터 견적 비교까지, 내 예산과 고민에 맞는 선택을 정리하는 뷰티 플랫폼
               </p>
             </div>
           </div>
@@ -180,12 +180,13 @@ export default function Home() {
 
             <div className="grid gap-5 lg:grid-cols-[1.12fr_0.88fr] lg:items-end">
               <div>
-                <h2 className="balance text-[2.1rem] font-semibold leading-[1.02] text-stone-950 sm:text-[2.8rem] lg:text-[3.35rem]" data-display="true">
+                <span className="inline-flex rounded-full border border-[#f1d7cf] bg-[#fff4ef] px-3 py-1 text-[11px] font-semibold text-[#b45844]">
                   Tangle: 탱글
+                </span>
+                <h2 className="balance mt-3 text-[2.15rem] font-semibold leading-[1.02] text-stone-950 sm:text-[2.85rem] lg:text-[3.2rem]" data-display="true">
+                  개인 맞춤형 시술 추천
                   <br />
-                  개인 맞춤형 시술 추천과
-                  <br />
-                  견적 비교를 한 곳에서
+                  견적 비교까지 한 곳에서
                 </h2>
                 <p className="mt-4 max-w-2xl text-[14px] leading-7 text-stone-600 sm:text-[15px]">
                   예산, 고민, 연령대, 회복 허용도를 바탕으로 나에게 맞는 시술 조합을 추천하고,
@@ -202,18 +203,51 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-                {decisionSignals.map((signal) => (
-                  <article key={signal.label} className="metric-tile">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
-                      {signal.label}
+              <div className="grid gap-3">
+                <article className="overflow-hidden rounded-[22px] border border-[#202633]/10 bg-[linear-gradient(145deg,#171d28_0%,#243248_60%,#2f2126_100%)] p-5 text-white shadow-[0_22px_48px_rgba(23,29,40,0.18)]">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                      product snapshot
                     </p>
-                    <p className="mt-2 text-[1.55rem] font-semibold text-stone-950" data-display="true">
-                      {signal.value}
-                    </p>
-                    <p className="mt-2 text-[13px] leading-6 text-stone-500">{signal.detail}</p>
-                  </article>
-                ))}
+                    <span className="rounded-full border border-white/10 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white/75">
+                      live flow
+                    </span>
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    <div className="rounded-[16px] border border-white/10 bg-white/8 px-4 py-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[13px] font-medium text-white">맞춤 질문으로 고민 정리</span>
+                        <span className="rounded-full bg-white/10 px-2 py-1 text-[11px] text-white/70">5 step</span>
+                      </div>
+                    </div>
+                    <div className="rounded-[16px] border border-white/10 bg-white/8 px-4 py-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[13px] font-medium text-white">추천 조합과 예상 총액 확인</span>
+                        <span className="rounded-full bg-white/10 px-2 py-1 text-[11px] text-white/70">AI + DB</span>
+                      </div>
+                    </div>
+                    <div className="rounded-[16px] border border-white/10 bg-white/8 px-4 py-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[13px] font-medium text-white">병원 제안과 예약 안내 비교</span>
+                        <span className="rounded-full bg-white/10 px-2 py-1 text-[11px] text-white/70">quote</span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-3">
+                  {decisionSignals.map((signal) => (
+                    <article key={signal.label} className="metric-tile">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
+                        {signal.label}
+                      </p>
+                      <p className="mt-2 text-[1.55rem] font-semibold text-stone-950" data-display="true">
+                        {signal.value}
+                      </p>
+                      <p className="mt-2 text-[13px] leading-6 text-stone-500">{signal.detail}</p>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -311,7 +345,7 @@ export default function Home() {
               <div>
                 <p className="eyebrow mb-3">category scan</p>
                 <h3 className="type-section" data-display="true">
-                  스크롤보다 빠르게 훑는 시술 카테고리
+                  시술 카테고리 한눈에 보기
                 </h3>
               </div>
               <Link href="/recommend" className="text-[13px] font-semibold text-stone-500 hover:text-stone-950">
