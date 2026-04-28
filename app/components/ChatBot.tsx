@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: string; text: string }[]>([
-    { role: "bot", text: "안녕하세요! 피부 고민이 있으신가요? 저에게 물어보세요! 🤖" }
+    {
+      role: "bot",
+      text: "안녕하세요. 시술 가격대, 회복 기간, 부작용처럼 비교에 필요한 정보를 먼저 정리해드릴게요.",
+    },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // 새 메시지 오면 스크롤 내리기
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -19,70 +21,83 @@ export default function ChatBot() {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const userMsg = input;
-    setMessages((prev) => [...prev, { role: "user", text: userMsg }]);
+    const userMessage = input;
+    setMessages((prev) => [...prev, { role: "user", text: userMessage }]);
     setInput("");
     setLoading(true);
 
     try {
-      const res = await fetch("/api/chat", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMsg }),
+        body: JSON.stringify({ message: userMessage }),
       });
-      const data = await res.json();
+      const data = await response.json();
       setMessages((prev) => [...prev, { role: "bot", text: data.reply }]);
-    } catch (error) {
-      setMessages((prev) => [...prev, { role: "bot", text: "오류가 발생했어요." }]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: "bot", text: "일시적으로 답변을 불러오지 못했어요. 잠시 후 다시 시도해주세요." },
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      {/* 채팅창 화면 */}
+    <div className="fixed bottom-5 right-5 z-50 sm:bottom-6 sm:right-6">
       {isOpen && (
-        <div className="mb-4 w-80 h-96 bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden animate-fade-in-up">
-          <div className="bg-pink-500 p-4 text-white font-bold flex justify-between">
-            <span>탱글 AI 상담사</span>
-            <button onClick={() => setIsOpen(false)} className="text-white hover:text-gray-200">✕</button>
+        <div className="mb-4 flex h-[28rem] w-[21rem] flex-col overflow-hidden rounded-[28px] border border-stone-200 bg-white shadow-[0_25px_60px_rgba(27,21,18,0.18)] animate-fade-up">
+          <div className="flex items-center justify-between bg-stone-950 px-4 py-4 text-white">
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-white/55">tangle assistant</p>
+              <span className="text-base font-bold">AI 상담 가이드</span>
+            </div>
+            <button onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white">
+              ✕
+            </button>
           </div>
-          
-          <div className="flex-1 p-4 overflow-y-auto bg-gray-50 space-y-3">
-            {messages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[80%] p-3 rounded-xl text-sm ${
-                  msg.role === "user" ? "bg-pink-500 text-white rounded-tr-none" : "bg-white border text-gray-800 rounded-tl-none shadow-sm"
-                }`}>
-                  {msg.text}
+
+          <div className="flex-1 space-y-3 overflow-y-auto bg-[#fbf8f5] p-4">
+            {messages.map((message, index) => (
+              <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                <div
+                  className={`max-w-[85%] rounded-2xl p-3 text-sm leading-6 ${
+                    message.role === "user"
+                      ? "rounded-tr-none bg-stone-900 text-white"
+                      : "rounded-tl-none border border-stone-200 bg-white text-stone-800 shadow-sm"
+                  }`}
+                >
+                  {message.text}
                 </div>
               </div>
             ))}
-            {loading && <div className="text-xs text-gray-400 text-center">답변 생각 중...</div>}
+            {loading && <div className="text-center text-xs text-stone-400">답변 정리 중...</div>}
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-3 bg-white border-t flex gap-2">
-            <input 
-              type="text" 
+          <div className="flex gap-2 border-t border-stone-200 bg-white p-3">
+            <input
+              type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-              placeholder="예: 팔자주름엔 뭐가 좋아?"
-              className="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-pink-500"
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={(event) => event.key === "Enter" && sendMessage()}
+              placeholder="예: 리프팅은 어느 예산대부터 봐야 해?"
+              className="flex-1 rounded-full border border-stone-200 px-4 py-2 text-sm outline-none focus:border-stone-900"
             />
-            <button onClick={sendMessage} className="bg-pink-500 text-white rounded-full p-2 hover:bg-pink-600 w-10 h-10 flex items-center justify-center">
-              ➤
+            <button
+              onClick={sendMessage}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-stone-900 text-white hover:bg-stone-800"
+            >
+              →
             </button>
           </div>
         </div>
       )}
 
-      {/* 둥둥 떠있는 버튼 */}
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center text-3xl transition-transform hover:scale-110"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-stone-900 text-2xl text-white shadow-[0_18px_36px_rgba(19,14,12,0.24)] transition-transform hover:scale-105 hover:bg-stone-800"
       >
         💬
       </button>

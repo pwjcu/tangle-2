@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import ChatBot from "./components/ChatBot"; // ★ 채팅봇 가져오기
-
-const inter = Inter({ subsets: ["latin"] });
+import ChatBot from "./components/ChatBot";
 
 export const metadata: Metadata = {
-  title: "Tangle - 나만의 미용 에이전트",
-  description: "AI 기반 맞춤형 시술 추천 서비스",
+  title: "Tangle | 가격만 보지 않는 뷰티 의사결정 플랫폼",
+  description:
+    "개인 맞춤형 시술 추천, 팩트 기반 가격대 비교, 역입찰형 병원 제안을 하나의 흐름으로 연결하는 Tangle",
 };
 
 export default function RootLayout({
@@ -17,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <body>
         {children}
-        <ChatBot /> {/* ★ 여기에 챗봇 배치! */}
+        <ChatBot />
       </body>
     </html>
   );

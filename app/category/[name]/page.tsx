@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "../../../lib/supabaseClient";
+import { accentStyles, getCategoryMeta } from "../../../lib/siteContent";
 
 interface Treatment {
   id: number;
@@ -14,23 +15,22 @@ interface Treatment {
   pain_level: number;
   description: string;
   synergy: string;
+  recovery?: string;
 }
 
 export default function CategoryPage() {
   const params = useParams();
   const router = useRouter();
-  // 한글 깨짐 방지를 위해 디코딩 (예: %EB%... -> 리프팅)
-  const categoryName = decodeURIComponent(params.name as string); 
-  
+  const categoryName = decodeURIComponent(params.name as string);
+  const categoryMeta = getCategoryMeta(categoryName);
+  const accent = accentStyles[categoryMeta.accent];
+
   const [list, setList] = useState<Treatment[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategory = async () => {
-      const { data, error } = await supabase
-        .from("treatments")
-        .select("*")
-        .eq("category", categoryName); // 여기가 핵심! 카테고리 이름으로 필터링
+      const { data, error } = await supabase.from("treatments").select("*").eq("category", categoryName);
 
       if (error) {
         console.error(error);
@@ -40,53 +40,83 @@ export default function CategoryPage() {
       setLoading(false);
     };
 
-    fetchCategory();
+    void fetchCategory();
   }, [categoryName]);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center p-6">
-      <nav className="w-full max-w-md mb-6">
-        <button onClick={() => router.back()} className="text-gray-400 hover:text-pink-500 text-lg">
-          ← 뒤로가기
-        </button>
-      </nav>
+    <div className="pb-16 pt-5 sm:pt-7">
+      <div className="shell">
+        <nav className="mb-6">
+          <button onClick={() => router.back()} className="text-sm font-semibold text-stone-500 hover:text-stone-900">
+            ← 뒤로가기
+          </button>
+        </nav>
 
-      <main className="w-full max-w-md">
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
-          <span className="text-pink-500">{categoryName}</span> 모음
-        </h1>
-        <p className="text-gray-500 mb-8">이 카테고리의 인기 시술들입니다.</p>
+        <main className="space-y-5">
+          <section className="panel px-6 py-7 sm:px-8">
+            <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${accent.chip}`}>
+              {categoryName}
+            </span>
+            <h1 className="mt-4 text-4xl font-bold text-stone-950" data-display="true">
+              {categoryMeta.headline}
+            </h1>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-stone-600">{categoryMeta.description}</p>
 
-        {loading ? (
-          <div className="text-center py-10 text-pink-500">불러오는 중... ⏳</div>
-        ) : list.length === 0 ? (
-          <div className="text-center py-10 text-gray-400">
-            아직 등록된 시술이 없어요 😭
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {list.map((item) => (
-              <Link href={`/treatment/${item.id}`} key={item.id} className="block">
-                <div className="border border-gray-100 rounded-xl p-5 hover:shadow-md transition-shadow bg-white hover:border-pink-300 cursor-pointer">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold text-lg text-gray-800">{item.name}</h3>
-                    <span className={`text-xs px-2 py-1 rounded-full text-white font-bold ${
-                      item.pain_level >= 4 ? "bg-red-400" : item.pain_level <= 2 ? "bg-blue-400" : "bg-yellow-400"
-                    }`}>
-                      통증 {item.pain_level}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-500 mb-3">{item.description}</p>
-                  <div className="flex justify-between items-center text-xs text-gray-900 font-bold">
-                    <span>{item.price_min}~{item.price_max}만원</span>
-                    <span className="text-pink-500 bg-pink-50 px-2 py-1 rounded">✨ {item.synergy}</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </main>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className={`rounded-[24px] border ${accent.border} ${accent.surface} px-5 py-5`}>
+                <p className="text-xs uppercase tracking-[0.16em] text-stone-400">대표 시술</p>
+                <p className="mt-2 text-base font-semibold text-stone-900">{categoryMeta.examples}</p>
+              </div>
+              <div className="rounded-[24px] border border-stone-200 bg-white px-5 py-5">
+                <p className="text-xs uppercase tracking-[0.16em] text-stone-400">추천 상황</p>
+                <p className="mt-2 text-base font-semibold text-stone-900">{categoryMeta.audience}</p>
+              </div>
+            </div>
+          </section>
+
+          <section className="panel px-6 py-7 sm:px-8">
+            {loading ? (
+              <div className="py-10 text-center text-sm text-stone-500">시술 목록을 불러오는 중입니다.</div>
+            ) : list.length === 0 ? (
+              <div className="py-10 text-center text-sm text-stone-500">아직 등록된 시술이 없습니다.</div>
+            ) : (
+              <div className="grid gap-4 lg:grid-cols-2">
+                {list.map((item) => (
+                  <Link
+                    href={`/treatment/${item.id}`}
+                    key={item.id}
+                    className="rounded-[24px] border border-stone-200 bg-white p-5 shadow-sm hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <h2 className="text-2xl font-bold text-stone-900">{item.name}</h2>
+                      <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-600">
+                        통증 {item.pain_level}/5
+                      </span>
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-stone-600">{item.description}</p>
+                    <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                      <div className="rounded-2xl bg-stone-50 px-4 py-4">
+                        <p className="text-xs uppercase tracking-[0.16em] text-stone-400">가격대</p>
+                        <p className="mt-2 text-sm font-semibold text-stone-800">
+                          {item.price_min}~{item.price_max}만원
+                        </p>
+                      </div>
+                      <div className="rounded-2xl bg-stone-50 px-4 py-4">
+                        <p className="text-xs uppercase tracking-[0.16em] text-stone-400">시너지</p>
+                        <p className="mt-2 text-sm font-semibold text-stone-800">{item.synergy || "단독 진행 가능"}</p>
+                      </div>
+                      <div className="rounded-2xl bg-stone-50 px-4 py-4">
+                        <p className="text-xs uppercase tracking-[0.16em] text-stone-400">회복</p>
+                        <p className="mt-2 text-sm font-semibold text-stone-800">{item.recovery || "상담 시 확인"}</p>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </section>
+        </main>
+      </div>
     </div>
   );
 }

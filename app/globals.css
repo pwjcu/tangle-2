@@ -1,3 +1,97 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg: #f5ede6;
+  --bg-soft: #fffaf6;
+  --card: rgba(255, 251, 247, 0.92);
+  --ink: #1f1916;
+  --muted: #6e6259;
+  --line: rgba(61, 43, 31, 0.12);
+  --accent: #d4634e;
+  --accent-deep: #8f3327;
+  --navy: #1d2433;
+  --font-body: "Aptos", "Malgun Gothic", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+  --font-display: "Aptos Display", "Segoe UI Variable Display", "Aptos", "Malgun Gothic", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(223, 162, 150, 0.35), transparent 34%),
+    radial-gradient(circle at top right, rgba(154, 182, 213, 0.22), transparent 28%),
+    linear-gradient(180deg, #f8f1eb 0%, #f4ede5 42%, #fbf8f4 100%);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+}
+
+[data-display="true"] {
+  font-family: var(--font-display), var(--font-body), sans-serif;
+}
+
+::selection {
+  background: rgba(212, 99, 78, 0.22);
+  color: var(--ink);
+}
+
+@layer base {
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    @apply transition-all duration-200;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    @apply rounded-[28px] shadow-[0_20px_70px_rgba(39,28,20,0.08)] backdrop-blur;
+  }
+
+  .soft-panel {
+    @apply rounded-[24px] border border-white/70 bg-white/80 shadow-[0_10px_30px_rgba(39,28,20,0.06)];
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center rounded-full border border-white/70 bg-white/85 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8f5b51];
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-900 outline-none placeholder:text-stone-400 focus:border-[#d4634e] focus:ring-4 focus:ring-[#d4634e]/10;
+  }
+
+  .question-option {
+    @apply w-full rounded-[24px] border border-stone-200 bg-white p-5 text-left shadow-sm hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md;
+  }
+
+  .question-option-active {
+    @apply border-[#d4634e] bg-[#fff5f1] shadow-[0_14px_30px_rgba(212,99,78,0.12)];
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.45s ease-out;
+}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import { parseBidComment } from "../../lib/bids";
 
 interface Bid {
   id: number;
@@ -11,139 +12,219 @@ interface Bid {
   created_at: string;
 }
 
-interface Request {
+interface RequestRecord {
   id: number;
   category: string;
   symptom: string;
   budget: number;
   created_at: string;
-  bids: Bid[]; // 요청서 안에 제안서들이 들어있는 구조
+  bids: Bid[];
+}
+
+function getEmailFromSearch() {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  return new URLSearchParams(window.location.search).get("email") || "";
 }
 
 export default function MyPage() {
-  const [email, setEmail] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [myRequests, setMyRequests] = useState<Request[]>([]);
+  const [email, setEmail] = useState(getEmailFromSearch);
+  const [loadedEmail, setLoadedEmail] = useState("");
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [myRequests, setMyRequests] = useState<RequestRecord[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // 이메일로 내 요청 내역 조회하기
-  const handleCheck = async (e: any) => {
-    e.preventDefault();
+  const loadRequests = async (targetEmail: string) => {
     setLoading(true);
 
-    // 1. 요청서(requests)와 그에 달린 제안서(bids)를 한 번에 가져오기
     const { data, error } = await supabase
       .from("requests")
-      .select(`
-        *,
-        bids (*)
-      `)
-      .eq("user_email", email)
+      .select(
+        `
+          *,
+          bids (*)
+        `,
+      )
+      .eq("user_email", targetEmail)
       .order("created_at", { ascending: false });
 
     if (error) {
-      alert("데이터를 불러오지 못했어요 😭");
       console.error(error);
-    } else {
-      if (data.length === 0) {
-        alert("등록된 요청 내역이 없습니다.");
-      } else {
-        setMyRequests(data);
-        setIsLoggedIn(true); // 조회 성공 시 화면 전환
-      }
+      alert("제안 데이터를 불러오지 못했습니다.");
+      setLoading(false);
+      return;
     }
+
+    if (!data || data.length === 0) {
+      alert("등록된 요청 내역이 없습니다.");
+      setMyRequests([]);
+      setHasLoaded(false);
+      setLoading(false);
+      return;
+    }
+
+    setLoadedEmail(targetEmail);
+    setMyRequests(data);
+    setHasLoaded(true);
     setLoading(false);
   };
 
-  const handleSelectBid = (hospitalName: string) => {
-    alert(`🎉 축하합니다! '${hospitalName}'와 매칭되었습니다.\n병원에서 곧 연락을 드릴 예정입니다.`);
+  const handleCheck = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!email) return;
+    await loadRequests(email);
   };
 
-  // 1. 조회 전 화면 (이메일 입력)
-  if (!isLoggedIn) {
+  const handleSelectBid = (hospitalName: string) => {
+    alert(`'${hospitalName}' 제안을 선택했습니다. 실제 연결 단계는 다음 리팩토링에서 이어집니다.`);
+  };
+
+  if (!hasLoaded) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
-        <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">내 견적 확인하기 📮</h1>
-          <p className="text-gray-500 text-center mb-6">견적 요청 시 입력했던 이메일을 적어주세요.</p>
-          <form onSubmit={handleCheck} className="space-y-4">
-            <input
-              type="email"
-              placeholder="example@naver.com"
-              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-pink-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 rounded-xl transition-all"
-            >
-              {loading ? "조회 중..." : "도착한 견적 확인하기"}
-            </button>
-          </form>
+      <div className="pb-16 pt-5 sm:pt-7">
+        <div className="shell">
+          <div className="mx-auto max-w-xl panel px-6 py-8 sm:px-8">
+            <p className="eyebrow mb-3">proposal inbox</p>
+            <h1 className="text-3xl font-bold text-stone-950" data-display="true">
+              받은 제안함 확인하기
+            </h1>
+            <p className="mt-3 text-sm leading-7 text-stone-600">
+              견적 요청 시 입력한 이메일을 기준으로 병원 제안서를 불러옵니다.
+            </p>
+
+            <form onSubmit={handleCheck} className="mt-6 space-y-4">
+              <input
+                type="email"
+                placeholder="example@naver.com"
+                className="field"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full rounded-[20px] px-6 py-4 text-base font-semibold text-white ${
+                  loading
+                    ? "cursor-not-allowed bg-stone-400"
+                    : "bg-stone-900 hover:-translate-y-0.5 hover:bg-stone-800"
+                }`}
+              >
+                {loading ? "조회 중..." : "도착한 제안 확인하기"}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     );
   }
 
-  // 2. 조회 후 화면 (리스트)
   return (
-    <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
-      <nav className="w-full max-w-md mb-6 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-gray-800">받은 제안함 📬</h1>
-        <button onClick={() => setIsLoggedIn(false)} className="text-sm text-gray-500 underline">
-          로그아웃
-        </button>
-      </nav>
-
-      <main className="w-full max-w-md space-y-8">
-        {myRequests.map((req) => (
-          <div key={req.id} className="border-b-2 border-dashed border-gray-200 pb-8 last:border-0">
-            {/* 내 요청 내용 */}
-            <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-4">
-              <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-bold mb-2 inline-block">
-                내가 보낸 요청
-              </span>
-              <h2 className="font-bold text-lg text-gray-900">
-                {req.category} (예산 {req.budget}만원)
-              </h2>
-              <p className="text-gray-500 text-sm mt-1">{req.symptom}</p>
-            </div>
-
-            {/* 병원들의 제안 목록 */}
-            <h3 className="font-bold text-gray-700 mb-3 ml-1 flex items-center gap-2">
-              👇 병원 도착 제안 ({req.bids.length}건)
-            </h3>
-            
-            {req.bids.length === 0 ? (
-              <div className="text-center py-6 bg-gray-100 rounded-xl text-gray-400 text-sm">
-                아직 도착한 제안이 없습니다. 조금만 기다려주세요!
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {req.bids.map((bid) => (
-                  <div key={bid.id} className="bg-white p-5 rounded-xl shadow-md border-l-4 border-pink-500 relative overflow-hidden">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-bold text-lg text-gray-900">{bid.hospital_name}</h4>
-                      <span className="text-pink-600 font-extrabold text-lg">{bid.price}만원</span>
-                    </div>
-                    <p className="text-gray-600 text-sm mb-4 bg-gray-50 p-3 rounded-lg">
-                      "{bid.comment}"
-                    </p>
-                    <button 
-                      onClick={() => handleSelectBid(bid.hospital_name)}
-                      className="w-full bg-slate-900 text-white py-3 rounded-lg font-bold hover:bg-slate-700 transition-colors"
-                    >
-                      이 제안으로 예약하기 ✅
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+    <div className="pb-16 pt-5 sm:pt-7">
+      <div className="shell">
+        <header className="panel mb-6 flex flex-col gap-3 px-6 py-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="eyebrow mb-3">proposal inbox</p>
+            <h1 className="text-3xl font-bold text-stone-950" data-display="true">
+              받은 제안 비교
+            </h1>
+            <p className="mt-2 text-sm leading-6 text-stone-600">
+              {loadedEmail} 기준으로 도착한 제안을 불러왔습니다. 가격만이 아니라 추천 시술과
+              이유까지 같이 보고 비교하세요.
+            </p>
           </div>
-        ))}
-      </main>
+          <button
+            onClick={() => setHasLoaded(false)}
+            className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-semibold text-stone-600 hover:border-stone-300 hover:text-stone-900"
+          >
+            다른 이메일로 조회
+          </button>
+        </header>
+
+        <main className="space-y-6">
+          {myRequests.map((request) => {
+            const sortedBids = [...request.bids].sort((left, right) => left.price - right.price);
+
+            return (
+              <section key={request.id} className="panel px-6 py-6">
+                <div className="grid gap-5 lg:grid-cols-[0.74fr_1.26fr]">
+                  <article className="rounded-[24px] border border-stone-200 bg-white p-5">
+                    <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-600">
+                      내가 보낸 요청
+                    </span>
+                    <h2 className="mt-4 text-2xl font-bold text-stone-900">
+                      {request.category} / 예산 {request.budget}만원
+                    </h2>
+                    <p className="mt-4 text-sm leading-7 text-stone-600">{request.symptom}</p>
+                    <p className="mt-4 text-xs uppercase tracking-[0.16em] text-stone-400">
+                      도착한 제안 {request.bids.length}건
+                    </p>
+                  </article>
+
+                  <div className="space-y-4">
+                    {sortedBids.length === 0 ? (
+                      <div className="rounded-[24px] border border-dashed border-stone-300 bg-white/70 px-5 py-10 text-center text-sm text-stone-500">
+                        아직 도착한 제안이 없습니다. 조금만 기다려주세요.
+                      </div>
+                    ) : (
+                      sortedBids.map((bid) => {
+                        const parsed = parseBidComment(bid.comment);
+                        return (
+                          <article key={bid.id} className="rounded-[24px] border border-stone-200 bg-white p-5 shadow-sm">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                              <div>
+                                <h3 className="text-2xl font-bold text-stone-900">{bid.hospital_name}</h3>
+                                <p className="mt-1 text-xs uppercase tracking-[0.16em] text-stone-400">
+                                  {new Date(bid.created_at).toLocaleDateString()} 도착
+                                </p>
+                              </div>
+                              <div className="rounded-2xl bg-stone-900 px-4 py-3 text-white">
+                                <p className="text-xs uppercase tracking-[0.14em] text-white/65">price</p>
+                                <p className="mt-1 text-2xl font-bold" data-display="true">
+                                  {bid.price}만원
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                              <div className="rounded-2xl bg-stone-50 px-4 py-4">
+                                <p className="text-xs uppercase tracking-[0.16em] text-stone-400">추천 시술</p>
+                                <p className="mt-2 text-sm font-medium leading-6 text-stone-700">
+                                  {parsed.plan || "별도 기재 없음"}
+                                </p>
+                              </div>
+                              <div className="rounded-2xl bg-stone-50 px-4 py-4">
+                                <p className="text-xs uppercase tracking-[0.16em] text-stone-400">제안 이유</p>
+                                <p className="mt-2 text-sm font-medium leading-6 text-stone-700">
+                                  {parsed.reason || "별도 기재 없음"}
+                                </p>
+                              </div>
+                              <div className="rounded-2xl bg-stone-50 px-4 py-4">
+                                <p className="text-xs uppercase tracking-[0.16em] text-stone-400">예약 안내</p>
+                                <p className="mt-2 text-sm font-medium leading-6 text-stone-700">
+                                  {parsed.reservation || "별도 기재 없음"}
+                                </p>
+                              </div>
+                            </div>
+
+                            <button
+                              onClick={() => handleSelectBid(bid.hospital_name)}
+                              className="mt-5 w-full rounded-[20px] bg-stone-900 px-6 py-4 text-base font-semibold text-white hover:-translate-y-0.5 hover:bg-stone-800"
+                            >
+                              이 제안으로 상담 이어가기
+                            </button>
+                          </article>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+              </section>
+            );
+          })}
+        </main>
+      </div>
     </div>
   );
 }

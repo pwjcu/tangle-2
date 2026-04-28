@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { supabase } from "../../../lib/supabaseClient"; 
 import Link from "next/link";
+import { supabase } from "../../../lib/supabaseClient";
+import { accentStyles, getCategoryMeta } from "../../../lib/siteContent";
 
 interface TreatmentDetail {
   id: number;
@@ -14,13 +15,13 @@ interface TreatmentDetail {
   pain_level: number;
   description: string;
   synergy: string;
-  side_effects: string; // 새로 추가된 정보
-  recovery: string;     // 새로 추가된 정보
-  cycle: string;        // 새로 추가된 정보
+  side_effects: string;
+  recovery: string;
+  cycle: string;
 }
 
 export default function TreatmentDetailPage() {
-  const { id } = useParams(); // 주소창의 id(숫자)를 가져옴
+  const { id } = useParams();
   const router = useRouter();
   const [treatment, setTreatment] = useState<TreatmentDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -28,95 +29,120 @@ export default function TreatmentDetailPage() {
   useEffect(() => {
     const fetchDetail = async () => {
       if (!id) return;
-      
-      const { data, error } = await supabase
-        .from("treatments")
-        .select("*")
-        .eq("id", id) // id가 일치하는 것 하나만 가져옴
-        .single();
+
+      const { data, error } = await supabase.from("treatments").select("*").eq("id", id).single();
 
       if (error) {
         console.error(error);
-        alert("정보를 불러오지 못했어요.");
-        router.push("/recommend"); // 에러나면 목록으로 튕겨내기
+        alert("시술 정보를 불러오지 못했습니다.");
+        router.push("/recommend");
       } else {
         setTreatment(data);
       }
       setLoading(false);
     };
 
-    fetchDetail();
+    void fetchDetail();
   }, [id, router]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-pink-500">로딩 중... ⏳</div>;
-  if (!treatment) return <div>데이터 없음</div>;
+  if (loading) {
+    return <div className="flex min-h-screen items-center justify-center text-stone-500">불러오는 중입니다.</div>;
+  }
+  if (!treatment) return <div>데이터가 없습니다.</div>;
+
+  const accent = accentStyles[getCategoryMeta(treatment.category).accent];
+  const requestHref = `/request?${new URLSearchParams({
+    category: treatment.category,
+    budget: String(Math.round((treatment.price_min + treatment.price_max) / 2)),
+    symptom: `${treatment.name}에 관심이 있습니다. ${treatment.description}`,
+  }).toString()}`;
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center p-6">
-      <nav className="w-full max-w-md mb-6 flex items-center">
-        <button onClick={() => router.back()} className="text-gray-400 hover:text-pink-500 text-lg">
-          ← 뒤로가기
-        </button>
-      </nav>
+    <div className="pb-16 pt-5 sm:pt-7">
+      <div className="shell">
+        <nav className="mb-6 flex items-center">
+          <button onClick={() => router.back()} className="text-sm font-semibold text-stone-500 hover:text-stone-900">
+            ← 뒤로가기
+          </button>
+        </nav>
 
-      <main className="w-full max-w-md">
-        {/* 헤더 섹션 */}
-        <div className="mb-8">
-          <span className="inline-block bg-pink-100 text-pink-500 text-xs font-bold px-2 py-1 rounded-full mb-2">
-            {treatment.category}
-          </span>
-          <h1 className="text-3xl font-extrabold text-gray-900">{treatment.name}</h1>
-          <p className="text-gray-500 mt-2">{treatment.description}</p>
-        </div>
+        <main className="grid gap-5 lg:grid-cols-[1.04fr_0.96fr]">
+          <section className="panel px-6 py-7 sm:px-8">
+            <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${accent.chip}`}>
+              {treatment.category}
+            </span>
+            <h1 className="mt-4 text-4xl font-bold text-stone-950" data-display="true">
+              {treatment.name}
+            </h1>
+            <p className="mt-4 text-sm leading-7 text-stone-600">{treatment.description}</p>
 
-        {/* 가격 및 통증 카드 */}
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          <div className="bg-gray-50 p-4 rounded-xl text-center">
-            <p className="text-gray-400 text-xs mb-1">예상 가격</p>
-            <p className="text-lg font-bold text-gray-800">{treatment.price_min}~{treatment.price_max}만</p>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-xl text-center">
-            <p className="text-gray-400 text-xs mb-1">통증 레벨</p>
-            <div className="flex justify-center gap-1 mt-1">
-               {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className={`w-3 h-3 rounded-full ${i < treatment.pain_level ? "bg-pink-500" : "bg-gray-200"}`} />
-               ))}
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[24px] border border-stone-200 bg-white px-5 py-5">
+                <p className="text-xs uppercase tracking-[0.16em] text-stone-400">가격 범위</p>
+                <p className="mt-2 text-2xl font-bold text-stone-900">
+                  {treatment.price_min}~{treatment.price_max}만원
+                </p>
+              </div>
+              <div className="rounded-[24px] border border-stone-200 bg-white px-5 py-5">
+                <p className="text-xs uppercase tracking-[0.16em] text-stone-400">통증 부담</p>
+                <div className="mt-3 flex gap-2">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className={`h-3 w-8 rounded-full ${
+                        index < treatment.pain_level ? "bg-stone-900" : "bg-stone-200"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* 상세 정보 섹션 */}
-        <div className="space-y-6">
-          <div className="border-t pt-6">
-            <h3 className="font-bold text-lg mb-2">💡 추천 주기</h3>
-            <p className="text-gray-700 bg-pink-50 p-4 rounded-xl border border-pink-100">
-              {treatment.cycle || "정보 없음"}
-            </p>
-          </div>
+            <div className="mt-6 grid gap-4">
+              <InfoCard title="권장 주기" value={treatment.cycle || "상담 시 확인 필요"} />
+              <InfoCard title="회복 기간" value={treatment.recovery || "상담 시 확인 필요"} />
+              <InfoCard title="주요 부작용" value={treatment.side_effects || "상담 시 확인 필요"} />
+              <InfoCard title="시너지 시술" value={treatment.synergy || "단독 진행 가능"} />
+            </div>
+          </section>
 
-          <div className="border-t pt-6">
-            <h3 className="font-bold text-lg mb-2">🏥 회복 기간</h3>
-            <p className="text-gray-700">{treatment.recovery || "정보 없음"}</p>
-          </div>
+          <aside className="space-y-5">
+            <section className="panel px-6 py-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">decision support</p>
+              <h2 className="mt-3 text-2xl font-bold text-stone-950" data-display="true">
+                이 시술을 볼 때 같이 확인할 것
+              </h2>
+              <ul className="mt-4 space-y-3 text-sm leading-6 text-stone-600">
+                <li>예산 범위 안에서 단독으로 갈지, 조합으로 갈지</li>
+                <li>회복 기간이 내 일정에 맞는지</li>
+                <li>같이 들어가면 좋은 보조 시술이 있는지</li>
+              </ul>
+            </section>
 
-          <div className="border-t pt-6">
-            <h3 className="font-bold text-lg mb-2 text-red-500">⚠️ 주요 부작용</h3>
-            <p className="text-gray-700">{treatment.side_effects || "정보 없음"}</p>
-          </div>
+            <Link
+              href={requestHref}
+              className="block rounded-[28px] bg-stone-900 px-6 py-6 text-white shadow-[0_18px_45px_rgba(20,16,14,0.22)] hover:-translate-y-0.5 hover:bg-stone-800"
+            >
+              <p className="text-xs uppercase tracking-[0.18em] text-white/55">next step</p>
+              <h3 className="mt-3 text-2xl font-bold" data-display="true">
+                이 시술을 기준으로 견적 요청하기
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-white/75">
+                관심 시술과 예산을 요청서에 미리 넣어 바로 병원 제안 비교 단계로 이동합니다.
+              </p>
+            </Link>
+          </aside>
+        </main>
+      </div>
+    </div>
+  );
+}
 
-          <div className="border-t pt-6 mb-10">
-            <h3 className="font-bold text-lg mb-2">✨ 꿀조합 시술</h3>
-            <p className="text-blue-600 font-bold">
-              + {treatment.synergy}
-            </p>
-          </div>
-        </div>
-
-        {/* 하단 상담 버튼 */}
-        <button className="w-full bg-pink-500 text-white font-bold py-4 rounded-xl text-lg shadow-lg hover:bg-pink-600 transition-colors">
-          이 시술 상담받기
-        </button>
-      </main>
+function InfoCard({ title, value }: { title: string; value: string }) {
+  return (
+    <div className="rounded-[24px] border border-stone-200 bg-white px-5 py-5">
+      <p className="text-xs uppercase tracking-[0.16em] text-stone-400">{title}</p>
+      <p className="mt-2 text-sm font-medium leading-7 text-stone-700">{value}</p>
     </div>
   );
 }
