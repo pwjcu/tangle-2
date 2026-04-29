@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import { supabase } from "../../../lib/supabaseClient";
 import { accentStyles, getCategoryMeta } from "../../../lib/siteContent";
 
@@ -44,14 +44,11 @@ export default function CategoryPage() {
   }, [categoryName]);
 
   return (
-    <div className="pb-10 pt-4 sm:pt-5">
+    <div className="pb-12 pt-4 sm:pt-5">
       <div className="shell">
         <nav className="mb-4">
-          <button
-            onClick={() => router.back()}
-            className="text-[13px] font-semibold text-stone-500 hover:text-stone-900"
-          >
-            ← 뒤로가기
+          <button onClick={() => router.back()} className="text-[13px] font-semibold text-stone-500 hover:text-stone-900">
+            뒤로 가기
           </button>
         </nav>
 
@@ -62,7 +59,10 @@ export default function CategoryPage() {
                 <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${accent.chip}`}>
                   {categoryName}
                 </span>
-                <h1 className="balance mt-4 text-[2rem] font-semibold leading-[1.04] text-stone-950 sm:text-[2.4rem]" data-display="true">
+                <h1
+                  className="balance mt-4 text-[2rem] font-semibold leading-[1.04] text-stone-950 sm:text-[2.4rem]"
+                  data-display="true"
+                >
                   {categoryMeta.headline}
                 </h1>
                 <p className="mt-4 max-w-3xl text-[14px] leading-7 text-stone-600">{categoryMeta.description}</p>
@@ -70,20 +70,12 @@ export default function CategoryPage() {
 
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
                 <div className={`rounded-[20px] border ${accent.border} ${accent.surface} px-4 py-4`}>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
-                    대표 시술
-                  </p>
-                  <p className="mt-2 text-[14px] font-semibold leading-6 text-stone-900">
-                    {categoryMeta.examples}
-                  </p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">대표 시술</p>
+                  <p className="mt-2 text-[14px] font-semibold leading-6 text-stone-900">{categoryMeta.examples}</p>
                 </div>
                 <div className="rounded-[20px] border border-stone-200 bg-white px-4 py-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
-                    추천 대상
-                  </p>
-                  <p className="mt-2 text-[14px] font-semibold leading-6 text-stone-900">
-                    {categoryMeta.audience}
-                  </p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">추천 대상</p>
+                  <p className="mt-2 text-[14px] font-semibold leading-6 text-stone-900">{categoryMeta.audience}</p>
                 </div>
               </div>
             </div>
@@ -97,9 +89,7 @@ export default function CategoryPage() {
                   이 카테고리에서 바로 비교할 수 있는 시술
                 </h2>
               </div>
-              <span className="text-[12px] text-stone-400">
-                가격, 회복, 시너지를 한 카드 안에서 확인합니다.
-              </span>
+              <span className="text-[12px] text-stone-400">가격, 회복, 시너지 정보를 같은 카드 안에서 확인합니다.</span>
             </div>
 
             {loading ? (
@@ -126,25 +116,19 @@ export default function CategoryPage() {
 
                     <div className="mt-4 grid gap-3 sm:grid-cols-3">
                       <div className="rounded-[16px] bg-stone-50 px-4 py-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
-                          가격대
-                        </p>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">가격대</p>
                         <p className="mt-2 text-[13px] font-semibold text-stone-800">
                           {item.price_min}~{item.price_max}만원
                         </p>
                       </div>
                       <div className="rounded-[16px] bg-stone-50 px-4 py-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
-                          시너지
-                        </p>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">시너지</p>
                         <p className="mt-2 text-[13px] font-semibold leading-6 text-stone-800">
                           {item.synergy || "단독 진행 가능"}
                         </p>
                       </div>
                       <div className="rounded-[16px] bg-stone-50 px-4 py-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
-                          회복
-                        </p>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">회복</p>
                         <p className="mt-2 text-[13px] font-semibold leading-6 text-stone-800">
                           {item.recovery || "상담 후 확인"}
                         </p>
