@@ -26,9 +26,9 @@ interface TreatmentRow {
 const concernCategoryMap: Record<string, string[]> = {
   "탄력/리프팅": ["리프팅", "스킨부스터"],
   "주름/노화": ["리프팅", "보톡스", "스킨부스터"],
-  "피부결/모공": ["관리", "모공흉터", "스킨부스터"],
-  "잡티/색소": ["관리", "스킨부스터"],
-  "여드름/흉터": ["모공흉터", "관리"],
+  "피부결·모공": ["관리", "모공흉터", "스킨부스터"],
+  "톤업/색소": ["관리", "스킨부스터"],
+  "여드름·흉터": ["모공흉터", "관리"],
 };
 
 function averagePrice(treatment: TreatmentRow) {
@@ -52,7 +52,7 @@ function scoreTreatment(
 
   if (preferredCategories.includes(treatment.category)) {
     score += 4;
-    reasons.push(`${concern} 고민과 직접적으로 맞닿은 카테고리`);
+    reasons.push(`${concern} 고민과 직접적으로 연결되는 카테고리`);
   }
 
   if (avgPrice <= budget * 1.15) {
@@ -60,17 +60,17 @@ function scoreTreatment(
     reasons.push("예산 범위 안에서 조합 가능");
   } else if (avgPrice <= budget * 1.35) {
     score += 1;
-    reasons.push("예산을 약간 넘지만 후보로 검토 가능");
+    reasons.push("예산보다 조금 높지만 대안 후보로 검토 가능");
   }
 
   if (downtime === "low" && /(당일|즉시|다운타임 없음|거의 없음)/.test(recovery)) {
     score += 2;
-    reasons.push("회복 부담이 비교적 적음");
+    reasons.push("다운타임 부담이 비교적 적음");
   }
 
   if (downtime === "high" && !/(당일|즉시|다운타임 없음|거의 없음)/.test(recovery)) {
     score += 1;
-    reasons.push("효과 우선형 선택으로 검토 가능");
+    reasons.push("회복보다 효과를 우선하는 선택으로 검토 가능");
   }
 
   if (goal === "가성비 중심" && avgPrice <= budget) {
@@ -81,16 +81,16 @@ function scoreTreatment(
     score += 1;
   }
 
-  if (goal === "시술 입문용" && /(진정|관리|입문|저자극|유지)/.test(description)) {
+  if (goal === "시술 입문" && /(진정|관리|입문|저자극|유지)/.test(description)) {
     score += 2;
-    reasons.push("입문형 접근에 적합");
+    reasons.push("입문 단계에서 접근하기 쉬운 성격");
   }
 
   if ((age === "40대" || age === "50대 이상") && treatment.category === "리프팅") {
     score += 1;
   }
 
-  if (concern === "여드름/흉터" && /(흉터|모공|트러블)/.test(description)) {
+  if (concern === "여드름·흉터" && /(흉터|모공|여드름)/.test(description)) {
     score += 2;
   }
 
@@ -130,19 +130,19 @@ function buildFallbackResult(
   return {
     strategyTitle: `${concern} 중심 맞춤 조합`,
     summary:
-      "데이터베이스에 있는 가격대와 회복 정보를 기준으로, 예산 안에서 체감 변화와 현실성을 함께 고려한 조합입니다.",
-    budgetFit: `총 예상 금액은 약 ${totalPrice}만원으로, 입력한 예산 ${budget}만원을 기준으로 크게 벗어나지 않는 후보를 우선 선정했습니다.`,
+      "데이터베이스에 있는 가격대와 회복 정보를 기준으로, 예산 안에서 체감 변화와 안정성을 함께 고려한 추천 조합입니다.",
+    budgetFit: `예상 총액은 약 ${totalPrice}만원이며, 입력한 예산 ${budget}만원을 크게 벗어나지 않는 후보를 우선 선택했습니다.`,
     caution:
-      "실제 피부 상태, 통증 민감도, 기존 시술 이력에 따라 최종 선택은 달라질 수 있습니다. 병원 상담에서 적합성과 불필요한 시술 여부를 꼭 다시 확인하세요.",
+      "실제 피부 상태, 통증 민감도, 기존 시술 이력에 따라 최종 선택은 달라질 수 있습니다. 병원 상담에서 적합성과 불필요한 시술 여부를 다시 확인하세요.",
     confidenceNotes: [
       `${concern} 고민과 맞는 카테고리를 우선 선별했습니다.`,
-      "예산 범위 안에서 조합 가능한 시술부터 검토했습니다.",
-      "회복 부담이 큰 시술은 입력한 다운타임 허용도에 따라 뒤로 미뤘습니다.",
+      "예산 범위 안에서 조합 가능한 시술을 먼저 검토했습니다.",
+      "다운타임 조건에 따라 과한 시술은 후순위로 조정했습니다.",
     ],
     requestCategory: selected[0]?.treatment.category || "기타",
     requestSummary: `${concern} 고민이 있어 ${selected
       .map((item) => item.treatment.name)
-      .join(", ")} 조합을 우선 검토하고 싶습니다. 불필요한 시술은 제외하고 예산 안에서 상담받고 싶습니다.`,
+      .join(", ")} 조합을 우선 검토하고 싶습니다. 과한 시술은 제외하고 예산 안에서 상담받고 싶습니다.`,
     totalPrice,
     items: selected.map((item) => ({
       name: item.treatment.name,
@@ -150,8 +150,8 @@ function buildFallbackResult(
       price: item.avgPrice,
       description: item.treatment.description,
       reason: item.reasons[0] || "고민과 예산 기준에 부합",
-      recovery: item.treatment.recovery || "상담 시 확인 필요",
-      sideEffects: item.treatment.side_effects || "상담 시 확인 필요",
+      recovery: item.treatment.recovery || "상담 후 확인 필요",
+      sideEffects: item.treatment.side_effects || "상담 후 확인 필요",
       synergy: item.treatment.synergy || "단독 진행 가능",
     })),
   };
@@ -163,7 +163,9 @@ export async function POST(req: Request) {
 
   const { data: treatments } = await supabase
     .from("treatments")
-    .select("name, category, price_min, price_max, description, synergy, side_effects, recovery, cycle, recommended_for");
+    .select(
+      "name, category, price_min, price_max, description, synergy, side_effects, recovery, cycle, recommended_for",
+    );
 
   if (!treatments || treatments.length === 0) {
     return NextResponse.json({ error: "시술 데이터를 불러오지 못했습니다." }, { status: 500 });
@@ -191,9 +193,9 @@ export async function POST(req: Request) {
 
   const openai = new OpenAI({ apiKey });
   const prompt = `
-    너는 팩트 기반으로 시술 추천 결과를 정리하는 뷰티 상담 실장이다.
-    아래의 선택 결과와 후보 시술 데이터만 사용해서 JSON으로만 답한다.
-    데이터에 없는 가격, 효과, 회복 표현은 새로 만들지 않는다.
+    너는 팩트 기반으로 시술 추천 결과를 정리하는 뷰티 상담 조력자다.
+    아래 사용자 선택 결과와 후보 시술 데이터만 사용해서 JSON으로만 답한다.
+    데이터에 없는 가격, 효과, 회복 표현은 임의로 만들지 않는다.
 
     [사용자 선택]
     - 나이: ${age}
@@ -202,18 +204,18 @@ export async function POST(req: Request) {
     - 원하는 결과: ${goal}
     - 다운타임 허용도: ${downtime}
 
-    [선정된 후보]
+    [후보 데이터]
     ${selected
       .map(
         (item) =>
-          `- ${item.treatment.name} / ${item.treatment.category} / ${item.treatment.price_min}~${item.treatment.price_max}만원 / 설명: ${item.treatment.description} / 회복: ${item.treatment.recovery || "상담 시 확인 필요"} / 부작용: ${item.treatment.side_effects || "상담 시 확인 필요"} / 시너지: ${item.treatment.synergy || "단독 진행 가능"} / 선정 이유: ${item.reasons.join(", ")}`,
+          `- ${item.treatment.name} / ${item.treatment.category} / ${item.treatment.price_min}~${item.treatment.price_max}만원 / 설명: ${item.treatment.description} / 회복: ${item.treatment.recovery || "상담 후 확인 필요"} / 부작용: ${item.treatment.side_effects || "상담 후 확인 필요"} / 시너지: ${item.treatment.synergy || "단독 진행 가능"} / 선정 이유: ${item.reasons.join(", ")}`,
       )
       .join("\n")}
 
     [출력 JSON 형식]
     {
       "strategyTitle": "추천 전략 제목",
-      "summary": "이 조합을 추천하는 이유를 2문장으로 설명",
+      "summary": "왜 이 조합을 추천하는지 2문장으로 설명",
       "budgetFit": "예산 관점 설명 1문장",
       "caution": "상담 전에 확인할 점 1문장",
       "requestCategory": "대표 카테고리 하나",
@@ -225,7 +227,7 @@ export async function POST(req: Request) {
           "category": "카테고리",
           "price": 120,
           "description": "DB 설명을 바탕으로 한 짧은 설명",
-          "reason": "왜 이 시술이 들어갔는지",
+          "reason": "왜 이 시술이 들어가는지",
           "recovery": "회복 표현",
           "sideEffects": "부작용 표현",
           "synergy": "시너지 표현"

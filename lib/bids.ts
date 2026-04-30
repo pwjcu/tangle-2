@@ -4,6 +4,20 @@ interface BidCommentInput {
   reservation: string;
 }
 
+const PLAN_PREFIXES = ["추천 시술:", "추천 시술 :"];
+const REASON_PREFIXES = ["제안 이유:", "제안 이유 :"];
+const RESERVATION_PREFIXES = ["예약 안내:", "예약 안내 :"];
+
+function stripPrefix(line: string, prefixes: string[]) {
+  for (const prefix of prefixes) {
+    if (line.startsWith(prefix)) {
+      return line.replace(prefix, "").trim();
+    }
+  }
+
+  return "";
+}
+
 export function buildBidComment({ plan, reason, reservation }: BidCommentInput) {
   return [
     `추천 시술: ${plan.trim()}`,
@@ -13,7 +27,11 @@ export function buildBidComment({ plan, reason, reservation }: BidCommentInput) 
 }
 
 export function parseBidComment(comment: string) {
-  const lines = comment.split("\n").map((line) => line.trim()).filter(Boolean);
+  const lines = comment
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
   const parsed = {
     plan: "",
     reason: "",
@@ -22,16 +40,21 @@ export function parseBidComment(comment: string) {
   };
 
   for (const line of lines) {
-    if (line.startsWith("추천 시술:")) {
-      parsed.plan = line.replace("추천 시술:", "").trim();
+    const plan = stripPrefix(line, PLAN_PREFIXES);
+    if (plan) {
+      parsed.plan = plan;
       continue;
     }
-    if (line.startsWith("제안 이유:")) {
-      parsed.reason = line.replace("제안 이유:", "").trim();
+
+    const reason = stripPrefix(line, REASON_PREFIXES);
+    if (reason) {
+      parsed.reason = reason;
       continue;
     }
-    if (line.startsWith("예약 안내:")) {
-      parsed.reservation = line.replace("예약 안내:", "").trim();
+
+    const reservation = stripPrefix(line, RESERVATION_PREFIXES);
+    if (reservation) {
+      parsed.reservation = reservation;
     }
   }
 

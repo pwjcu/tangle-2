@@ -29,6 +29,10 @@ function getEmailFromSearch() {
   return new URLSearchParams(window.location.search).get("email") || "";
 }
 
+function formatPrice(value: number) {
+  return `${value.toLocaleString()}만원`;
+}
+
 export default function MyPage() {
   const [email, setEmail] = useState(getEmailFromSearch);
   const [loadedEmail, setLoadedEmail] = useState("");
@@ -58,7 +62,7 @@ export default function MyPage() {
     }
 
     if (!data || data.length === 0) {
-      alert("등록된 요청 내역이 없습니다.");
+      alert("등록된 요청 이력이 없습니다.");
       setMyRequests([]);
       setHasLoaded(false);
       setLoading(false);
@@ -78,12 +82,12 @@ export default function MyPage() {
   };
 
   const handleSelectBid = (hospitalName: string) => {
-    alert(`'${hospitalName}' 제안을 선택했습니다. 실제 연결 단계는 다음 리팩토링에서 이어집니다.`);
+    alert(`'${hospitalName}' 제안을 선택했습니다. 실제 예약 연결 단계는 다음 리팩토링에서 이어집니다.`);
   };
 
   if (!hasLoaded) {
     return (
-      <div className="pb-10 pt-4 sm:pt-5">
+      <div className="pb-12 pt-4 sm:pt-5">
         <div className="shell">
           <div className="mx-auto max-w-[620px] panel px-5 py-6 sm:px-6">
             <p className="eyebrow mb-3">proposal inbox</p>
@@ -91,7 +95,7 @@ export default function MyPage() {
               받은 제안함 확인하기
             </h1>
             <p className="mt-3 text-[14px] leading-7 text-stone-600">
-              견적 요청 시 입력한 이메일을 기준으로 병원 제안서를 불러옵니다.
+              견적 요청 때 입력한 이메일을 기준으로 병원 제안을 불러옵니다.
             </p>
 
             <form onSubmit={handleCheck} className="mt-5 space-y-3">
@@ -106,12 +110,10 @@ export default function MyPage() {
                 type="submit"
                 disabled={loading}
                 className={`w-full rounded-[18px] px-6 py-3.5 text-[15px] font-semibold text-white ${
-                  loading
-                    ? "cursor-not-allowed bg-stone-400"
-                    : "bg-stone-900 hover:-translate-y-0.5 hover:bg-stone-800"
+                  loading ? "cursor-not-allowed bg-stone-400" : "bg-[#6b38d4] hover:-translate-y-0.5 hover:bg-[#5b2cc4]"
                 }`}
               >
-                {loading ? "조회 중..." : "도착한 제안 확인하기"}
+                {loading ? "조회 중..." : "내 제안 확인하기"}
               </button>
             </form>
           </div>
@@ -121,7 +123,7 @@ export default function MyPage() {
   }
 
   return (
-    <div className="pb-10 pt-4 sm:pt-5">
+    <div className="pb-12 pt-4 sm:pt-5">
       <div className="shell">
         <header className="panel mb-4 flex flex-col gap-3 px-5 py-5 sm:px-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -130,8 +132,8 @@ export default function MyPage() {
               받은 제안 비교
             </h1>
             <p className="mt-2 text-[14px] leading-6 text-stone-600">
-              {loadedEmail} 기준으로 도착한 제안을 불러왔습니다. 가격만이 아니라 추천 시술과
-              이유까지 같이 보고 비교하세요.
+              {loadedEmail} 기준으로 도착한 병원 제안을 불러왔습니다. 가격만이 아니라 추천 시술, 제안 이유,
+              예약 안내까지 함께 보고 비교하세요.
             </p>
           </div>
           <button
@@ -145,6 +147,7 @@ export default function MyPage() {
         <main className="space-y-4">
           {myRequests.map((request) => {
             const sortedBids = [...request.bids].sort((left, right) => left.price - right.price);
+            const bestBid = sortedBids[0];
 
             return (
               <section key={request.id} className="panel px-5 py-5 sm:px-6">
@@ -154,9 +157,10 @@ export default function MyPage() {
                       내가 보낸 요청
                     </span>
                     <h2 className="mt-4 text-[1.2rem] font-semibold text-stone-900 sm:text-[1.35rem]">
-                      {request.category} / 예산 {request.budget}만원
+                      {request.category} / 예산 {formatPrice(request.budget)}
                     </h2>
                     <p className="mt-4 text-[13px] leading-7 text-stone-600">{request.symptom}</p>
+
                     <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
                       <div className="metric-tile">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">
@@ -175,31 +179,51 @@ export default function MyPage() {
                         </p>
                       </div>
                     </div>
+
+                    {bestBid && (
+                      <div className="mt-4 rounded-[18px] border border-[#e3d7fa] bg-[#f7f1ff] px-4 py-4">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#6b38d4]">
+                          best price
+                        </p>
+                        <p className="mt-2 text-[15px] font-semibold text-stone-900">
+                          {bestBid.hospital_name} · {formatPrice(bestBid.price)}
+                        </p>
+                      </div>
+                    )}
                   </article>
 
                   <div className="space-y-4">
                     {sortedBids.length === 0 ? (
                       <div className="rounded-[22px] border border-dashed border-stone-300 bg-white/70 px-5 py-10 text-center text-sm text-stone-500">
-                        아직 도착한 제안이 없습니다. 조금만 기다려주세요.
+                        아직 도착한 제안이 없습니다. 조금만 기다려 주세요.
                       </div>
                     ) : (
-                      sortedBids.map((bid) => {
+                      sortedBids.map((bid, index) => {
                         const parsed = parseBidComment(bid.comment);
+                        const isBest = index === 0;
+
                         return (
                           <article key={bid.id} className="rounded-[22px] border border-stone-200 bg-white p-5 shadow-sm">
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                               <div>
-                                <h3 className="text-[1.15rem] font-semibold text-stone-900 sm:text-[1.25rem]">
-                                  {bid.hospital_name}
-                                </h3>
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <h3 className="text-[1.15rem] font-semibold text-stone-900 sm:text-[1.25rem]">
+                                    {bid.hospital_name}
+                                  </h3>
+                                  {isBest && (
+                                    <span className="rounded-full bg-[#f1e9ff] px-2.5 py-1 text-[11px] font-semibold text-[#6b38d4]">
+                                      최저가
+                                    </span>
+                                  )}
+                                </div>
                                 <p className="mt-1 text-xs uppercase tracking-[0.16em] text-stone-400">
                                   {new Date(bid.created_at).toLocaleDateString()} 도착
                                 </p>
                               </div>
-                              <div className="rounded-2xl bg-stone-900 px-4 py-3 text-white">
+                              <div className="rounded-2xl bg-[#221a33] px-4 py-3 text-white">
                                 <p className="text-xs uppercase tracking-[0.14em] text-white/65">price</p>
                                 <p className="mt-1 text-[1.35rem] font-semibold" data-display="true">
-                                  {bid.price}만원
+                                  {formatPrice(bid.price)}
                                 </p>
                               </div>
                             </div>
@@ -227,7 +251,7 @@ export default function MyPage() {
 
                             <button
                               onClick={() => handleSelectBid(bid.hospital_name)}
-                              className="mt-5 w-full rounded-[18px] bg-stone-900 px-6 py-3.5 text-[15px] font-semibold text-white hover:-translate-y-0.5 hover:bg-stone-800"
+                              className="mt-5 w-full rounded-[18px] bg-[#6b38d4] px-6 py-3.5 text-[15px] font-semibold text-white hover:-translate-y-0.5 hover:bg-[#5b2cc4]"
                             >
                               이 제안으로 상담 이어가기
                             </button>
