@@ -1,0 +1,2 @@
+source_id,source_name,clinic_name,source_type,captured_date,source_path,category,subcategory,treatment_name,treatment_variant,package_components,area_scope,session_count,quantity_text,price_krw,price_manwon,currency,vat_included,confidence,notes
+sample-001,2026-05 public event image,Example Clinic,public_image,2026-05-04,C:\path\to\image.png,리프팅,이벤트,울쎄라,400샷,,얼굴전체,1,400샷,1400000,140,KRW,false,high,수동 추출 예시
