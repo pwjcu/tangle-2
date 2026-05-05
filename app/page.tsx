@@ -117,19 +117,19 @@ export default function Home() {
 
   return (
     <div className="pb-12">
-      <header className="sticky top-4 z-30">
+      <header className="sticky top-2 z-30 sm:top-4">
         <div className="shell">
-          <div className="flex min-h-[64px] flex-wrap items-center justify-between gap-3 rounded-full border border-[rgba(32,34,31,0.08)] bg-white/80 px-4 py-2 shadow-[0_18px_60px_rgba(32,34,31,0.08)] backdrop-blur-xl">
-            <Link href="/" className="flex items-center gap-3 rounded-full px-2 py-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-sky-violet)] text-[13px] font-semibold text-[var(--color-carbon)]">
+          <div className="flex min-h-[56px] flex-wrap items-center justify-between gap-2 rounded-[30px] border border-[rgba(32,34,31,0.07)] bg-white/50 px-3 py-3 shadow-[0_18px_60px_rgba(32,34,31,0.07)] backdrop-blur-2xl sm:min-h-[64px] sm:rounded-full sm:bg-white/68 sm:px-4 sm:py-2">
+            <Link href="/" className="flex items-center gap-2 rounded-full px-1.5 py-1.5 sm:gap-3 sm:px-2 sm:py-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-sky-violet)] text-[12px] font-semibold text-[var(--color-carbon)] sm:h-9 sm:w-9 sm:text-[13px]">
                 T
               </span>
-              <span className="text-[16px] font-semibold tracking-[-0.055em] sm:text-[20px]" data-display="true">
+              <span className="text-[15px] font-semibold tracking-[-0.055em] sm:text-[20px]" data-display="true">
                 Tangle: 관리가 최고의 재테크다
               </span>
             </Link>
 
-            <nav className="flex flex-wrap items-center justify-end gap-1">
+            <nav className="flex w-full flex-wrap items-center justify-center gap-1 sm:w-auto sm:justify-end">
               <Link href="/recommend" className="ghost-link">
                 {t("nav.recommend")}
               </Link>
@@ -154,12 +154,12 @@ export default function Home() {
                   <Link href={`/my?email=${encodeURIComponent(userEmail)}`} className="ghost-link">
                     {t("nav.my")}
                   </Link>
-                  <button onClick={handleLogout} className="action-secondary !px-4 !py-2">
+                  <button onClick={handleLogout} className="action-secondary !px-3 !py-2 !text-[12px] sm:!px-4 sm:!text-[14px]">
                     {t("nav.logout")}
                   </button>
                 </>
               ) : (
-                <button onClick={handleKakaoLogin} className="action-primary !px-5 !py-2.5">
+                <button onClick={handleKakaoLogin} className="action-primary !px-4 !py-2 !text-[12px] sm:!px-5 sm:!py-2.5 sm:!text-[14px]">
                   {t("nav.login")}
                 </button>
               )}
@@ -168,13 +168,13 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="shell pt-10">
-        <section className="overflow-hidden rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/82 px-5 py-8 shadow-[0_30px_100px_rgba(32,34,31,0.08)] backdrop-blur-xl sm:px-8 lg:px-10 lg:py-10">
-          <div className="grid items-center gap-8 lg:grid-cols-[0.94fr_1.06fr]">
-            <div className="max-w-[780px]">
+      <main className="shell pt-5 sm:pt-10">
+        <section className="overflow-hidden rounded-[34px] border border-[rgba(32,34,31,0.06)] bg-white/82 px-4 py-5 shadow-[0_30px_100px_rgba(32,34,31,0.08)] backdrop-blur-xl sm:rounded-[44px] sm:px-7 sm:py-7 lg:px-8 lg:py-8">
+          <div className="grid items-center gap-6 lg:grid-cols-[0.76fr_1.24fr]">
+            <div className="max-w-[640px]">
               <p className="eyebrow">beauty connect infrastructure</p>
               <h1
-                className="type-title balance mt-7 !text-[3rem] sm:!text-[4.2rem] lg:!text-[4.35rem]"
+                className="type-title balance mt-5 !text-[2.45rem] sm:!text-[3.35rem] lg:!text-[3.55rem] xl:!text-[3.85rem]"
                 data-display="true"
               >
                 나에게 가장 필요한
@@ -183,12 +183,12 @@ export default function Home() {
                 <br />
                 병원 제안 받기
               </h1>
-              <p className="mt-7 max-w-[680px] text-[17px] leading-8 text-[var(--color-muted)]">
+              <p className="mt-5 max-w-[600px] text-[14px] leading-7 text-[var(--color-muted)] sm:text-[15px] lg:text-[16px]">
                 탱글은 시술 정보 탐색, 개인 맞춤 추천, 견적 요청, 병원 역제안을 하나의 흐름으로 연결,
                 소비자의 선택피로도를 감소시키고 병원의 상담시간과 홍보비용을 줄이며 재방문율을 높입니다.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <Link href="/recommend" className="action-primary">
                   추천 시작
                 </Link>
@@ -196,19 +196,19 @@ export default function Home() {
                   견적 요청하기
                 </Link>
               </div>
-              <p className="mt-5 text-[13px] font-semibold text-[var(--color-muted)]">
+              <p className="mt-4 text-[12px] font-semibold text-[var(--color-muted)] sm:text-[13px]">
                 정보 탐색, 추천, 견적 요청, 병원 제안까지 이어주는 해결사
               </p>
             </div>
 
-            <div className="relative min-h-[420px] overflow-hidden rounded-[40px] border border-[rgba(32,34,31,0.06)] bg-[var(--color-porcelain-gray)] shadow-[0_26px_80px_rgba(32,34,31,0.08)] lg:min-h-[590px]">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] border border-[rgba(32,34,31,0.06)] bg-[var(--color-porcelain-gray)] shadow-[0_26px_80px_rgba(32,34,31,0.08)] sm:rounded-[40px]">
               <Image
                 src="/tangle-face-consult.png"
                 alt="카메라로 얼굴을 업로드하고 고민 부위를 표시한 뒤 병원에게만 공개하는 탱글 기능 안내"
                 fill
                 priority
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover object-center"
+                className="object-contain object-center"
               />
             </div>
           </div>
@@ -239,11 +239,11 @@ export default function Home() {
 
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {steps.map((step) => (
-              <article key={step.label} className="rounded-[32px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-6 shadow-[0_18px_55px_rgba(32,34,31,0.05)] backdrop-blur-xl">
+              <article key={step.label} className="rounded-[30px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-5 shadow-[0_18px_55px_rgba(32,34,31,0.05)] backdrop-blur-xl sm:p-6">
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-genius-yellow)] text-[13px] font-semibold">
                   {step.label}
                 </span>
-                <h3 className="mt-10 text-[1.65rem] font-semibold tracking-[-0.05em]" data-display="true">
+                <h3 className="mt-8 text-[1.35rem] font-semibold leading-tight tracking-[-0.05em] sm:text-[1.45rem]" data-display="true">
                   {step.title}
                 </h3>
                 <p className="mt-4 text-[14px] leading-7 text-[var(--color-muted)]">{step.body}</p>
@@ -257,7 +257,7 @@ export default function Home() {
             <Link
               key={card.title}
               href={card.href}
-              className={`group min-h-[340px] rounded-[40px] p-7 hover:-translate-y-1 ${
+              className={`group min-h-[260px] rounded-[34px] p-5 hover:-translate-y-1 sm:min-h-[300px] sm:rounded-[40px] sm:p-6 ${
                 card.tone === "yellow"
                   ? "border border-[rgba(32,34,31,0.06)] bg-[linear-gradient(135deg,#eee87f_0%,#dce6a0_48%,#dff8ee_100%)] shadow-[0_22px_70px_rgba(204,207,91,0.18)]"
                   : card.tone === "violet"
@@ -265,11 +265,11 @@ export default function Home() {
                     : "border border-[rgba(32,34,31,0.06)] bg-white/72 shadow-[0_22px_70px_rgba(32,34,31,0.06)] backdrop-blur-xl"
               }`}
             >
-              <h3 className="text-[2.2rem] font-semibold leading-[1.02] tracking-[-0.06em]" data-display="true">
+              <h3 className="text-[1.65rem] font-semibold leading-[1.05] tracking-[-0.06em] sm:text-[1.82rem] xl:text-[1.95rem]" data-display="true">
                 {card.title}
               </h3>
-              <p className="mt-6 text-[15px] leading-7 text-[rgba(23,21,14,0.72)]">{card.body}</p>
-              <p className="mt-12 inline-flex rounded-full bg-white px-5 py-3 text-[13px] font-semibold">
+              <p className="mt-5 text-[14px] leading-7 text-[rgba(23,21,14,0.72)] sm:text-[15px]">{card.body}</p>
+              <p className="mt-8 inline-flex rounded-full bg-white px-5 py-3 text-[13px] font-semibold">
                 {card.cta}
               </p>
             </Link>
@@ -327,7 +327,7 @@ export default function Home() {
                   <p className="text-[12px] font-semibold text-[var(--color-muted-light)]">
                     {String(index + 1).padStart(2, "0")}
                   </p>
-                  <p className="mt-8 text-[1.35rem] font-semibold leading-tight tracking-[-0.05em]" data-display="true">
+                  <p className="mt-7 text-[1.05rem] font-semibold leading-snug tracking-[-0.05em] sm:text-[1.15rem] lg:text-[1.25rem]" data-display="true">
                     {benefit}
                   </p>
                 </article>

@@ -10,8 +10,8 @@ export default function LanguageSwitcher({ compact = false }: { compact?: boolea
     <label
       className={
         compact
-          ? "inline-flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1.5 text-xs text-white"
-          : "inline-flex items-center gap-2 border border-[var(--color-carbon)] bg-transparent px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-carbon)]"
+          ? "inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs text-white"
+          : "inline-flex items-center gap-2 rounded-full border border-[rgba(32,34,31,0.1)] bg-white/45 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-carbon)] shadow-[0_10px_26px_rgba(32,34,31,0.05)] backdrop-blur-xl sm:text-xs"
       }
     >
       <span>{compact ? "Lang" : "Language"}</span>
