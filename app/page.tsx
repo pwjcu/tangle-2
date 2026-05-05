@@ -174,7 +174,7 @@ export default function Home() {
             <div className="max-w-[780px]">
               <p className="eyebrow">beauty connect infrastructure</p>
               <h1
-                className="type-title balance mt-7 !text-[3rem] sm:!text-[4.2rem] lg:!text-[4.9rem]"
+                className="type-title balance mt-7 !text-[3rem] sm:!text-[4.2rem] lg:!text-[4.35rem]"
                 data-display="true"
               >
                 나에게 가장 필요한
@@ -203,12 +203,12 @@ export default function Home() {
 
             <div className="relative min-h-[420px] overflow-hidden rounded-[40px] bg-[var(--color-porcelain-gray)] lg:min-h-[590px]">
               <Image
-                src="/tangle-flow-studio.svg"
+                src="/tangle-face-consult.png"
                 alt="카메라로 얼굴을 업로드하고 고민 부위를 표시한 뒤 병원에게만 공개하는 탱글 기능 안내"
                 fill
                 priority
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
+                className="object-cover object-center"
               />
             </div>
           </div>
