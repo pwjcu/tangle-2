@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import { buildBidComment } from "../../lib/bids";
+import { displayCategoryName } from "../../lib/siteContent";
 
 interface RequestRecord {
   id: number;
@@ -242,7 +243,7 @@ export default function HospitalPage() {
                         </span>
                       </div>
                       <h3 className="mt-6 text-[1.45rem] font-normal leading-tight" data-display="true">
-                        {request.category}
+                        {displayCategoryName(request.category)}
                       </h3>
                       <p className="mt-3 text-[14px] font-semibold">예산 {formatPrice(request.budget)}</p>
                       <p className="mt-4 line-clamp-3 text-[13px] leading-6 opacity-70">{request.symptom}</p>
@@ -283,7 +284,7 @@ function RequestProposalPanel({
       <section className="border-b border-[var(--color-silver-mist)] bg-[var(--color-porcelain-gray)] p-5 sm:p-7 xl:border-b-0 xl:border-r">
         <p className="eyebrow">selected request</p>
         <h2 className="mt-7 text-[2.4rem] font-normal leading-tight" data-display="true">
-          {request.category}
+          {displayCategoryName(request.category)}
           <br />
           {formatPrice(request.budget)}
         </h2>

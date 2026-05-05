@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
-import { treatmentCategories } from "../../lib/siteContent";
+import { displayCategoryName, treatmentCategories } from "../../lib/siteContent";
 
 function getRequestPrefill() {
   if (typeof window === "undefined") {
@@ -152,7 +152,7 @@ export default function RequestPage() {
                 <select name="category" value={formData.category} onChange={handleChange} className="field mt-2">
                   {treatmentCategories.map((category) => (
                     <option key={category.name} value={category.name}>
-                      {category.name}
+                      {displayCategoryName(category.name)}
                     </option>
                   ))}
                   <option value="기타">기타</option>

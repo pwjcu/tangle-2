@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
-import { treatmentCategories } from "../lib/siteContent";
+import { displayCategoryName, treatmentCategories } from "../lib/siteContent";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import { useLanguage } from "./components/LanguageProvider";
 
@@ -173,7 +173,10 @@ export default function Home() {
           <div className="grid items-center gap-8 lg:grid-cols-[0.94fr_1.06fr]">
             <div className="max-w-[780px]">
               <p className="eyebrow">beauty connect infrastructure</p>
-              <h1 className="type-title balance mt-7" data-display="true">
+              <h1
+                className="type-title balance mt-7 !text-[3rem] sm:!text-[4.2rem] lg:!text-[4.9rem]"
+                data-display="true"
+              >
                 나에게 가장 필요한
                 <br />
                 시술 정보안내와
@@ -284,7 +287,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-[620px] text-[15px] leading-8 text-white/68 lg:ml-auto">
-              리프팅, 스킨부스터, 보톡스, 색소/레이저, 모공흉터, 제모처럼 사용자가 실제로 찾는 기준으로 정리했습니다.
+              리프팅, 스킨부스터, 보톡스, 색소/레이저, 모공/흉터, 제모처럼 사용자가 실제로 찾는 기준으로 정리했습니다.
             </p>
           </div>
 
@@ -295,7 +298,9 @@ export default function Home() {
                 href={`/category/${encodeURIComponent(category.name)}`}
                 className="rounded-[28px] bg-white/10 p-5 hover:bg-white hover:text-[var(--color-carbon)]"
               >
-                <p className="text-[1.25rem] font-semibold tracking-[-0.04em]">{category.name}</p>
+                <p className="text-[1.25rem] font-semibold tracking-[-0.04em]">
+                  {displayCategoryName(category.name)}
+                </p>
                 <p className="mt-5 line-clamp-3 text-[14px] leading-6 opacity-75">{category.examples}</p>
               </Link>
             ))}

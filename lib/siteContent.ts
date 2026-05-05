@@ -135,9 +135,27 @@ export const treatmentCategories: CategoryMeta[] = [
   },
 ];
 
+export function displayCategoryName(name: string) {
+  return name === "모공흉터" ? "모공/흉터" : name;
+}
+
+export function normalizeCategoryName(name: string) {
+  return name === "모공/흉터" ? "모공흉터" : name;
+}
+
 export function getCategoryMeta(name: string) {
+  const normalizedName = normalizeCategoryName(name);
+  const category = treatmentCategories.find((category) => category.name === normalizedName);
+
+  if (category) {
+    return {
+      ...category,
+      name: displayCategoryName(category.name),
+    };
+  }
+
   return (
-    treatmentCategories.find((category) => category.name === name) ?? {
+    {
       name,
       headline: "시술 정보를 비교하고 내 고민에 맞는 선택지를 정리해보세요.",
       description:

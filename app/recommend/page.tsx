@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { displayCategoryName } from "../../lib/siteContent";
 
 type QuestionKey = "concern" | "budget" | "age" | "goal" | "downtime";
 
@@ -334,7 +335,7 @@ export default function RecommendPage() {
                   {result.items.map((item) => (
                     <article key={item.name} className="rounded-[28px] border border-[var(--color-silver-mist)] bg-white p-5">
                       <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">
-                        {item.category}
+                        {displayCategoryName(item.category)}
                       </p>
                       <h3 className="mt-8 text-[1.7rem] font-normal leading-tight" data-display="true">
                         {item.name}

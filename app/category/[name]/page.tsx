@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
-import { getCategoryMeta } from "../../../lib/siteContent";
+import { displayCategoryName, getCategoryMeta, normalizeCategoryName } from "../../../lib/siteContent";
 import { getLocalTreatmentsByCategory } from "../../../lib/localTreatments";
 
 interface Treatment {
@@ -28,6 +28,8 @@ export default function CategoryPage() {
   const params = useParams();
   const router = useRouter();
   const categoryName = decodeURIComponent(params.name as string);
+  const dataCategoryName = normalizeCategoryName(categoryName);
+  const displayName = displayCategoryName(categoryName);
   const categoryMeta = getCategoryMeta(categoryName);
 
   const [list, setList] = useState<Treatment[]>([]);
@@ -35,14 +37,14 @@ export default function CategoryPage() {
 
   useEffect(() => {
     const fetchCategory = async () => {
-      const { data, error } = await supabase.from("treatments").select("*").eq("category", categoryName);
+      const { data, error } = await supabase.from("treatments").select("*").eq("category", dataCategoryName);
 
       if (error) {
         console.error(error);
       } else {
         const remoteTreatments = data || [];
         const existingNames = new Set(remoteTreatments.map((item) => item.name.replace(/\s+/g, "").toLowerCase()));
-        const localTreatments = getLocalTreatmentsByCategory(categoryName).filter(
+        const localTreatments = getLocalTreatmentsByCategory(dataCategoryName).filter(
           (item) => !existingNames.has(item.name.replace(/\s+/g, "").toLowerCase()),
         );
 
@@ -52,7 +54,7 @@ export default function CategoryPage() {
     };
 
     void fetchCategory();
-  }, [categoryName]);
+  }, [dataCategoryName]);
 
   return (
     <div className="pb-10">
@@ -72,7 +74,7 @@ export default function CategoryPage() {
           <div className="border-b border-[var(--color-carbon)] p-5 sm:p-8 lg:border-b-0 lg:border-r">
             <p className="eyebrow">category inventory</p>
             <h1 className="type-title mt-7 !text-[3rem] sm:!text-[4.4rem]" data-display="true">
-              {categoryName}
+              {displayName}
             </h1>
             <p className="mt-6 max-w-[720px] text-[17px] leading-8 text-[var(--color-muted)]">
               {categoryMeta.headline}
@@ -132,7 +134,7 @@ export default function CategoryPage() {
                     <div>
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <span className="border border-current px-2 py-1 text-[11px] uppercase tracking-[0.16em]">
-                          {item.isLocalSeed ? "2026 csv" : item.category}
+                          {item.isLocalSeed ? "2026 csv" : displayCategoryName(item.category)}
                         </span>
                         <span className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-muted-light)] group-hover:text-[var(--color-ghost-white)]/55">
                           pain {item.pain_level}/5
