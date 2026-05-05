@@ -10,8 +10,8 @@ export default function LanguageSwitcher({ compact = false }: { compact?: boolea
     <label
       className={
         compact
-          ? "inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs text-white"
-          : "inline-flex items-center gap-2 rounded-full border border-[#ded4f4] bg-white px-3 py-2 text-xs font-semibold text-stone-700 shadow-sm"
+          ? "inline-flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1.5 text-xs text-white"
+          : "inline-flex items-center gap-2 border border-[var(--color-carbon)] bg-transparent px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-carbon)]"
       }
     >
       <span>{compact ? "Lang" : "Language"}</span>
@@ -21,7 +21,7 @@ export default function LanguageSwitcher({ compact = false }: { compact?: boolea
         className={
           compact
             ? "bg-transparent text-xs font-semibold text-white outline-none"
-            : "bg-transparent text-xs font-semibold text-stone-900 outline-none"
+            : "bg-transparent text-xs font-semibold text-[var(--color-carbon)] outline-none"
         }
       >
         {supportedLanguages.map((item) => (

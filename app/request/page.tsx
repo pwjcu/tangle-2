@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
@@ -53,7 +54,7 @@ export default function RequestPage() {
     setLoading(true);
 
     if (!formData.user_email || !formData.symptom || !formData.budget) {
-      alert("이메일, 예산, 고민 내용은 꼭 입력해 주세요.");
+      alert("이메일, 예산, 고민 내용을 입력해주세요.");
       setLoading(false);
       return;
     }
@@ -71,184 +72,178 @@ export default function RequestPage() {
 
     if (error) {
       console.error(error);
-      alert("요청 등록에 실패했어요. 잠시 후 다시 시도해 주세요.");
+      alert("요청 등록에 실패했어요. 잠시 후 다시 시도해주세요.");
       setLoading(false);
       return;
     }
 
-    alert("견적 요청이 등록됐습니다. 제안이 도착하면 받은 제안함에서 비교할 수 있어요.");
+    alert("견적 요청이 등록되었습니다. 제안이 도착하면 받은 제안함에서 비교할 수 있어요.");
     router.push(`/my?email=${encodeURIComponent(formData.user_email)}`);
     setLoading(false);
   };
 
   return (
-    <div className="pb-12 pt-4 sm:pt-5">
-      <div className="shell">
-        <nav className="mb-4 flex items-center justify-between gap-3">
-          <button onClick={() => router.back()} className="text-[13px] font-semibold text-stone-500 hover:text-stone-900">
-            뒤로 가기
+    <div className="pb-10">
+      <header className="border-b border-[var(--color-carbon)]">
+        <div className="shell flex min-h-[64px] items-center justify-between py-3">
+          <button onClick={() => router.back()} className="ghost-link">
+            Back
           </button>
-          <LinkHint text="이 요청서는 병원이 제안을 작성할 때 보는 기본 문서입니다." />
-        </nav>
+          <Link href="/" className="ghost-link">
+            Tangle
+          </Link>
+        </div>
+      </header>
 
-        <div className="grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
-          <main className="panel px-5 py-5 sm:px-6 sm:py-6">
-            <p className="eyebrow mb-3">request quote</p>
-            <h1 className="type-title balance !text-[2rem] sm:!text-[2.3rem]" data-display="true">
-              추천 결과를 기준으로
+      <main className="shell">
+        <section className="grid border-x border-b border-[var(--color-carbon)] lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="border-b border-[var(--color-carbon)] p-5 sm:p-8 lg:border-b-0 lg:border-r">
+            <p className="eyebrow">request quote</p>
+            <h1 className="type-title mt-7 !text-[3rem] sm:!text-[4.4rem]" data-display="true">
+              병원 제안을 받을
               <br />
-              견적 요청서 만들기
+              요청서를 만듭니다
             </h1>
-            <p className="mt-3 max-w-2xl text-[14px] leading-7 text-stone-600">
-              병원은 이 요청서를 보고 가격만이 아니라 추천 시술, 제안 이유, 예약 안내까지 함께 작성합니다. 그래서
-              고민과 원하는 방향을 짧고 또렷하게 적는 것이 중요합니다.
+            <p className="mt-7 max-w-[720px] text-[16px] leading-8 text-[var(--color-muted)]">
+              병원은 이 요청서를 보고 가격뿐 아니라 추천 시술, 제안 이유, 예약 안내를 함께 작성합니다. 사용자는 반복 상담 없이 조건이 맞는 병원을 먼저 비교할 수 있습니다.
             </p>
+          </div>
 
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-[13px] font-semibold text-stone-700">연락받을 이메일</label>
-                  <input
-                    type="email"
-                    name="user_email"
-                    value={formData.user_email}
-                    onChange={handleChange}
-                    placeholder="example@naver.com"
-                    className="field"
-                  />
-                </div>
+          <aside className="grid sm:grid-cols-2">
+            {[
+              "예산과 카테고리",
+              "실제 고민 문장",
+              "선호 지역",
+              "피하고 싶은 조건",
+            ].map((item, index) => (
+              <article key={item} className="min-h-[180px] border-b border-[var(--color-line)] p-5 sm:border-r sm:even:border-r-0 sm:p-7">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <p className="mt-8 text-[1.35rem] font-normal" data-display="true">
+                  {item}
+                </p>
+              </article>
+            ))}
+          </aside>
+        </section>
 
-                <div>
-                  <label className="mb-2 block text-[13px] font-semibold text-stone-700">관심 카테고리</label>
-                  <select name="category" value={formData.category} onChange={handleChange} className="field">
-                    {treatmentCategories.map((category) => (
-                      <option key={category.name} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))}
-                    <option value="기타">기타</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-[13px] font-semibold text-stone-700">희망 예산 (만원)</label>
-                  <input
-                    type="number"
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
-                    placeholder="예: 120"
-                    className="field"
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-[13px] font-semibold text-stone-700">선호 지역</label>
-                  <input
-                    type="text"
-                    name="preferred_area"
-                    value={formData.preferred_area}
-                    onChange={handleChange}
-                    placeholder="예: 강남, 여의도, 분당"
-                    className="field"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-[13px] font-semibold text-stone-700">고민 내용 / 요청사항</label>
-                <textarea
-                  name="symptom"
-                  value={formData.symptom}
+        <section className="grid border-x border-b border-[var(--color-carbon)] xl:grid-cols-[1.16fr_0.84fr]">
+          <form onSubmit={handleSubmit} className="border-b border-[var(--color-carbon)] p-5 sm:p-8 xl:border-b-0 xl:border-r">
+            <div className="grid gap-8 md:grid-cols-2">
+              <label>
+                <span className="text-[12px] uppercase tracking-[0.2em] text-[var(--color-muted-light)]">
+                  contact email
+                </span>
+                <input
+                  type="email"
+                  name="user_email"
+                  value={formData.user_email}
                   onChange={handleChange}
-                  rows={6}
-                  placeholder="예: 팔자주름과 탄력 저하가 고민입니다. 자연스럽지만 체감 있는 조합을 원하고, 다운타임은 길지 않았으면 좋겠습니다."
-                  className="field min-h-[160px] resize-none"
+                  placeholder="example@naver.com"
+                  className="field mt-2"
                 />
-              </div>
+              </label>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className={`w-full rounded-[18px] px-6 py-3.5 text-[15px] font-semibold text-white ${
-                  loading ? "cursor-not-allowed bg-stone-400" : "bg-[#6b38d4] hover:-translate-y-0.5 hover:bg-[#5b2cc4]"
-                }`}
-              >
-                {loading ? "요청 등록 중..." : "견적 요청 등록하기"}
-              </button>
-            </form>
-          </main>
+              <label>
+                <span className="text-[12px] uppercase tracking-[0.2em] text-[var(--color-muted-light)]">
+                  category
+                </span>
+                <select name="category" value={formData.category} onChange={handleChange} className="field mt-2">
+                  {treatmentCategories.map((category) => (
+                    <option key={category.name} value={category.name}>
+                      {category.name}
+                    </option>
+                  ))}
+                  <option value="기타">기타</option>
+                </select>
+              </label>
 
-          <aside className="space-y-4">
-            <section className="panel px-5 py-5 sm:px-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">request summary</p>
-              <h2 className="mt-3 text-[1.35rem] font-semibold text-stone-950" data-display="true">
-                병원이 받게 되는 핵심 정보
-              </h2>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                {[
-                  "예산 상한과 관심 카테고리",
-                  "실제 고민 문장과 원하는 방향",
-                  "선호 지역과 비교 가능성",
-                  "과한 시술을 피하고 싶은 조건",
-                ].map((item) => (
-                  <div key={item} className="metric-tile text-[13px] font-medium text-stone-700">
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </section>
+              <label>
+                <span className="text-[12px] uppercase tracking-[0.2em] text-[var(--color-muted-light)]">
+                  budget, 만원
+                </span>
+                <input
+                  type="number"
+                  name="budget"
+                  value={formData.budget}
+                  onChange={handleChange}
+                  placeholder="예: 120"
+                  className="field mt-2"
+                />
+              </label>
 
+              <label>
+                <span className="text-[12px] uppercase tracking-[0.2em] text-[var(--color-muted-light)]">
+                  preferred area
+                </span>
+                <input
+                  type="text"
+                  name="preferred_area"
+                  value={formData.preferred_area}
+                  onChange={handleChange}
+                  placeholder="예: 강남, 성수, 분당"
+                  className="field mt-2"
+                />
+              </label>
+            </div>
+
+            <label className="mt-8 block">
+              <span className="text-[12px] uppercase tracking-[0.2em] text-[var(--color-muted-light)]">
+                concern and request
+              </span>
+              <textarea
+                name="symptom"
+                value={formData.symptom}
+                onChange={handleChange}
+                rows={7}
+                placeholder="예: 얼굴 처짐과 팔자 라인이 고민입니다. 자연스럽지만 체감이 있는 조합을 원하고, 다운타임은 길지 않았으면 좋겠습니다."
+                className="field mt-2 min-h-[180px] resize-none"
+              />
+            </label>
+
+            <button type="submit" disabled={loading} className="action-primary mt-8 w-full disabled:cursor-not-allowed disabled:opacity-50">
+              {loading ? "요청 등록 중" : "견적 요청 등록"}
+            </button>
+          </form>
+
+          <aside className="grid">
             {(recommended || concern) && (
-              <section className="panel px-5 py-5 sm:px-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">from recommendation</p>
-                <h3 className="mt-3 text-[1.1rem] font-semibold text-stone-900">추천 단계에서 가져온 정보</h3>
-                <div className="mt-4 space-y-3 text-[13px] text-stone-600">
-                  {concern && (
-                    <p className="rounded-[16px] border border-stone-200 bg-white px-4 py-3 leading-6">
-                      <span className="font-semibold text-stone-900">핵심 고민</span> {concern}
-                    </p>
-                  )}
-                  {recommended && (
-                    <p className="rounded-[16px] border border-stone-200 bg-white px-4 py-3 leading-6">
-                      <span className="font-semibold text-stone-900">추천 시술</span> {recommended}
-                    </p>
-                  )}
-                </div>
-              </section>
+              <article className="border-b border-[var(--color-line)] p-5 sm:p-7">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">
+                  from recommendation
+                </p>
+                {concern && <p className="mt-6 text-[14px] leading-7 text-[var(--color-muted)]">고민: {concern}</p>}
+                {recommended && (
+                  <p className="mt-3 text-[14px] leading-7 text-[var(--color-muted)]">추천 시술: {recommended}</p>
+                )}
+              </article>
             )}
 
-            <section className="panel px-5 py-5 sm:px-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">best practice</p>
-              <h3 className="mt-3 text-[1.1rem] font-semibold text-stone-900">좋은 요청서의 조건</h3>
-              <div className="mt-4 space-y-3">
-                {[
-                  "무조건 저렴한 가격보다 원하는 효과와 회복 조건을 함께 적기",
-                  "불안한 시술이나 피하고 싶은 조건이 있으면 미리 명시하기",
-                  "병원이 추천 이유와 예약 안내까지 쓰도록 유도하기",
-                ].map((item, index) => (
-                  <div key={item} className="soft-panel flex gap-3 p-4">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-[#f1e9ff] text-[11px] font-semibold text-[#6b38d4]">
-                      0{index + 1}
-                    </span>
-                    <p className="text-[13px] leading-6 text-stone-700">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
+            {[
+              {
+                title: "좋은 요청서",
+                body: "원하는 변화, 예산 상한, 회복 가능 시간을 명확히 적을수록 병원 제안이 좋아집니다.",
+              },
+              {
+                title: "비교 기준",
+                body: "가격만이 아니라 추천 이유, 조합, 예약 안내, 회복 조건을 함께 비교하세요.",
+              },
+              {
+                title: "다음 단계",
+                body: "제안이 도착하면 받은 제안함에서 병원별 내용을 한 번에 비교할 수 있습니다.",
+              },
+            ].map((item) => (
+              <article key={item.title} className="border-b border-[var(--color-line)] p-5 sm:p-7 last:border-b-0">
+                <h2 className="text-[1.5rem] font-normal" data-display="true">
+                  {item.title}
+                </h2>
+                <p className="mt-4 text-[14px] leading-7 text-[var(--color-muted)]">{item.body}</p>
+              </article>
+            ))}
           </aside>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
-  );
-}
-
-function LinkHint({ text }: { text: string }) {
-  return (
-    <span className="rounded-full border border-stone-200 bg-white px-3 py-2 text-[11px] font-semibold text-stone-500">
-      {text}
-    </span>
   );
 }

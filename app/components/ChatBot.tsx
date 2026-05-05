@@ -58,8 +58,8 @@ export default function ChatBot() {
   return (
     <div className="fixed bottom-5 right-5 z-50 sm:bottom-6 sm:right-6">
       {isOpen && (
-        <div className="mb-4 flex h-[28rem] w-[21rem] flex-col overflow-hidden rounded-[28px] border border-stone-200 bg-white shadow-[0_25px_60px_rgba(27,21,18,0.18)] animate-fade-up">
-          <div className="flex items-center justify-between bg-stone-950 px-4 py-4 text-white">
+        <div className="mb-4 flex h-[28rem] w-[21rem] flex-col overflow-hidden border border-[var(--color-carbon)] bg-[var(--color-paper)] animate-fade-up sm:w-[24rem]">
+          <div className="flex items-center justify-between border-b border-[var(--color-carbon)] bg-[var(--color-carbon)] px-4 py-4 text-[var(--color-ghost-white)]">
             <div>
               <p className="text-xs uppercase tracking-[0.18em] text-white/55">{t("chat.eyebrow")}</p>
               <span className="text-base font-bold">{t("chat.title")}</span>
@@ -70,14 +70,14 @@ export default function ChatBot() {
             </button>
           </div>
 
-          <div className="flex-1 space-y-3 overflow-y-auto bg-[#fbf8f5] p-4">
+          <div className="flex-1 space-y-3 overflow-y-auto bg-[var(--color-fog-canvas)] p-4">
             {messages.map((message, index) => (
               <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[85%] rounded-2xl p-3 text-sm leading-6 ${
+                  className={`max-w-[85%] border p-3 text-sm leading-6 ${
                     message.role === "user"
-                      ? "rounded-tr-none bg-stone-900 text-white"
-                      : "rounded-tl-none border border-stone-200 bg-white text-stone-800 shadow-sm"
+                      ? "border-[var(--color-carbon)] bg-[var(--color-carbon)] text-[var(--color-ghost-white)]"
+                      : "border-[var(--color-carbon)] bg-[var(--color-paper)] text-[var(--color-carbon)]"
                   }`}
                 >
                   {message.text}
@@ -88,18 +88,18 @@ export default function ChatBot() {
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="flex gap-2 border-t border-stone-200 bg-white p-3">
+          <div className="flex gap-2 border-t border-[var(--color-carbon)] bg-[var(--color-paper)] p-3">
             <input
               type="text"
               value={input}
               onChange={(event) => setInput(event.target.value)}
               onKeyDown={(event) => event.key === "Enter" && sendMessage()}
               placeholder={t("chat.placeholder")}
-              className="flex-1 rounded-full border border-stone-200 px-4 py-2 text-sm outline-none focus:border-stone-900"
+              className="flex-1 border border-[var(--color-carbon)] bg-transparent px-3 py-2 text-sm outline-none focus:bg-white/30"
             />
             <button
               onClick={sendMessage}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-stone-900 text-white hover:bg-stone-800"
+              className="flex h-10 w-10 items-center justify-center bg-[var(--color-carbon)] text-[var(--color-ghost-white)] hover:bg-[var(--color-obsidian)]"
             >
               →
             </button>
@@ -109,9 +109,9 @@ export default function ChatBot() {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-stone-900 text-2xl text-white shadow-[0_18px_36px_rgba(19,14,12,0.24)] transition-transform hover:scale-105 hover:bg-stone-800"
+        className="flex h-14 w-14 items-center justify-center border border-[var(--color-carbon)] bg-[var(--color-carbon)] text-[13px] font-semibold uppercase tracking-[0.16em] text-[var(--color-ghost-white)] hover:bg-[var(--color-obsidian)]"
       >
-        💬
+        AI
       </button>
     </div>
   );

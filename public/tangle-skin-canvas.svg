@@ -1,0 +1,23 @@
+<svg width="1200" height="1500" viewBox="0 0 1200 1500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="1500" fill="#dedbd2"/>
+  <path d="M0 0H1200V1500H0V0Z" fill="#d1d3cf"/>
+  <path d="M132 107C291 52 510 50 688 130C898 225 1026 408 1011 626C994 877 822 1133 586 1196C377 1252 171 1134 100 935C28 731 -63 174 132 107Z" fill="#f1eee6"/>
+  <path d="M655 160C828 228 941 394 933 601C923 832 771 1077 566 1136C388 1187 209 1085 148 898C91 722 19 237 174 174C309 119 502 100 655 160Z" stroke="#24241F" stroke-width="2"/>
+  <path d="M473 394C510 374 565 371 610 396" stroke="#24241F" stroke-width="7" stroke-linecap="round"/>
+  <path d="M751 397C792 379 846 382 886 408" stroke="#24241F" stroke-width="7" stroke-linecap="round"/>
+  <path d="M515 491C549 468 599 470 632 496C598 515 550 512 515 491Z" fill="#24241F"/>
+  <path d="M775 503C808 480 856 482 889 509C855 526 809 524 775 503Z" fill="#24241F"/>
+  <path d="M704 491C680 610 653 695 611 782C659 807 719 804 763 771" stroke="#24241F" stroke-width="4" stroke-linecap="round"/>
+  <path d="M521 892C603 945 739 953 826 900" stroke="#24241F" stroke-width="5" stroke-linecap="round"/>
+  <path d="M324 315C286 435 283 567 322 713" stroke="#24241F" stroke-width="3" stroke-linecap="round"/>
+  <path d="M948 323C1005 526 985 775 867 990" stroke="#24241F" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="426" cy="661" r="66" stroke="#24241F" stroke-width="2" stroke-dasharray="8 12"/>
+  <circle cx="848" cy="671" r="92" stroke="#24241F" stroke-width="2" stroke-dasharray="8 12"/>
+  <circle cx="618" cy="1017" r="44" stroke="#24241F" stroke-width="2" stroke-dasharray="8 12"/>
+  <path d="M236 1230H1052" stroke="#24241F" stroke-width="2"/>
+  <path d="M236 1278H1052" stroke="#24241F" stroke-width="2"/>
+  <path d="M236 1326H752" stroke="#24241F" stroke-width="2"/>
+  <text x="236" y="1210" fill="#24241F" font-family="Arial, sans-serif" font-size="25" letter-spacing="5">FACE SIGNAL MAP</text>
+  <text x="236" y="1266" fill="#24241F" font-family="Arial, sans-serif" font-size="31" letter-spacing="-1">skin texture / lifting / pigment / budget fit</text>
+  <text x="236" y="1378" fill="#24241F" font-family="Arial, sans-serif" font-size="23" letter-spacing="4">TANGLE CONSULT CANVAS</text>
+</svg>

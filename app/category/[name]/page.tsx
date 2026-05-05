@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
-import { accentStyles, getCategoryMeta } from "../../../lib/siteContent";
+import { getCategoryMeta } from "../../../lib/siteContent";
 import { getLocalTreatmentsByCategory } from "../../../lib/localTreatments";
 
 interface Treatment {
@@ -20,12 +20,15 @@ interface Treatment {
   isLocalSeed?: true;
 }
 
+function formatPrice(min: number, max: number) {
+  return `${min.toLocaleString()}~${max.toLocaleString()}만원`;
+}
+
 export default function CategoryPage() {
   const params = useParams();
   const router = useRouter();
   const categoryName = decodeURIComponent(params.name as string);
   const categoryMeta = getCategoryMeta(categoryName);
-  const accent = accentStyles[categoryMeta.accent];
 
   const [list, setList] = useState<Treatment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,116 +55,124 @@ export default function CategoryPage() {
   }, [categoryName]);
 
   return (
-    <div className="pb-12 pt-4 sm:pt-5">
-      <div className="shell">
-        <nav className="mb-4">
-          <button onClick={() => router.back()} className="text-[13px] font-semibold text-stone-500 hover:text-stone-900">
-            뒤로 가기
+    <div className="pb-10">
+      <header className="border-b border-[var(--color-carbon)]">
+        <div className="shell flex min-h-[64px] items-center justify-between py-3">
+          <button onClick={() => router.back()} className="ghost-link">
+            Back
           </button>
-        </nav>
+          <Link href="/" className="ghost-link">
+            Tangle
+          </Link>
+        </div>
+      </header>
 
-        <main className="space-y-4">
-          <section className="panel px-5 py-5 sm:px-6 sm:py-6">
-            <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr] xl:items-end">
-              <div>
-                <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${accent.chip}`}>
-                  {categoryName}
-                </span>
-                <h1
-                  className="balance mt-4 text-[2rem] font-semibold leading-[1.04] text-stone-950 sm:text-[2.4rem]"
-                  data-display="true"
-                >
-                  {categoryMeta.headline}
-                </h1>
-                <p className="mt-4 max-w-3xl text-[14px] leading-7 text-stone-600">{categoryMeta.description}</p>
-              </div>
+      <main className="shell">
+        <section className="grid border-x border-b border-[var(--color-carbon)] lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="border-b border-[var(--color-carbon)] p-5 sm:p-8 lg:border-b-0 lg:border-r">
+            <p className="eyebrow">category inventory</p>
+            <h1 className="type-title mt-7 !text-[3rem] sm:!text-[4.4rem]" data-display="true">
+              {categoryName}
+            </h1>
+            <p className="mt-6 max-w-[720px] text-[17px] leading-8 text-[var(--color-muted)]">
+              {categoryMeta.headline}
+            </p>
+          </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <div className={`rounded-[20px] border ${accent.border} ${accent.surface} px-4 py-4`}>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">대표 시술</p>
-                  <p className="mt-2 text-[14px] font-semibold leading-6 text-stone-900">{categoryMeta.examples}</p>
-                </div>
-                <div className="rounded-[20px] border border-stone-200 bg-white px-4 py-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">추천 대상</p>
-                  <p className="mt-2 text-[14px] font-semibold leading-6 text-stone-900">{categoryMeta.audience}</p>
-                </div>
-              </div>
+          <div className="grid sm:grid-cols-2">
+            <article className="border-b border-[var(--color-line)] p-5 sm:border-r sm:p-7">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">why it matters</p>
+              <p className="mt-8 text-[14px] leading-7 text-[var(--color-muted)]">{categoryMeta.description}</p>
+            </article>
+            <article className="border-b border-[var(--color-line)] p-5 sm:p-7">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">typical items</p>
+              <p className="mt-8 text-[1.3rem] font-normal leading-8" data-display="true">
+                {categoryMeta.examples}
+              </p>
+            </article>
+            <article className="p-5 sm:col-span-2 sm:p-7">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">best for</p>
+              <p className="mt-4 text-[15px] leading-7 text-[var(--color-muted)]">{categoryMeta.audience}</p>
+            </article>
+          </div>
+        </section>
+
+        <section className="border-x border-b border-[var(--color-carbon)]">
+          <div className="flex flex-col justify-between gap-4 border-b border-[var(--color-carbon)] p-5 sm:p-8 lg:flex-row lg:items-end">
+            <div>
+              <p className="eyebrow">treatment cards</p>
+              <h2 className="type-section mt-5" data-display="true">
+                이 카테고리에서 비교 가능한 시술
+              </h2>
             </div>
-          </section>
+            <span className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-muted-light)]">
+              {loading ? "loading" : `${list.length} items`}
+            </span>
+          </div>
 
-          <section className="panel px-5 py-5 sm:px-6">
-            <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="eyebrow mb-3">category inventory</p>
-                <h2 className="type-section" data-display="true">
-                  이 카테고리에서 바로 비교할 수 있는 시술
-                </h2>
-              </div>
-              <span className="text-[12px] text-stone-400">가격, 회복, 시너지 정보를 같은 카드 안에서 확인합니다.</span>
-            </div>
+          {loading ? (
+            <div className="p-12 text-center text-[14px] text-[var(--color-muted)]">시술 목록을 불러오는 중입니다.</div>
+          ) : list.length === 0 ? (
+            <div className="p-12 text-center text-[14px] text-[var(--color-muted)]">아직 등록된 시술이 없습니다.</div>
+          ) : (
+            <div className="grid lg:grid-cols-2">
+              {list.map((item) => {
+                const requestHref = `/request?${new URLSearchParams({
+                  category: item.category,
+                  budget: String(Math.round((item.price_min + item.price_max) / 2)),
+                  symptom: `${item.name}에 관심이 있습니다. ${item.description}`,
+                }).toString()}`;
 
-            {loading ? (
-              <div className="py-10 text-center text-sm text-stone-500">시술 목록을 불러오는 중입니다.</div>
-            ) : list.length === 0 ? (
-              <div className="py-10 text-center text-sm text-stone-500">아직 등록된 시술이 없습니다.</div>
-            ) : (
-              <div className="grid gap-4 xl:grid-cols-2">
-                {list.map((item) => (
+                return (
                   <Link
-                    href={
-                      item.isLocalSeed
-                        ? `/request?${new URLSearchParams({
-                            category: item.category,
-                            budget: String(Math.round((item.price_min + item.price_max) / 2)),
-                            symptom: `${item.name}에 관심이 있습니다. ${item.description}`,
-                          }).toString()}`
-                        : `/treatment/${item.id}`
-                    }
+                    href={item.isLocalSeed ? requestHref : `/treatment/${item.id}`}
                     key={item.id}
-                    className="soft-panel flex h-full flex-col justify-between p-5 hover:-translate-y-0.5 hover:shadow-md"
+                    className="group flex min-h-[320px] flex-col justify-between border-b border-[var(--color-line)] p-5 hover:bg-[var(--color-carbon)] hover:text-[var(--color-ghost-white)] sm:p-7 lg:border-r lg:even:border-r-0"
                   >
                     <div>
                       <div className="flex flex-wrap items-start justify-between gap-3">
-                        <h3 className="text-[1.15rem] font-semibold text-stone-950">{item.name}</h3>
-                        <span className="rounded-full bg-stone-100 px-3 py-1 text-[11px] font-semibold text-stone-600">
-                          통증 {item.pain_level}/5
+                        <span className="border border-current px-2 py-1 text-[11px] uppercase tracking-[0.16em]">
+                          {item.isLocalSeed ? "2026 csv" : item.category}
                         </span>
-                        {item.isLocalSeed ? (
-                          <span className="rounded-full border border-[#e3daf7] bg-[#f7f2ff] px-3 py-1 text-[11px] font-semibold text-[#6b38d4]">
-                            2026 CSV
-                          </span>
-                        ) : null}
+                        <span className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-muted-light)] group-hover:text-[var(--color-ghost-white)]/55">
+                          pain {item.pain_level}/5
+                        </span>
                       </div>
-                      <p className="mt-3 text-[13px] leading-7 text-stone-600">{item.description}</p>
+                      <h3 className="mt-10 text-[2rem] font-normal leading-tight" data-display="true">
+                        {item.name}
+                      </h3>
+                      <p className="mt-5 text-[14px] leading-7 text-[var(--color-muted)] group-hover:text-[var(--color-ghost-white)]/72">
+                        {item.description}
+                      </p>
                     </div>
 
-                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                      <div className="rounded-[16px] bg-stone-50 px-4 py-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">가격대</p>
-                        <p className="mt-2 text-[13px] font-semibold text-stone-800">
-                          {item.price_min}~{item.price_max}만원
+                    <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--color-muted-light)] group-hover:text-[var(--color-ghost-white)]/55">
+                          price
                         </p>
+                        <p className="mt-2 text-[14px] font-semibold">{formatPrice(item.price_min, item.price_max)}</p>
                       </div>
-                      <div className="rounded-[16px] bg-stone-50 px-4 py-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">시너지</p>
-                        <p className="mt-2 text-[13px] font-semibold leading-6 text-stone-800">
-                          {item.synergy || "단독 진행 가능"}
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--color-muted-light)] group-hover:text-[var(--color-ghost-white)]/55">
+                          recovery
                         </p>
+                        <p className="mt-2 text-[14px] font-semibold">{item.recovery || "상담 후 확인"}</p>
                       </div>
-                      <div className="rounded-[16px] bg-stone-50 px-4 py-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-stone-400">회복</p>
-                        <p className="mt-2 text-[13px] font-semibold leading-6 text-stone-800">
-                          {item.recovery || "상담 후 확인"}
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--color-muted-light)] group-hover:text-[var(--color-ghost-white)]/55">
+                          action
                         </p>
+                        <p className="mt-2 text-[14px] font-semibold">견적 요청</p>
                       </div>
                     </div>
                   </Link>
-                ))}
-              </div>
-            )}
-          </section>
-        </main>
-      </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      </main>
     </div>
   );
 }

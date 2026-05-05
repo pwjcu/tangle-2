@@ -4,7 +4,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function LanguageDock() {
   return (
-    <div className="fixed right-5 top-5 z-40 hidden sm:block">
+    <div className="fixed bottom-5 left-5 z-40 hidden sm:block">
       <LanguageSwitcher />
     </div>
   );
