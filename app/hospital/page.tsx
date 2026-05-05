@@ -22,6 +22,11 @@ interface BidFormState {
   reservation: string;
 }
 
+interface AuthUserState {
+  email: string | null;
+  checked: boolean;
+}
+
 const emptyBidState: BidFormState = {
   hospital_name: "",
   price: "",
@@ -35,12 +40,28 @@ function formatPrice(value: number) {
 }
 
 export default function HospitalPage() {
+  const [authUser, setAuthUser] = useState<AuthUserState>({ email: null, checked: false });
   const [requests, setRequests] = useState<RequestRecord[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [bidInputs, setBidInputs] = useState<Record<number, BidFormState>>({});
 
   useEffect(() => {
+    const syncAuth = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      setAuthUser({ email: user?.email ?? null, checked: true });
+    };
+
+    void syncAuth();
+  }, []);
+
+  useEffect(() => {
+    if (!authUser.checked || !authUser.email) return;
+
     const fetchRequests = async () => {
+      setLoading(true);
       const { data } = await supabase
         .from("requests")
         .select("*")
@@ -52,7 +73,20 @@ export default function HospitalPage() {
     };
 
     void fetchRequests();
-  }, []);
+  }, [authUser]);
+
+  const handleKakaoLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "kakao",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=/hospital`,
+      },
+    });
+
+    if (error) {
+      alert(`로그인에 실패했어요: ${error.message}`);
+    }
+  };
 
   const handleInputChange = (requestId: number, field: keyof BidFormState, value: string) => {
     setBidInputs((prev) => ({
@@ -114,19 +148,64 @@ export default function HospitalPage() {
               병원 제안 관리
             </h1>
             <p className="mt-2 text-[14px] leading-6 text-stone-600">
-              가격만 적는 입찰이 아니라 추천 시술, 제안 이유, 예약 안내까지 함께 보내는 구조를 기준으로
-              정리했습니다.
+              환자의 고민과 예산을 먼저 확인하고, 병원은 맞는 고객에게 추천 시술, 제안 이유, 예약 안내를
+              역제안하는 파트너 영역입니다.
             </p>
           </div>
-          <div className="rounded-full bg-[#221a33] px-4 py-2 text-sm font-semibold text-white">
-            열려 있는 요청 {requests.length}건
+          <div className="flex flex-wrap gap-2">
+            <div className="rounded-full bg-[#221a33] px-4 py-2 text-sm font-semibold text-white">
+              열려 있는 요청 {requests.length}건
+            </div>
+            <div className="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700">
+              로그인 보호 프로토타입
+            </div>
           </div>
         </header>
 
         <main className="space-y-4">
-          {loading ? (
+          <section className="panel grid gap-3 px-5 py-5 sm:px-6 lg:grid-cols-3">
+            {[
+              {
+                title: "운영 접근 권한",
+                body: "최종 버전에서는 관리자와 승인된 병원 계정만 접근하도록 role 기반 권한을 붙입니다.",
+              },
+              {
+                title: "1차 환자 필터링",
+                body: "고민, 예산, 선호 지역이 정리된 요청서만 보게 해 상담 전 반복 설명을 줄입니다.",
+              },
+              {
+                title: "병원 역제안",
+                body: "가격만 던지는 입찰이 아니라 시술 조합, 이유, 예약 안내까지 한 번에 제안합니다.",
+              },
+            ].map((item) => (
+              <article key={item.title} className="rounded-[20px] border border-stone-200 bg-white px-4 py-4">
+                <h2 className="text-[15px] font-semibold text-stone-950">{item.title}</h2>
+                <p className="mt-2 text-[13px] leading-6 text-stone-600">{item.body}</p>
+              </article>
+            ))}
+          </section>
+
+          {authUser.checked && !authUser.email ? (
+            <section className="panel px-6 py-12 text-center">
+              <p className="eyebrow mb-4">restricted prototype</p>
+              <h2 className="text-[1.7rem] font-semibold text-stone-950" data-display="true">
+                병원센터는 로그인 후 확인할 수 있습니다
+              </h2>
+              <p className="mx-auto mt-3 max-w-xl text-[14px] leading-7 text-stone-600">
+                지금은 프로토타입이라 병원 role 검증 전 단계지만, 운영 버전에서는 관리자와 승인된 병원 계정만
+                요청서와 제안 작성 화면을 볼 수 있게 분리합니다.
+              </p>
+              <button onClick={handleKakaoLogin} className="action-primary mt-6">
+                카카오로 로그인
+              </button>
+            </section>
+          ) : null}
+
+          {!authUser.checked ? (
+            <div className="panel px-6 py-12 text-center text-sm text-stone-500">접근 권한을 확인하는 중입니다.</div>
+          ) : loading ? (
             <div className="panel px-6 py-12 text-center text-sm text-stone-500">요청서를 불러오는 중입니다.</div>
-          ) : requests.length === 0 ? (
+          ) : !authUser.email ? null : requests.length === 0 ? (
             <div className="panel px-6 py-12 text-center text-sm text-stone-500">현재 열려 있는 요청이 없습니다.</div>
           ) : (
             requests.map((request) => {

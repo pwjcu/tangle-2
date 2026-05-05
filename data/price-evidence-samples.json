@@ -425,6 +425,93 @@
         { "category": "필러", "section": "요정 귀필러 이벤트", "treatment_name": "에피 또는 더채움", "price_manwon": 39, "confidence": "medium" },
         { "category": "필러", "section": "요정 귀필러 이벤트", "treatment_name": "리쥬비엘", "price_manwon": 42, "confidence": "high" }
       ]
+    },
+    {
+      "source_id": "cnn-012",
+      "clinic_name": "세리아의원",
+      "source_type": "clinic_price_photo",
+      "source_file": "C:/Users/pwjcu/Desktop/CNN-탱글/KakaoTalk_20260504_160856950.jpg",
+      "captured_date": "2026-05-04",
+      "items": [
+        { "category": "관리", "section": "고압 산소 테라피", "treatment_name": "고압 산소테라피", "variant": "30분", "price_manwon": 15, "confidence": "high" },
+        { "category": "관리", "section": "고압 산소 테라피", "treatment_name": "고압 산소테라피", "variant": "60분", "price_manwon": 24, "confidence": "high" },
+        { "category": "관리", "section": "고압 산소 테라피", "treatment_name": "고압 산소테라피", "variant": "30분 5회", "price_manwon": 66, "confidence": "high" },
+        { "category": "관리", "section": "고압 산소 테라피", "treatment_name": "고압 산소테라피", "variant": "60분 5회", "price_manwon": 99, "confidence": "high" },
+        { "category": "스킨부스터", "section": "줄기세포 혈청 부스터", "treatment_name": "30P 스킨부스터 + 커스텀 후관리", "variant": "1회", "price_manwon": 88, "confidence": "high" },
+        { "category": "스킨부스터", "section": "줄기세포 혈청 부스터", "treatment_name": "30P 스킨부스터 + 커스텀 후관리", "variant": "3회", "price_manwon": 190, "confidence": "high" },
+        { "category": "스킨부스터", "section": "줄기세포 혈청 부스터", "treatment_name": "60P 인젝션 + 커스텀 후관리", "variant": "1회", "price_manwon": 159, "confidence": "high" },
+        { "category": "스킨부스터", "section": "줄기세포 혈청 부스터", "treatment_name": "60P 인젝션 + 커스텀 후관리", "variant": "3회", "price_manwon": 440, "confidence": "high" },
+        { "category": "관리", "section": "줄기세포 혈청 부스터", "treatment_name": "120P 항노화 프로그램", "variant": "1회", "package_components": ["엑소좀", "혈청", "후관리"], "price_manwon": 290, "confidence": "medium" },
+        { "category": "관리", "section": "줄기세포 혈청 부스터", "treatment_name": "120P 항노화 프로그램", "variant": "3회", "package_components": ["엑소좀", "혈청", "후관리"], "price_manwon": 790, "confidence": "medium" },
+        { "category": "관리", "section": "줄기세포 혈청 부스터", "treatment_name": "240P 항노화 프로그램", "variant": "1회", "package_components": ["엑소좀", "혈청", "후관리"], "price_manwon": 490, "confidence": "medium" },
+        { "category": "관리", "section": "줄기세포 혈청 부스터", "treatment_name": "240P 항노화 프로그램", "variant": "3회", "package_components": ["엑소좀", "혈청", "후관리"], "price_manwon": 1100, "confidence": "medium" }
+      ]
+    },
+    {
+      "source_id": "cnn-013",
+      "clinic_name": "세리아의원",
+      "source_type": "clinic_price_photo",
+      "source_file": "C:/Users/pwjcu/Desktop/CNN-탱글/KakaoTalk_20260504_160856950_01.jpg",
+      "captured_date": "2026-05-04",
+      "items": [
+        { "category": "관리", "section": "활력 & 에너지 부스팅", "treatment_name": "마늘주사", "price_manwon": 3.9, "confidence": "high" },
+        { "category": "관리", "section": "활력 & 에너지 부스팅", "treatment_name": "백옥 + 신데렐라 + 글루타치온", "price_manwon": 4.5, "confidence": "medium" },
+        { "category": "관리", "section": "활력 & 에너지 부스팅", "treatment_name": "해장수액", "variant": "맥페란 + 글루타치온", "price_manwon": 4, "confidence": "medium" },
+        { "category": "관리", "section": "활력 & 에너지 부스팅", "treatment_name": "하이르민", "price_manwon": 3, "confidence": "medium" },
+        { "category": "관리", "section": "활력 & 에너지 부스팅", "treatment_name": "신델주", "price_manwon": 3, "confidence": "medium" },
+        { "category": "관리", "section": "활력 & 에너지 부스팅", "treatment_name": "아연", "price_manwon": 2, "confidence": "high" },
+        { "category": "관리", "section": "피부 & 항산화 케어", "treatment_name": "글루타치온", "variant": "2배", "price_manwon": 3, "confidence": "high" },
+        { "category": "관리", "section": "피부 & 항산화 케어", "treatment_name": "글루타치온태반 실버", "price_manwon": 4.4, "confidence": "medium" },
+        { "category": "관리", "section": "두뇌 & 집중력 케어", "treatment_name": "초명 진정주사", "price_manwon": 5, "confidence": "medium" },
+        { "category": "관리", "section": "두뇌 & 집중력 케어", "treatment_name": "NAD + NMN 주사", "price_manwon": 12.9, "confidence": "high" },
+        { "category": "관리", "section": "두뇌 & 집중력 케어", "treatment_name": "싸이모신알파", "price_manwon": 7, "confidence": "high" },
+        { "category": "관리", "section": "통증 & 회복 케어", "treatment_name": "진통몸살", "variant": "트리마돌", "price_manwon": 2, "confidence": "medium" }
+      ]
+    },
+    {
+      "source_id": "cnn-014",
+      "clinic_name": "세리아의원",
+      "source_type": "clinic_price_photo",
+      "source_file": "C:/Users/pwjcu/Desktop/CNN-탱글/KakaoTalk_20260504_160856950_02.jpg",
+      "captured_date": "2026-05-04",
+      "items": [
+        { "category": "필러", "section": "세리아 추천 시술", "treatment_name": "입술 필러 + 입꼬리 보톡스", "variant": "필러 1cc 국산 + 보톡스 국산", "price_manwon": 9.9, "confidence": "high" },
+        { "category": "보톡스", "section": "세리아 추천 시술", "treatment_name": "얼굴 전체 스킨보톡스", "variant": "국산", "price_manwon": 8.9, "confidence": "high" },
+        { "category": "필러", "section": "세리아 추천 시술", "treatment_name": "엘프 리프팅", "variant": "1cc 국산", "price_manwon": 14, "confidence": "medium" },
+        { "category": "필러", "section": "세리아 추천 시술", "treatment_name": "엘프 필러", "variant": "1cc 수입", "price_manwon": 29, "confidence": "medium" },
+        { "category": "필러", "section": "필러 시술", "treatment_name": "턱끝 필러 + 자갈턱 보톡스", "variant": "필러 1cc 국산 + 보톡스 국산", "price_manwon": 7.9, "confidence": "medium" },
+        { "category": "필러", "section": "필러 시술", "treatment_name": "목주름 더마 베이직", "price_manwon": 9.9, "confidence": "medium" },
+        { "category": "리프팅", "section": "얼굴 리프팅 & 윤곽 시술", "treatment_name": "슈링크 유니버스 + 리쥬란아이", "variant": "300샷 + 2cc", "price_manwon": 11.9, "confidence": "medium" },
+        { "category": "리프팅", "section": "얼굴 리프팅 & 윤곽 시술", "treatment_name": "아이써마지FLX + 쥬베룩아이", "variant": "200샷 + 2cc", "price_manwon": 25.9, "confidence": "medium" },
+        { "category": "리프팅", "section": "얼굴 리프팅 & 윤곽 시술", "treatment_name": "티타늄 리프팅", "variant": "30KJ", "price_manwon": 35, "confidence": "high" },
+        { "category": "리프팅", "section": "얼굴 리프팅 & 윤곽 시술", "treatment_name": "온다 리프팅", "variant": "40KJ", "price_manwon": 28, "confidence": "medium" },
+        { "category": "리프팅", "section": "얼굴 리프팅 & 윤곽 시술", "treatment_name": "온다 리프팅", "variant": "60KJ", "price_manwon": 39, "confidence": "medium" },
+        { "category": "리프팅", "section": "얼굴 리프팅 & 윤곽 시술", "treatment_name": "울쎄라피 프라임", "variant": "300샷", "price_manwon": 99, "confidence": "high" },
+        { "category": "리프팅", "section": "얼굴 리프팅 & 윤곽 시술", "treatment_name": "써마지 FLX", "variant": "300샷", "price_manwon": 99, "confidence": "high" }
+      ]
+    },
+    {
+      "source_id": "cnn-015",
+      "clinic_name": "세리아의원",
+      "source_type": "clinic_price_photo",
+      "source_file": "C:/Users/pwjcu/Desktop/CNN-탱글/KakaoTalk_20260504_160856950_03.jpg",
+      "captured_date": "2026-05-04",
+      "items": [
+        { "category": "모공흉터", "section": "모공·흉터 개선 치료", "treatment_name": "나비존 모공주사 + 진정재생관리", "variant": "1cc", "price_manwon": 35, "confidence": "high" },
+        { "category": "모공흉터", "section": "모공·흉터 개선 치료", "treatment_name": "펌핑 포텐자 + 쥬베룩 스킨", "variant": "4cc", "price_manwon": 45, "confidence": "high" },
+        { "category": "모공흉터", "section": "모공·흉터 개선 치료", "treatment_name": "포텐자 + 엑소좀 + 진정재생관리", "price_manwon": 45, "confidence": "high" },
+        { "category": "모공흉터", "section": "모공·흉터 개선 치료", "treatment_name": "포텐자 + 리쥬란S + 진정재생관리", "variant": "2cc", "price_manwon": 55, "confidence": "medium" },
+        { "category": "색소", "section": "미백·색소·토닝 레이저", "treatment_name": "토닝 6개월 무제한권", "price_manwon": 39, "confidence": "high" },
+        { "category": "색소", "section": "미백·색소·토닝 레이저", "treatment_name": "제네시스 6개월 무제한권", "price_manwon": 129, "confidence": "high" },
+        { "category": "스킨부스터", "section": "스킨부스터·피부재생 시술", "treatment_name": "줄기세포 혈청 스킨부스터 + 소노", "variant": "30P 1회", "price_manwon": 69, "confidence": "high" },
+        { "category": "스킨부스터", "section": "스킨부스터·피부재생 시술", "treatment_name": "줄기세포 혈청 스킨부스터 + 리쥬란 HB", "variant": "30P + 1cc", "price_manwon": 85, "confidence": "high" },
+        { "category": "스킨부스터", "section": "스킨부스터·피부재생 시술", "treatment_name": "60P 인젝션 + 커스텀 관리", "price_manwon": 129, "confidence": "high" },
+        { "category": "관리", "section": "스킨부스터·피부재생 시술", "treatment_name": "60P + 엑소좀 + 고압산소", "price_manwon": 145, "confidence": "high" },
+        { "category": "스킨부스터", "section": "스킨부스터·피부재생 시술", "treatment_name": "리쥬란 HB", "variant": "1cc", "price_manwon": 39, "confidence": "high" },
+        { "category": "스킨부스터", "section": "스킨부스터·피부재생 시술", "treatment_name": "리쥬란 HB", "variant": "2cc", "price_manwon": 21, "confidence": "low", "notes": "Image row was partially unclear and should be rechecked before production use." },
+        { "category": "스킨부스터", "section": "스킨부스터·피부재생 시술", "treatment_name": "인젝션 + 커스텀관리", "price_manwon": 65, "confidence": "medium" },
+        { "category": "스킨부스터", "section": "스킨부스터·피부재생 시술", "treatment_name": "엑소좀 + 고압산소", "price_manwon": 67, "confidence": "medium" }
+      ]
     }
   ]
 }

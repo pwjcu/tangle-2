@@ -1,12 +1,21 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
+import { languageInstructions, supportedLanguages, type SupportedLanguage } from "../../../lib/i18n";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const apiKey = process.env.OPENAI_API_KEY;
+
+function normalizeLanguage(value: unknown): SupportedLanguage {
+  if (typeof value === "string" && supportedLanguages.includes(value as SupportedLanguage)) {
+    return value as SupportedLanguage;
+  }
+
+  return "ko";
+}
 
 export async function POST(req: Request) {
   if (!apiKey) {
@@ -18,7 +27,8 @@ export async function POST(req: Request) {
   const openai = new OpenAI({ apiKey });
 
   try {
-    const { message } = await req.json();
+    const { message, language } = await req.json();
+    const responseLanguage = normalizeLanguage(language);
 
     const { data: treatments } = await supabase
       .from("treatments")
@@ -53,6 +63,7 @@ export async function POST(req: Request) {
       3. 진단처럼 단정하지 말고, 최종 판단은 실제 병원 상담이 필요하다고 안내한다.
       4. 답변은 3~5문장으로 간결하게 작성한다.
       5. 시술 비교를 요청받으면 가격, 회복, 시너지 기준으로 정리한다.
+      6. 반드시 ${languageInstructions[responseLanguage]}로 답변한다.
     `;
 
     const completion = await openai.chat.completions.create({

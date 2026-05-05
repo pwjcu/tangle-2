@@ -94,6 +94,16 @@ export const treatmentCategories: CategoryMeta[] = [
     concernTags: ["피부결·모공", "톤업/색소", "붉음증/민감", "항노화", "회복관리"],
   },
   {
+    name: "색소/레이저",
+    headline: "톤, 잡티, 홍조, 문신처럼 빛과 레이저 기반 비교가 필요한 카테고리",
+    description:
+      "피코토닝, 레이저토닝, 혈관레이저처럼 에너지 기반 장비를 활용하는 영역입니다. 장비명과 회차, 색소 타입에 따라 가격과 회복이 달라집니다.",
+    examples: "피코토닝, 레이저토닝, 혈관레이저",
+    audience: "잡티, 기미, 홍조, 문신 제거, 전체적인 톤 개선을 비교하고 싶은 경우",
+    accent: "amber",
+    concernTags: ["톤업/색소", "붉음증/민감"],
+  },
+  {
     name: "모공흉터",
     headline: "모공과 흉터처럼 질감 개선이 핵심인 고민을 다루는 카테고리",
     description:
@@ -102,6 +112,16 @@ export const treatmentCategories: CategoryMeta[] = [
     audience: "여드름 흉터, 넓은 모공, 피부결 거칠음이 핵심 고민인 경우",
     accent: "violet",
     concernTags: ["여드름·흉터", "피부결·모공"],
+  },
+  {
+    name: "바디라인",
+    headline: "얼굴 시술 밖의 체형·라인 고민을 별도 비교하는 확장 카테고리",
+    description:
+      "비침습 바디컨투어링, 지방분해주사, 고주파·초음파 바디 관리처럼 부위와 회차에 따라 가격 차이가 큰 영역입니다.",
+    examples: "냉각지방분해, 바디 고주파, 지방분해주사",
+    audience: "복부, 팔뚝, 허벅지, 이중턱처럼 얼굴 외 라인 고민을 비교하고 싶은 경우",
+    accent: "emerald",
+    concernTags: ["바디라인", "이중턱", "유지관리"],
   },
   {
     name: "제모",

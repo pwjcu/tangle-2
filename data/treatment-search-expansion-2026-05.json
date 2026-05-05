@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "created_at": "2026-05-05",
+  "purpose": "Search-assisted non-duplicate treatment expansion candidates for Tangle.",
+  "review_status": "local_seed_only",
+  "sources": [
+    {
+      "name": "FDA aesthetic cosmetic devices overview",
+      "url": "https://www.fda.gov/medical-devices/products-and-medical-procedures/aesthetic-cosmetic-devices",
+      "usage": "Used to separate cosmetic device categories such as lasers, body contouring, dermabrasion, and energy-based devices."
+    },
+    {
+      "name": "American Society for Dermatologic Surgery treatment education",
+      "url": "https://www.asds.net/skin-experts/skin-treatments",
+      "usage": "Used to identify common dermatologic treatment families such as peels, lasers, fillers, injectables, resurfacing, and body contouring."
+    },
+    {
+      "name": "American Academy of Dermatology patient guidance",
+      "url": "https://www.aad.org/public/cosmetic",
+      "usage": "Used as a conservative reference for cosmetic dermatology concepts and patient-facing caution level."
+    },
+    {
+      "name": "전자신문 리투오 거래처 1000곳 돌파",
+      "url": "https://m.etnews.com/20250908000384",
+      "usage": "Used to identify Re2O as a recent Korean skinbooster trend candidate."
+    },
+    {
+      "name": "뉴스핌 리투오 2025년 4분기 실적 호조",
+      "url": "https://m.newspim.com/news/view/20260127000142",
+      "usage": "Used to verify recent market adoption and sales momentum of Re2O."
+    },
+    {
+      "name": "오드의원 세르프 가이드",
+      "url": "https://odeclinic.co.kr/column/xerf-lifting-guide-thermage-difference",
+      "usage": "Used as clinic-side evidence that XERF is actively offered and positioned as a recent RF lifting candidate."
+    },
+    {
+      "name": "보건뉴스 덴서티 신규 도입",
+      "url": "https://www.bokuennews.com/news/article.html?no=268683",
+      "usage": "Used to verify Density lifting as an actively introduced RF lifting device."
+    },
+    {
+      "name": "리뉴미 피부과 볼뉴머 설명",
+      "url": "https://rnmeskin.com/clinic4/clinic4_70.htm",
+      "usage": "Used as clinic-side evidence that Volnewmer is actively offered as RF lifting."
+    },
+    {
+      "name": "닥터디자이너의원 리프테라2 설명",
+      "url": "https://gwangju.drdclinic.co.kr/products/23285?wcid=1221&wpid=23285",
+      "usage": "Used as clinic-side evidence that Liftera2 is actively offered as HIFU lifting."
+    }
+  ],
+  "candidates": [
+    {
+      "canonical_name": "피코토닝",
+      "category": "색소/레이저",
+      "aliases": ["피코레이저", "피코슈어", "피코플러스", "토닝"],
+      "reason_to_add": "색소/문신/잡티 관련 검색 수요가 높아 레이저토닝과 별도 후보로 분리",
+      "recommended_for": "색소, 잡티, 문신 제거, 칙칙한 톤 개선을 비교하고 싶은 경우",
+      "price_status": "needs_local_price_evidence"
+    },
+    {
+      "canonical_name": "프락셔널 CO2 레이저",
+      "category": "모공흉터",
+      "aliases": ["CO2 프락셀", "프락셔널 레이저", "레이저 박피"],
+      "reason_to_add": "모공흉터 카테고리에서 포텐자와 다른 회복 부담을 갖는 대표 레이저 후보",
+      "recommended_for": "여드름 흉터, 깊은 모공, 피부결 재생을 원하는 경우",
+      "price_status": "needs_local_price_evidence"
+    },
+    {
+      "canonical_name": "마이크로니들링",
+      "category": "모공흉터",
+      "aliases": ["더마펜", "MTS", "스킨니들링"],
+      "reason_to_add": "CNN/피부상태 분석 후 모공·흉터 보조 추천으로 연결하기 좋은 후보",
+      "recommended_for": "얕은 흉터, 피부결, 모공 개선을 비교하고 싶은 경우",
+      "price_status": "needs_local_price_evidence"
+    },
+    {
+      "canonical_name": "RF 마이크로니들링",
+      "category": "모공흉터",
+      "aliases": ["RF 니들", "시크릿RF", "실펌X", "포텐자"],
+      "reason_to_add": "이미 포텐자 가격 증거가 있어 모공흉터 패키지를 더 정규화하기 쉬움",
+      "recommended_for": "모공, 흉터, 탄력 저하를 동시에 비교하고 싶은 경우",
+      "price_status": "has_partial_price_evidence"
+    },
+    {
+      "canonical_name": "혈관레이저",
+      "category": "색소/레이저",
+      "aliases": ["브이빔", "엑셀브이", "홍조 레이저"],
+      "reason_to_add": "붉음증/민감 고민을 단순 관리가 아니라 장비 기반 선택지로 분리",
+      "recommended_for": "홍조, 혈관성 붉음, 붉은 여드름 자국이 고민인 경우",
+      "price_status": "needs_local_price_evidence"
+    },
+    {
+      "canonical_name": "리투오 ECM 스킨부스터",
+      "category": "스킨부스터",
+      "aliases": ["리투오", "엘라비에 리투오", "Re2O", "ECM 스킨부스터"],
+      "reason_to_add": "2025년 이후 국내 거래처 확대와 품귀/성장 기사로 확인되는 최신 스킨부스터 후보",
+      "recommended_for": "탄력, 모공, 잔주름, 피부 재생 계열의 최신 부스터를 비교하고 싶은 경우",
+      "price_status": "has_partial_market_evidence"
+    },
+    {
+      "canonical_name": "세르프 리프팅",
+      "category": "리프팅",
+      "aliases": ["세르프", "XERF", "듀얼 고주파 리프팅"],
+      "reason_to_add": "2025년 국내 뷰티 기사와 병원 페이지에서 노출되는 최신 RF 리프팅 후보",
+      "recommended_for": "탄력 저하, 턱선, 볼 처짐을 RF 리프팅 계열로 비교하고 싶은 경우",
+      "price_status": "needs_local_price_evidence"
+    },
+    {
+      "canonical_name": "볼뉴머 리프팅",
+      "category": "리프팅",
+      "aliases": ["볼뉴머", "Volnewmer", "모노폴라 RF"],
+      "reason_to_add": "국내 피부과에서 현재 제공되는 모노폴라 RF 리프팅 후보",
+      "recommended_for": "잔주름, 모공, 피부결, 처진 탄력을 RF 계열로 비교하고 싶은 경우",
+      "price_status": "needs_local_price_evidence"
+    },
+    {
+      "canonical_name": "덴서티 리프팅",
+      "category": "리프팅",
+      "aliases": ["덴서티", "Density", "듀얼 고주파"],
+      "reason_to_add": "2025년 병원 신규 도입 기사로 확인되는 고주파 리프팅 후보",
+      "recommended_for": "얕은 층과 깊은 층의 탄력을 함께 관리하고 싶은 경우",
+      "price_status": "needs_local_price_evidence"
+    },
+    {
+      "canonical_name": "리프테라2",
+      "category": "리프팅",
+      "aliases": ["리프테라2", "Liftera2", "HIFU 리프팅"],
+      "reason_to_add": "국내 병원에서 현재 제공되는 HIFU 리프팅 후보이며 얼굴 굴곡 부위 안내에 적합",
+      "recommended_for": "눈가, 인중, 이중턱, 턱선처럼 굴곡진 부위 리프팅을 비교하고 싶은 경우",
+      "price_status": "needs_local_price_evidence"
+    },
+    {
+      "canonical_name": "비침습 바디컨투어링",
+      "category": "바디라인",
+      "aliases": ["냉각지방분해", "바디 고주파", "초음파 바디관리", "바디 리프팅"],
+      "reason_to_add": "얼굴 중심 추천에서 바디라인/이중턱 시장으로 확장하기 위한 신규 카테고리",
+      "recommended_for": "복부, 팔뚝, 허벅지, 이중턱 라인 개선을 비교하고 싶은 경우",
+      "price_status": "needs_local_price_evidence"
+    }
+  ]
+}

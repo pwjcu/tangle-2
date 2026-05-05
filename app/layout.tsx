@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ChatBot from "./components/ChatBot";
+import LanguageDock from "./components/LanguageDock";
+import LanguageProvider from "./components/LanguageProvider";
 
 export const metadata: Metadata = {
-  title: "Tangle | 가격만 보지 않는 뷰티 의사결정 플랫폼",
+  title: "Tangle | 소비자와 병원을 잇는 뷰티 커넥트 플랫폼",
   description:
-    "개인 맞춤형 시술 추천, 팩트 기반 가격대 비교, 역입찰형 병원 제안을 하나의 흐름으로 연결하는 Tangle",
+    "개인 맞춤형 시술 추천, 견적 요청, 역제안형 병원 연결, 글로벌 환자 유치 흐름을 하나로 연결하는 Tangle",
 };
 
 export default function RootLayout({
@@ -16,8 +18,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        {children}
-        <ChatBot />
+        <LanguageProvider>
+          <LanguageDock />
+          {children}
+          <ChatBot />
+        </LanguageProvider>
       </body>
     </html>
   );

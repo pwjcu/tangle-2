@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "created_at": "2026-05-04",
+  "purpose": "Candidate treatment families to add or normalize in the Supabase treatments table after review.",
+  "notes": [
+    "This file is not the production database. It is a reviewed staging layer between raw price evidence and Supabase seed data.",
+    "Price ranges are observed public/event price signals from user-provided clinic images, not guaranteed market averages.",
+    "Rows with limited or ambiguous image text should stay in review before becoming user-facing baseline prices."
+  ],
+  "families": [
+    {
+      "canonical_name": "고압산소치료",
+      "category": "관리",
+      "aliases": ["고압 산소테라피", "고압산소 테라피", "HBOT"],
+      "observed_price_manwon": { "min": 15, "max": 99 },
+      "evidence_source_ids": ["cnn-012", "cnn-015"],
+      "recommended_for": "회복 보조, 피로 회복, 항노화 관리에 관심 있는 사용자",
+      "positioning": "메인 얼굴 시술보다는 회복·항노화 보조 케어로 추천 흐름에 연결",
+      "evidence_status": "review_ready"
+    },
+    {
+      "canonical_name": "수액류·영양주사",
+      "category": "관리",
+      "aliases": ["마늘주사", "백옥주사", "글루타치온", "해장수액", "아연주사"],
+      "observed_price_manwon": { "min": 2, "max": 12.9 },
+      "evidence_source_ids": ["cnn-013"],
+      "recommended_for": "다운타임이 거의 없는 컨디션 관리나 항산화 보조를 원하는 사용자",
+      "positioning": "저가 입문형 관리와 병원 제안 번들 옵션에 적합",
+      "evidence_status": "review_ready"
+    },
+    {
+      "canonical_name": "NAD/NMN 주사",
+      "category": "관리",
+      "aliases": ["NAD + NMN", "NAD", "NMN"],
+      "observed_price_manwon": { "min": 12.9, "max": 12.9 },
+      "evidence_source_ids": ["cnn-013"],
+      "recommended_for": "항노화·회복 관리 카테고리에서 프리미엄 보조 옵션을 찾는 사용자",
+      "positioning": "의학적 효능을 과장하지 않고, 항노화 관심군의 보조 관리 후보로 표시",
+      "evidence_status": "review_ready"
+    },
+    {
+      "canonical_name": "줄기세포 혈청 스킨부스터",
+      "category": "스킨부스터",
+      "aliases": ["혈청 스킨부스터", "60P 인젝션", "30P 스킨부스터", "항노화 프로그램"],
+      "observed_price_manwon": { "min": 69, "max": 1100 },
+      "evidence_source_ids": ["cnn-012", "cnn-015"],
+      "recommended_for": "피부 재생, 항노화, 고가 패키지 비교가 필요한 사용자",
+      "positioning": "단일 가격으로 단정하지 말고 회차·패키지 구성에 따라 별도 비교",
+      "evidence_status": "review_ready"
+    },
+    {
+      "canonical_name": "포텐자·엑소좀 모공흉터 패키지",
+      "category": "모공흉터",
+      "aliases": ["포텐자", "펌핑 포텐자", "엑소좀", "리쥬란S"],
+      "observed_price_manwon": { "min": 35, "max": 67 },
+      "evidence_source_ids": ["cnn-015"],
+      "recommended_for": "모공, 흉터, 피부결 개선을 원하지만 회복 부담도 함께 비교해야 하는 사용자",
+      "positioning": "모공흉터 핵심 카테고리의 신규 패키지 후보",
+      "evidence_status": "review_ready"
+    },
+    {
+      "canonical_name": "온다·티타늄·울쎄라피 프라임",
+      "category": "리프팅",
+      "aliases": ["온다 리프팅", "티타늄 리프팅", "울쎄라피 프라임", "써마지 FLX"],
+      "observed_price_manwon": { "min": 28, "max": 129 },
+      "evidence_source_ids": ["cnn-014"],
+      "recommended_for": "탄력, 윤곽, 눈가 리프팅을 가격대별로 비교하고 싶은 사용자",
+      "positioning": "샷 수·에너지 단위가 달라 직접 가격 비교 전 단위 정규화가 필요",
+      "evidence_status": "review_ready"
+    },
+    {
+      "canonical_name": "크라이오 회복관리",
+      "category": "관리",
+      "aliases": ["크라이오", "냉각관리", "쿨링관리"],
+      "observed_price_manwon": null,
+      "evidence_source_ids": [],
+      "recommended_for": "붉음, 열감, 시술 후 진정 케어가 필요한 사용자",
+      "positioning": "사용자 요청으로 추가할 관리 카테고리 후보. 가격표 근거는 추가 수집 필요",
+      "evidence_status": "needs_price_evidence"
+    }
+  ]
+}

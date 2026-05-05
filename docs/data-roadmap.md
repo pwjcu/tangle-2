@@ -118,6 +118,38 @@ These fit better as:
 
 than as the main recommendation engine’s primary high-impact facial procedure.
 
+## Latest Evidence Batch
+
+Added from user-provided clinic price photos on `2026-05-04`:
+
+- Serrea Clinic care/support pricing: 고압산소치료, 줄기세포 혈청 부스터, 항노화 프로그램
+- IV and recovery care: 마늘주사, 백옥/글루타치온, NAD/NMN, 싸이모신알파
+- lifting and contouring evidence: 온다, 티타늄, 울쎄라피 프라임, 써마지 FLX
+- pore/scar and booster packages: 포텐자, 엑소좀, 리쥬란S, 리쥬란 HB
+
+Current local evidence file summary:
+
+- 15 price source images/posts
+- 125 treatment or package rows
+- categories covered: 관리, 스킨부스터, 리프팅, 필러, 보톡스, 모공흉터, 색소
+
+## Search-Assisted Expansion Batch
+
+Added on `2026-05-05` as local review candidates and revised after market fit review:
+
+- 색소/레이저: 피코토닝, 혈관레이저
+- 모공흉터: 프락셔널 CO2 레이저, 마이크로니들링, RF 마이크로니들링
+- 스킨부스터: 리투오 ECM 스킨부스터
+- 리프팅: 세르프, 볼뉴머, 덴서티, 리프테라2
+- 바디라인: 비침습 바디컨투어링
+
+Removed from candidates after user market review:
+
+- IPL 광치료
+- 화학박피
+
+These were not pushed directly into the live Supabase table. They were saved as reviewable seed/candidate files first to avoid duplicate or unsafe production data.
+
 ## Immediate Next Build Steps
 
 ### Step 1. Evidence-first pricing pipeline
@@ -159,5 +191,9 @@ Future admin flow:
 
 - `data/price-import-template.csv`
 - `data/price-evidence-samples.json`
+- `data/treatment-catalog-expansion.json`
+- `data/treatment-search-expansion-2026-05.json`
+- `supabase/price_data_schema.sql`
+- `supabase/treatment_expansion_seed.sql`
 
 These are scaffolding files for the next phase.

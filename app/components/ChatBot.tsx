@@ -1,18 +1,29 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "./LanguageProvider";
 
 export default function ChatBot() {
+  const { language, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: string; text: string }[]>([
     {
       role: "bot",
-      text: "안녕하세요. 시술 가격대, 회복 기간, 부작용처럼 비교에 필요한 정보를 먼저 정리해드릴게요.",
+      text: t("chat.initial"),
     },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length > 1) return prev;
+
+      return [{ role: "bot", text: t("chat.initial") }];
+    });
+  }, [language, t]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -30,14 +41,14 @@ export default function ChatBot() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ message: userMessage, language }),
       });
       const data = await response.json();
       setMessages((prev) => [...prev, { role: "bot", text: data.reply }]);
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "bot", text: "일시적으로 답변을 불러오지 못했어요. 잠시 후 다시 시도해주세요." },
+        { role: "bot", text: t("chat.error") },
       ]);
     } finally {
       setLoading(false);
@@ -50,9 +61,10 @@ export default function ChatBot() {
         <div className="mb-4 flex h-[28rem] w-[21rem] flex-col overflow-hidden rounded-[28px] border border-stone-200 bg-white shadow-[0_25px_60px_rgba(27,21,18,0.18)] animate-fade-up">
           <div className="flex items-center justify-between bg-stone-950 px-4 py-4 text-white">
             <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-white/55">tangle assistant</p>
-              <span className="text-base font-bold">AI 상담 가이드</span>
+              <p className="text-xs uppercase tracking-[0.18em] text-white/55">{t("chat.eyebrow")}</p>
+              <span className="text-base font-bold">{t("chat.title")}</span>
             </div>
+            <LanguageSwitcher compact />
             <button onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white">
               ✕
             </button>
@@ -72,7 +84,7 @@ export default function ChatBot() {
                 </div>
               </div>
             ))}
-            {loading && <div className="text-center text-xs text-stone-400">답변 정리 중...</div>}
+            {loading && <div className="text-center text-xs text-stone-400">{t("chat.loading")}</div>}
             <div ref={messagesEndRef} />
           </div>
 
@@ -82,7 +94,7 @@ export default function ChatBot() {
               value={input}
               onChange={(event) => setInput(event.target.value)}
               onKeyDown={(event) => event.key === "Enter" && sendMessage()}
-              placeholder="예: 리프팅은 어느 예산대부터 봐야 해?"
+              placeholder={t("chat.placeholder")}
               className="flex-1 rounded-full border border-stone-200 px-4 py-2 text-sm outline-none focus:border-stone-900"
             />
             <button

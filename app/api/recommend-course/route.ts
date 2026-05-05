@@ -27,8 +27,10 @@ const concernCategoryMap: Record<string, string[]> = {
   "탄력/리프팅": ["리프팅", "스킨부스터"],
   "주름/노화": ["리프팅", "보톡스", "스킨부스터"],
   "피부결·모공": ["관리", "모공흉터", "스킨부스터"],
-  "톤업/색소": ["관리", "스킨부스터"],
+  "톤업/색소": ["관리", "스킨부스터", "색소/레이저"],
   "여드름·흉터": ["모공흉터", "관리"],
+  "회복/항노화": ["관리", "스킨부스터"],
+  "바디라인": ["바디라인", "제모", "관리"],
 };
 
 function averagePrice(treatment: TreatmentRow) {
@@ -92,6 +94,16 @@ function scoreTreatment(
 
   if (concern === "여드름·흉터" && /(흉터|모공|여드름)/.test(description)) {
     score += 2;
+  }
+
+  if (
+    concern === "회복/항노화" &&
+    /(항노화|회복|수액|고압|산소|nad|nmn|글루타치온|컨디션|혈청|부스터)/.test(
+      `${description} ${treatment.name}`.toLowerCase(),
+    )
+  ) {
+    score += 2;
+    reasons.push("회복·항노화 보조 관리 목적과 연결되는 근거가 있음");
   }
 
   return { treatment, score, reasons, avgPrice };
