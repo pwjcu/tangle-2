@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 import { accentStyles, getCategoryMeta } from "../../../lib/siteContent";
+import { getLocalTreatmentsByCategory } from "../../../lib/localTreatments";
 
 interface Treatment {
-  id: number;
+  id: number | string;
   name: string;
   category: string;
   price_min: number;
@@ -16,6 +17,7 @@ interface Treatment {
   description: string;
   synergy: string;
   recovery?: string;
+  isLocalSeed?: true;
 }
 
 export default function CategoryPage() {
@@ -35,7 +37,13 @@ export default function CategoryPage() {
       if (error) {
         console.error(error);
       } else {
-        setList(data || []);
+        const remoteTreatments = data || [];
+        const existingNames = new Set(remoteTreatments.map((item) => item.name.replace(/\s+/g, "").toLowerCase()));
+        const localTreatments = getLocalTreatmentsByCategory(categoryName).filter(
+          (item) => !existingNames.has(item.name.replace(/\s+/g, "").toLowerCase()),
+        );
+
+        setList([...remoteTreatments, ...localTreatments]);
       }
       setLoading(false);
     };
@@ -100,7 +108,15 @@ export default function CategoryPage() {
               <div className="grid gap-4 xl:grid-cols-2">
                 {list.map((item) => (
                   <Link
-                    href={`/treatment/${item.id}`}
+                    href={
+                      item.isLocalSeed
+                        ? `/request?${new URLSearchParams({
+                            category: item.category,
+                            budget: String(Math.round((item.price_min + item.price_max) / 2)),
+                            symptom: `${item.name}에 관심이 있습니다. ${item.description}`,
+                          }).toString()}`
+                        : `/treatment/${item.id}`
+                    }
                     key={item.id}
                     className="soft-panel flex h-full flex-col justify-between p-5 hover:-translate-y-0.5 hover:shadow-md"
                   >
@@ -110,6 +126,11 @@ export default function CategoryPage() {
                         <span className="rounded-full bg-stone-100 px-3 py-1 text-[11px] font-semibold text-stone-600">
                           통증 {item.pain_level}/5
                         </span>
+                        {item.isLocalSeed ? (
+                          <span className="rounded-full border border-[#e3daf7] bg-[#f7f2ff] px-3 py-1 text-[11px] font-semibold text-[#6b38d4]">
+                            2026 CSV
+                          </span>
+                        ) : null}
                       </div>
                       <p className="mt-3 text-[13px] leading-7 text-stone-600">{item.description}</p>
                     </div>

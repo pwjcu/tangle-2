@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
 import { languageInstructions, supportedLanguages, type SupportedLanguage } from "../../../lib/i18n";
+import { mergeLocalTreatments } from "../../../lib/localTreatments";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -34,7 +35,9 @@ export async function POST(req: Request) {
       .from("treatments")
       .select("name, price_min, price_max, category, description, side_effects, recovery, synergy, cycle, recommended_for");
 
-    const treatmentInfo = treatments
+    const mergedTreatments = mergeLocalTreatments(treatments);
+
+    const treatmentInfo = mergedTreatments
       ?.map((treatment) =>
         [
           `- 시술명: ${treatment.name}`,

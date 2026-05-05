@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
+import { mergeLocalTreatments } from "../../../lib/localTreatments";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -183,7 +184,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "시술 데이터를 불러오지 못했습니다." }, { status: 500 });
   }
 
-  const scored = (treatments as TreatmentRow[])
+  const mergedTreatments = mergeLocalTreatments(treatments as TreatmentRow[]);
+
+  const scored = mergedTreatments
     .map((treatment) =>
       scoreTreatment(
         treatment,

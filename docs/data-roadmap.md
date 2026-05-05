@@ -150,6 +150,20 @@ Removed from candidates after user market review:
 
 These were not pushed directly into the live Supabase table. They were saved as reviewable seed/candidate files first to avoid duplicate or unsafe production data.
 
+## User CSV Expansion Batch
+
+Added on `2026-05-05` from `korea_skin_procedures_2026_final.csv`:
+
+- 32 deduplicated rows were retained as Tangle treatment candidates.
+- Duplicate generic rows such as 보톡스, 필러, 리쥬란, 쥬베룩, 울쎄라, 써마지, 인모드, 포텐자, 슈링크 유니버스, 볼뉴머 were excluded.
+- IPL stayed excluded based on market-fit feedback.
+- 브이빔 / 브이빔 퍼펙타 / 엑셀V were treated as 혈관레이저 aliases rather than separate master rows.
+
+Files:
+
+- `data/korea-skin-procedures-2026-reviewed.json`
+- `supabase/korea_skin_procedures_2026_seed.sql`
+
 ## Immediate Next Build Steps
 
 ### Step 1. Evidence-first pricing pipeline
@@ -193,7 +207,9 @@ Future admin flow:
 - `data/price-evidence-samples.json`
 - `data/treatment-catalog-expansion.json`
 - `data/treatment-search-expansion-2026-05.json`
+- `data/korea-skin-procedures-2026-reviewed.json`
 - `supabase/price_data_schema.sql`
 - `supabase/treatment_expansion_seed.sql`
+- `supabase/korea_skin_procedures_2026_seed.sql`
 
 These are scaffolding files for the next phase.
