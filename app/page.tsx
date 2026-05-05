@@ -119,13 +119,13 @@ export default function Home() {
     <div className="pb-12">
       <header className="sticky top-4 z-30">
         <div className="shell">
-          <div className="flex min-h-[64px] flex-wrap items-center justify-between gap-3 rounded-full border border-[rgba(23,21,14,0.08)] bg-white/88 px-4 py-2 backdrop-blur">
+          <div className="flex min-h-[64px] flex-wrap items-center justify-between gap-3 rounded-full border border-[rgba(32,34,31,0.08)] bg-white/80 px-4 py-2 shadow-[0_18px_60px_rgba(32,34,31,0.08)] backdrop-blur-xl">
             <Link href="/" className="flex items-center gap-3 rounded-full px-2 py-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-carbon)] text-[13px] font-semibold text-white">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-sky-violet)] text-[13px] font-semibold text-[var(--color-carbon)]">
                 T
               </span>
-              <span className="text-[20px] font-semibold tracking-[-0.06em]" data-display="true">
-                Tangle
+              <span className="text-[16px] font-semibold tracking-[-0.055em] sm:text-[20px]" data-display="true">
+                Tangle: 관리가 최고의 재테크다
               </span>
             </Link>
 
@@ -169,7 +169,7 @@ export default function Home() {
       </header>
 
       <main className="shell pt-10">
-        <section className="overflow-hidden rounded-[44px] bg-white px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
+        <section className="overflow-hidden rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/82 px-5 py-8 shadow-[0_30px_100px_rgba(32,34,31,0.08)] backdrop-blur-xl sm:px-8 lg:px-10 lg:py-10">
           <div className="grid items-center gap-8 lg:grid-cols-[0.94fr_1.06fr]">
             <div className="max-w-[780px]">
               <p className="eyebrow">beauty connect infrastructure</p>
@@ -201,7 +201,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="relative min-h-[420px] overflow-hidden rounded-[40px] bg-[var(--color-porcelain-gray)] lg:min-h-[590px]">
+            <div className="relative min-h-[420px] overflow-hidden rounded-[40px] border border-[rgba(32,34,31,0.06)] bg-[var(--color-porcelain-gray)] shadow-[0_26px_80px_rgba(32,34,31,0.08)] lg:min-h-[590px]">
               <Image
                 src="/tangle-face-consult.png"
                 alt="카메라로 얼굴을 업로드하고 고민 부위를 표시한 뒤 병원에게만 공개하는 탱글 기능 안내"
@@ -216,7 +216,7 @@ export default function Home() {
 
         <section className="mt-5 grid gap-5 lg:grid-cols-3">
           {metrics.map((metric) => (
-            <article key={metric.label} className="rounded-[32px] bg-[var(--color-porcelain-gray)] p-6">
+            <article key={metric.label} className="rounded-[32px] border border-[rgba(32,34,31,0.06)] bg-white/72 p-6 shadow-[0_18px_55px_rgba(32,34,31,0.05)] backdrop-blur-xl">
               <p className="text-[13px] font-semibold text-[var(--color-muted)]">{metric.label}</p>
               <p className="mt-5 text-[3rem] font-semibold leading-none tracking-[-0.06em]" data-display="true">
                 {metric.value}
@@ -239,7 +239,7 @@ export default function Home() {
 
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {steps.map((step) => (
-              <article key={step.label} className="rounded-[32px] bg-white p-6">
+              <article key={step.label} className="rounded-[32px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-6 shadow-[0_18px_55px_rgba(32,34,31,0.05)] backdrop-blur-xl">
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-genius-yellow)] text-[13px] font-semibold">
                   {step.label}
                 </span>
@@ -259,10 +259,10 @@ export default function Home() {
               href={card.href}
               className={`group min-h-[340px] rounded-[40px] p-7 hover:-translate-y-1 ${
                 card.tone === "yellow"
-                  ? "bg-[var(--color-genius-yellow)]"
+                  ? "border border-[rgba(32,34,31,0.06)] bg-[linear-gradient(135deg,#eee87f_0%,#dce6a0_48%,#dff8ee_100%)] shadow-[0_22px_70px_rgba(204,207,91,0.18)]"
                   : card.tone === "violet"
-                    ? "bg-[var(--color-sky-violet)]"
-                    : "bg-[var(--color-porcelain-gray)]"
+                    ? "border border-[rgba(32,34,31,0.06)] bg-[linear-gradient(135deg,#a49bff_0%,#d1ccff_54%,#eef7ff_100%)] shadow-[0_22px_70px_rgba(164,155,255,0.18)]"
+                    : "border border-[rgba(32,34,31,0.06)] bg-white/72 shadow-[0_22px_70px_rgba(32,34,31,0.06)] backdrop-blur-xl"
               }`}
             >
               <h3 className="text-[2.2rem] font-semibold leading-[1.02] tracking-[-0.06em]" data-display="true">
@@ -276,17 +276,17 @@ export default function Home() {
           ))}
         </section>
 
-        <section className="mt-16 rounded-[44px] bg-[var(--color-carbon)] p-6 text-white sm:p-8 lg:p-10">
+        <section className="mt-16 rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-6 shadow-[0_30px_100px_rgba(32,34,31,0.07)] backdrop-blur-xl sm:p-8 lg:p-10">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-white/55">category index</p>
-              <h2 className="type-section mt-6 !text-white" data-display="true">
+              <p className="eyebrow">category index</p>
+              <h2 className="type-section mt-6" data-display="true">
                 시술 카테고리
                 <br />
                 한눈에 보기
               </h2>
             </div>
-            <p className="max-w-[620px] text-[15px] leading-8 text-white/68 lg:ml-auto">
+            <p className="max-w-[620px] text-[15px] leading-8 text-[var(--color-muted)] lg:ml-auto">
               리프팅, 스킨부스터, 보톡스, 색소/레이저, 모공/흉터, 제모처럼 사용자가 실제로 찾는 기준으로 정리했습니다.
             </p>
           </div>
@@ -296,7 +296,7 @@ export default function Home() {
               <Link
                 key={category.name}
                 href={`/category/${encodeURIComponent(category.name)}`}
-                className="rounded-[28px] bg-white/10 p-5 hover:bg-white hover:text-[var(--color-carbon)]"
+                className="rounded-[28px] border border-[rgba(32,34,31,0.06)] bg-[var(--color-porcelain-gray)] p-5 shadow-[0_16px_45px_rgba(32,34,31,0.04)] hover:-translate-y-0.5 hover:bg-white"
               >
                 <p className="text-[1.25rem] font-semibold tracking-[-0.04em]">
                   {displayCategoryName(category.name)}
@@ -307,7 +307,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mt-16 overflow-hidden rounded-[44px] bg-white">
+        <section className="mt-16 overflow-hidden rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/82 shadow-[0_30px_100px_rgba(32,34,31,0.07)] backdrop-blur-xl">
           <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
             <div className="p-6 sm:p-8 lg:p-10">
               <p className="eyebrow">clinic side</p>
@@ -321,9 +321,9 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid gap-3 bg-[var(--color-porcelain-gray)] p-4 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="grid gap-3 bg-[linear-gradient(135deg,#f4fbf9_0%,#edf8f5_55%,#f7f5ff_100%)] p-4 sm:grid-cols-3 lg:grid-cols-1">
               {clinicBenefits.map((benefit, index) => (
-                <article key={benefit} className="rounded-[28px] bg-white p-5">
+                <article key={benefit} className="rounded-[28px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-5 shadow-[0_16px_45px_rgba(32,34,31,0.04)] backdrop-blur-xl">
                   <p className="text-[12px] font-semibold text-[var(--color-muted-light)]">
                     {String(index + 1).padStart(2, "0")}
                   </p>

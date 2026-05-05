@@ -3,24 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --color-carbon: #17150e;
-  --color-inkwell-black: #17150e;
+  --color-carbon: #20221f;
+  --color-inkwell-black: #20221f;
   --color-cloud-white: #ffffff;
-  --color-porcelain-gray: #f0f7f6;
+  --color-porcelain-gray: #f4fbf9;
   --color-obsidian: #000000;
-  --color-silver-mist: #e2e2e2;
-  --color-genius-yellow: #cccc25;
-  --gradient-genius-yellow: linear-gradient(135deg, #cccc25 0%, #cad177 100%);
-  --color-sky-violet: #9fa6ff;
-  --gradient-sky-violet: linear-gradient(135deg, #9fa6ff 0%, #c4c8ff 100%);
+  --color-silver-mist: #dce9e7;
+  --color-genius-yellow: #dcd85f;
+  --gradient-genius-yellow: linear-gradient(135deg, #eee87f 0%, #d9dc64 56%, #bcefe0 100%);
+  --color-sky-violet: #a49bff;
+  --gradient-sky-violet: linear-gradient(135deg, #a49bff 0%, #cfcaff 52%, #eaf5ff 100%);
   --color-fog-canvas: #ffffff;
   --color-ghost-white: #f0f7f6;
   --color-paper: #ffffff;
   --color-warm-paper: #f0f7f6;
   --color-line: #e2e2e2;
-  --color-line-soft: rgba(23, 21, 14, 0.08);
-  --color-muted: rgba(23, 21, 14, 0.68);
-  --color-muted-light: rgba(23, 21, 14, 0.46);
+  --color-line-soft: rgba(32, 34, 31, 0.08);
+  --color-muted: rgba(32, 34, 31, 0.66);
+  --color-muted-light: rgba(32, 34, 31, 0.44);
   --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Inter, ui-sans-serif, system-ui, sans-serif;
   --font-display: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Inter, ui-sans-serif, system-ui, sans-serif;
 }
@@ -32,9 +32,10 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 14% 8%, rgba(204, 204, 37, 0.2), transparent 22rem),
-    radial-gradient(circle at 82% 18%, rgba(159, 166, 255, 0.2), transparent 24rem),
-    linear-gradient(180deg, #ffffff 0%, #f8fbfa 52%, #ffffff 100%);
+    radial-gradient(circle at 16% 10%, rgba(186, 239, 224, 0.48), transparent 25rem),
+    radial-gradient(circle at 82% 14%, rgba(164, 155, 255, 0.24), transparent 27rem),
+    radial-gradient(circle at 88% 78%, rgba(220, 216, 95, 0.18), transparent 24rem),
+    linear-gradient(180deg, #fbfefd 0%, #f4fbf9 48%, #ffffff 100%);
   color: var(--color-carbon);
   font-family: var(--font-body);
   letter-spacing: -0.018em;
@@ -95,32 +96,37 @@ span {
   }
 
   .panel {
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.78);
     border: 1px solid var(--color-silver-mist);
     border-radius: 32px;
-    box-shadow: none;
+    box-shadow: 0 24px 80px rgba(32, 34, 31, 0.08);
+    backdrop-filter: blur(18px);
   }
 
   .soft-panel {
-    background: var(--color-porcelain-gray);
-    border: 1px solid rgba(23, 21, 14, 0.06);
+    background: rgba(255, 255, 255, 0.68);
+    border: 1px solid rgba(32, 34, 31, 0.06);
     border-radius: 24px;
-    box-shadow: none;
+    box-shadow: 0 18px 55px rgba(32, 34, 31, 0.06);
+    backdrop-filter: blur(18px);
   }
 
   .canvas-panel {
     background: var(--color-cloud-white);
     border: 1px solid var(--color-silver-mist);
     border-radius: 32px;
+    box-shadow: 0 26px 90px rgba(32, 34, 31, 0.08);
   }
 
   .eyebrow {
-    @apply inline-flex items-center rounded-lg bg-[var(--color-porcelain-gray)] px-3 py-2 text-[11px] font-semibold uppercase leading-none tracking-[0.2em];
+    @apply inline-flex items-center rounded-full border border-[rgba(32,34,31,0.07)] bg-white/75 px-3 py-2 text-[11px] font-semibold uppercase leading-none tracking-[0.2em];
     color: var(--color-muted);
+    box-shadow: 0 12px 32px rgba(32, 34, 31, 0.05);
+    backdrop-filter: blur(14px);
   }
 
   .field {
-    @apply w-full rounded-[18px] border border-[var(--color-silver-mist)] bg-white px-4 py-3 text-[15px] outline-none;
+    @apply w-full rounded-[18px] border border-[var(--color-silver-mist)] bg-white/85 px-4 py-3 text-[15px] outline-none;
     color: var(--color-carbon);
   }
 
@@ -129,8 +135,8 @@ span {
   }
 
   .field:focus {
-    border-color: rgba(23, 21, 14, 0.3);
-    box-shadow: 0 0 0 4px rgba(204, 204, 37, 0.18);
+    border-color: rgba(164, 155, 255, 0.46);
+    box-shadow: 0 0 0 4px rgba(164, 155, 255, 0.14);
   }
 
   .type-title {
@@ -150,14 +156,17 @@ span {
   .action-primary {
     @apply inline-flex items-center justify-center rounded-full px-7 py-3.5 text-[14px] font-semibold text-[var(--color-carbon)] hover:-translate-y-0.5;
     background: var(--gradient-genius-yellow);
+    box-shadow: 0 18px 40px rgba(204, 207, 91, 0.28);
   }
 
   .action-secondary {
-    @apply inline-flex items-center justify-center rounded-full border border-[rgba(23,21,14,0.12)] bg-white px-7 py-3.5 text-[14px] font-semibold text-[var(--color-carbon)] hover:-translate-y-0.5 hover:bg-[var(--color-porcelain-gray)];
+    @apply inline-flex items-center justify-center rounded-full border border-[rgba(32,34,31,0.1)] bg-white/80 px-7 py-3.5 text-[14px] font-semibold text-[var(--color-carbon)] hover:-translate-y-0.5 hover:bg-white;
+    box-shadow: 0 16px 38px rgba(32, 34, 31, 0.06);
+    backdrop-filter: blur(14px);
   }
 
   .ghost-link {
-    @apply rounded-full px-3 py-2 text-[13px] font-semibold text-[var(--color-carbon)] hover:bg-[var(--color-porcelain-gray)];
+    @apply rounded-full px-3 py-2 text-[13px] font-semibold text-[var(--color-carbon)] hover:bg-white/75;
   }
 
   .snap-strip {
@@ -174,14 +183,16 @@ span {
   }
 
   .metric-tile {
-    background: var(--color-porcelain-gray);
-    border: 1px solid rgba(23, 21, 14, 0.06);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(32, 34, 31, 0.06);
     border-radius: 20px;
+    box-shadow: 0 18px 55px rgba(32, 34, 31, 0.05);
     @apply px-4 py-4;
   }
 
   .option-card {
-    @apply rounded-3xl border border-[var(--color-silver-mist)] bg-white p-4 text-left hover:-translate-y-0.5 hover:bg-[var(--color-porcelain-gray)] sm:p-5;
+    @apply rounded-3xl border border-[var(--color-silver-mist)] bg-white/80 p-4 text-left hover:-translate-y-0.5 hover:bg-white sm:p-5;
+    box-shadow: 0 18px 55px rgba(32, 34, 31, 0.05);
   }
 
   .option-card-active {
@@ -193,12 +204,13 @@ span {
   }
 
   .tangle-image-frame {
-    border: 1px solid rgba(23, 21, 14, 0.08);
+    border: 1px solid rgba(32, 34, 31, 0.08);
     border-radius: 40px;
     background:
-      radial-gradient(circle at 24% 18%, rgba(204, 204, 37, 0.32), transparent 18rem),
-      radial-gradient(circle at 84% 72%, rgba(159, 166, 255, 0.28), transparent 20rem),
+      radial-gradient(circle at 24% 18%, rgba(220, 216, 95, 0.22), transparent 18rem),
+      radial-gradient(circle at 84% 72%, rgba(164, 155, 255, 0.22), transparent 20rem),
       var(--color-porcelain-gray);
+    box-shadow: 0 26px 90px rgba(32, 34, 31, 0.08);
   }
 
   .border-\[var\(--color-carbon\)\] {
