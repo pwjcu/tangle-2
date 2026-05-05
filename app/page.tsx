@@ -136,6 +136,10 @@ export default function Home() {
               <Link href="/request" className="ghost-link">
                 {t("nav.request")}
               </Link>
+              <Link href="/booking" className="ghost-link">
+                <span className="hidden sm:inline">{t("nav.booking")}</span>
+                <span className="sm:hidden">예약</span>
+              </Link>
               <Link href="/hospital" className="ghost-link">
                 {t("nav.hospital")}
               </Link>

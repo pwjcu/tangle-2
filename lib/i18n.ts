@@ -22,6 +22,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   ko: {
     "nav.recommend": "AI 추천",
     "nav.request": "견적 요청",
+    "nav.booking": "병원 예약",
     "nav.hospital": "병원 센터",
     "nav.kakao": "카카오 채널",
     "nav.my": "받은 제안",
@@ -46,6 +47,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   en: {
     "nav.recommend": "AI Match",
     "nav.request": "Request Quote",
+    "nav.booking": "Book Clinic",
     "nav.hospital": "Clinic Center",
     "nav.kakao": "Kakao Channel",
     "nav.my": "My Offers",
@@ -70,6 +72,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   zh: {
     "nav.recommend": "AI 推荐",
     "nav.request": "申请报价",
+    "nav.booking": "预约医院",
     "nav.hospital": "医院中心",
     "nav.kakao": "Kakao 频道",
     "nav.my": "我的提案",
@@ -94,6 +97,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   ja: {
     "nav.recommend": "AI 推薦",
     "nav.request": "見積依頼",
+    "nav.booking": "予約",
     "nav.hospital": "クリニックセンター",
     "nav.kakao": "Kakao チャンネル",
     "nav.my": "届いた提案",
@@ -118,6 +122,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   th: {
     "nav.recommend": "AI แนะนำ",
     "nav.request": "ขอใบเสนอราคา",
+    "nav.booking": "จองคลินิก",
     "nav.hospital": "ศูนย์คลินิก",
     "nav.kakao": "ช่อง Kakao",
     "nav.my": "ข้อเสนอของฉัน",
