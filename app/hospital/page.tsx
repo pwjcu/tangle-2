@@ -148,9 +148,9 @@ export default function HospitalPage() {
   };
 
   return (
-    <div className="pb-10">
-      <header className="border-b border-[var(--color-carbon)]">
-        <div className="shell flex min-h-[64px] items-center justify-between py-3">
+    <div className="pb-12">
+      <header className="sticky top-4 z-30">
+        <div className="shell flex min-h-[64px] items-center justify-between rounded-full border border-[rgba(23,21,14,0.08)] bg-white/88 px-4 py-2 backdrop-blur">
           <Link href="/" className="ghost-link">
             Tangle
           </Link>
@@ -158,9 +158,9 @@ export default function HospitalPage() {
         </div>
       </header>
 
-      <main className="shell">
-        <section className="grid border-x border-b border-[var(--color-carbon)] lg:grid-cols-[1fr_1fr]">
-          <div className="border-b border-[var(--color-carbon)] p-5 sm:p-8 lg:border-b-0 lg:border-r">
+      <main className="shell pt-8">
+        <section className="grid overflow-hidden rounded-[40px] bg-white lg:grid-cols-[1fr_1fr]">
+          <div className="border-b border-[var(--color-silver-mist)] p-5 sm:p-8 lg:border-b-0 lg:border-r">
             <p className="eyebrow">hospital center</p>
             <h1 className="type-title mt-7 !text-[3rem] sm:!text-[4.4rem]" data-display="true">
               요청을 고르고
@@ -172,7 +172,7 @@ export default function HospitalPage() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2">
+          <div className="grid gap-3 bg-[var(--color-porcelain-gray)] p-4 sm:grid-cols-2">
             <StatusBlock label="open requests" value={`${requests.length}건`} />
             <StatusBlock label="selected" value={selectedRequest ? `#${selectedRequest.id}` : "none"} />
             <StatusBlock label="access" value={authUser.email ? "login active" : "restricted"} />
@@ -181,11 +181,11 @@ export default function HospitalPage() {
         </section>
 
         {!authUser.checked ? (
-          <div className="border-x border-b border-[var(--color-carbon)] p-12 text-center text-[var(--color-muted)]">
+          <div className="mt-5 rounded-[36px] bg-white p-12 text-center text-[var(--color-muted)]">
             접근 권한을 확인하는 중입니다.
           </div>
         ) : !authUser.email ? (
-          <section className="border-x border-b border-[var(--color-carbon)] p-8 text-center">
+          <section className="mt-5 rounded-[36px] bg-white p-8 text-center">
             <p className="eyebrow">restricted prototype</p>
             <h2 className="type-section mt-6" data-display="true">
               병원 센터는 로그인이 필요합니다
@@ -198,11 +198,11 @@ export default function HospitalPage() {
             </button>
           </section>
         ) : loading ? (
-          <div className="border-x border-b border-[var(--color-carbon)] p-12 text-center text-[var(--color-muted)]">
+          <div className="mt-5 rounded-[36px] bg-white p-12 text-center text-[var(--color-muted)]">
             요청서를 불러오는 중입니다.
           </div>
         ) : requests.length === 0 ? (
-          <section className="border-x border-b border-[var(--color-carbon)] p-8 text-center">
+          <section className="mt-5 rounded-[36px] bg-white p-8 text-center">
             <p className="eyebrow">empty board</p>
             <h2 className="type-section mt-6" data-display="true">
               현재 열린 요청이 없습니다
@@ -212,9 +212,9 @@ export default function HospitalPage() {
             </p>
           </section>
         ) : (
-          <section className="grid border-x border-b border-[var(--color-carbon)] xl:grid-cols-[420px_1fr]">
-            <aside className="border-b border-[var(--color-carbon)] xl:border-b-0 xl:border-r">
-              <div className="border-b border-[var(--color-carbon)] p-5">
+          <section className="mt-5 grid gap-5 xl:grid-cols-[420px_1fr]">
+            <aside className="overflow-hidden rounded-[36px] bg-white">
+              <div className="border-b border-[var(--color-silver-mist)] p-5">
                 <p className="eyebrow">request board</p>
                 <h2 className="mt-5 text-[1.7rem] font-normal" data-display="true">
                   열린 요청
@@ -229,8 +229,8 @@ export default function HospitalPage() {
                     <button
                       key={request.id}
                       onClick={() => setSelectedRequestId(request.id)}
-                      className={`block w-full border-b border-[var(--color-line)] p-5 text-left hover:bg-[var(--color-carbon)] hover:text-[var(--color-ghost-white)] ${
-                        isSelected ? "bg-[var(--color-carbon)] text-[var(--color-ghost-white)]" : ""
+                      className={`block w-full border-b border-[var(--color-line)] p-5 text-left hover:bg-[var(--color-porcelain-gray)] ${
+                        isSelected ? "bg-[var(--color-genius-yellow)] text-[var(--color-carbon)]" : ""
                       }`}
                     >
                       <div className="flex items-center justify-between gap-4">
@@ -279,8 +279,8 @@ function RequestProposalPanel({
   onSubmit: (requestId: number) => void;
 }) {
   return (
-    <div className="grid min-h-[820px] xl:grid-cols-[0.92fr_1.08fr]">
-      <section className="border-b border-[var(--color-carbon)] p-5 sm:p-7 xl:border-b-0 xl:border-r">
+    <div className="grid min-h-[820px] overflow-hidden rounded-[36px] bg-white xl:grid-cols-[0.92fr_1.08fr]">
+      <section className="border-b border-[var(--color-silver-mist)] bg-[var(--color-porcelain-gray)] p-5 sm:p-7 xl:border-b-0 xl:border-r">
         <p className="eyebrow">selected request</p>
         <h2 className="mt-7 text-[2.4rem] font-normal leading-tight" data-display="true">
           {request.category}
@@ -295,7 +295,7 @@ function RequestProposalPanel({
           <Info label="요청일" value={new Date(request.created_at).toLocaleDateString()} />
         </div>
 
-        <div className="mt-8 border border-[var(--color-carbon)] p-5">
+        <div className="mt-8 rounded-[28px] bg-white p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-muted-light)]">customer note</p>
           <p className="mt-5 text-[14px] leading-7 text-[var(--color-muted)]">{request.symptom}</p>
         </div>
@@ -309,7 +309,7 @@ function RequestProposalPanel({
           병원 제안을 작성합니다
         </h2>
         <p className="mt-5 type-copy">
-          가격만 입력하는 구조가 아니라, 왜 이 조합이 맞는지와 예약 안내까지 함께 작성해야 고객이 병원을 비교할 수 있습니다.
+          시술 조합, 제안 이유, 예약 안내를 함께 작성해야 고객이 병원의 제안을 더 쉽게 비교할 수 있습니다.
         </p>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-[1fr_180px]">
@@ -361,7 +361,7 @@ function RequestProposalPanel({
 
 function StatusBlock({ label, value }: { label: string; value: string }) {
   return (
-    <article className="min-h-[180px] border-b border-[var(--color-line)] p-5 sm:border-r sm:even:border-r-0 sm:p-7">
+    <article className="min-h-[180px] rounded-[28px] bg-white p-5 sm:p-7">
       <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">{label}</p>
       <p className="mt-8 text-[1.45rem] font-normal leading-tight" data-display="true">
         {value}

@@ -199,9 +199,9 @@ export default function RecommendPage() {
   };
 
   return (
-    <div className="pb-10">
-      <header className="border-b border-[var(--color-carbon)]">
-        <div className="shell flex min-h-[64px] items-center justify-between py-3">
+    <div className="pb-12">
+      <header className="sticky top-4 z-30">
+        <div className="shell flex min-h-[64px] items-center justify-between rounded-full border border-[rgba(23,21,14,0.08)] bg-white/88 px-4 py-2 backdrop-blur">
           <Link href="/" className="ghost-link">
             Tangle
           </Link>
@@ -211,20 +211,20 @@ export default function RecommendPage() {
         </div>
       </header>
 
-      <main className="shell">
-        <section className="grid border-x border-b border-[var(--color-carbon)] xl:grid-cols-[0.72fr_1.28fr]">
-          <aside className="border-b border-[var(--color-carbon)] p-5 sm:p-8 xl:border-b-0 xl:border-r">
-            <p className="eyebrow">AI recommendation</p>
+      <main className="shell pt-8">
+        <section className="grid gap-5 xl:grid-cols-[0.72fr_1.28fr]">
+          <aside className="rounded-[36px] bg-white p-5 sm:p-8">
+            <p className="eyebrow">AI 맞춤 추천</p>
             <h1 className="type-title mt-7 !text-[3rem] sm:!text-[4rem]" data-display="true">
-              짧게 묻고
+              고객 설문 기반
               <br />
-              근거 있게 좁힙니다
+              AI 맞춤형 추천
             </h1>
             <p className="mt-7 type-copy">
               긴 상담 전에 필요한 기준만 묻습니다. 고민, 예산, 나이대, 원하는 변화, 다운타임을 기준으로 추천 후보를 정리합니다.
             </p>
 
-            <div className="mt-10 grid gap-0 border-t border-[var(--color-carbon)]">
+            <div className="mt-10 grid gap-3">
               {questions.map((question, index) => {
                 const isActive = index === stepIndex && !loading && !isComplete;
                 const value = answers[question.key];
@@ -232,7 +232,7 @@ export default function RecommendPage() {
                 return (
                   <article
                     key={question.key}
-                    className={`border-b border-[var(--color-line)] py-4 ${isActive ? "text-[var(--color-carbon)]" : "text-[var(--color-muted)]"}`}
+                    className={`rounded-3xl px-4 py-4 ${isActive ? "bg-[var(--color-genius-yellow)] text-[var(--color-carbon)]" : "bg-[var(--color-porcelain-gray)] text-[var(--color-muted)]"}`}
                   >
                     <div className="flex items-start justify-between gap-4">
                       <span className="text-[11px] uppercase tracking-[0.22em]">{question.shortLabel}</span>
@@ -245,7 +245,7 @@ export default function RecommendPage() {
             </div>
           </aside>
 
-          <section className="min-h-[720px] p-5 sm:p-8">
+          <section className="min-h-[720px] rounded-[36px] bg-white p-5 sm:p-8">
             {!loading && !isComplete && activeQuestion && (
               <div className="animate-fade-up flex min-h-[660px] flex-col justify-between">
                 <div>
@@ -261,15 +261,15 @@ export default function RecommendPage() {
                   </h2>
                   <p className="mt-5 max-w-[760px] type-copy">{activeQuestion.subtitle}</p>
 
-                  <div className="mt-10 grid gap-0 border-l border-t border-[var(--color-carbon)] md:grid-cols-2">
+                  <div className="mt-10 grid gap-3 md:grid-cols-2">
                     {activeQuestion.options.map((option) => {
                       const isSelected = answers[activeQuestion.key] === option.value;
                       return (
                         <button
                           key={option.value}
                           onClick={() => handleOptionSelect(option.value)}
-                          className={`min-h-[170px] border-b border-r border-[var(--color-carbon)] p-5 text-left hover:bg-[var(--color-carbon)] hover:text-[var(--color-ghost-white)] ${
-                            isSelected ? "bg-[var(--color-carbon)] text-[var(--color-ghost-white)]" : ""
+                          className={`option-card min-h-[170px] ${
+                            isSelected ? "option-card-active" : ""
                           }`}
                         >
                           <span className="block text-[1.4rem] font-normal leading-tight" data-display="true">
@@ -317,7 +317,7 @@ export default function RecommendPage() {
                     </h2>
                     <p className="mt-5 type-copy">{result.summary}</p>
                   </div>
-                  <div className="border border-[var(--color-carbon)] p-5">
+                  <div className="rounded-[28px] bg-[var(--color-porcelain-gray)] p-5">
                     <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">
                       estimated total
                     </p>
@@ -330,9 +330,9 @@ export default function RecommendPage() {
                   </div>
                 </div>
 
-                <div className="mt-10 grid border-l border-t border-[var(--color-carbon)] xl:grid-cols-3">
+                <div className="mt-10 grid gap-4 xl:grid-cols-3">
                   {result.items.map((item) => (
-                    <article key={item.name} className="border-b border-r border-[var(--color-carbon)] p-5">
+                    <article key={item.name} className="rounded-[28px] border border-[var(--color-silver-mist)] bg-white p-5">
                       <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-muted-light)]">
                         {item.category}
                       </p>
@@ -356,9 +356,9 @@ export default function RecommendPage() {
                   ))}
                 </div>
 
-                <div className="mt-8 grid gap-0 border-l border-t border-[var(--color-carbon)] md:grid-cols-3">
+                <div className="mt-8 grid gap-3 md:grid-cols-3">
                   {[result.budgetFit, result.caution, ...(result.confidenceNotes || []).slice(0, 1)].map((note) => (
-                    <article key={note} className="border-b border-r border-[var(--color-carbon)] p-5">
+                    <article key={note} className="rounded-[24px] bg-[var(--color-porcelain-gray)] p-5">
                       <p className="text-[13px] leading-7 text-[var(--color-muted)]">{note}</p>
                     </article>
                   ))}

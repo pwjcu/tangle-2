@@ -1,0 +1,67 @@
+<svg width="1200" height="920" viewBox="0 0 1200 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="920" rx="58" fill="#F0F7F6"/>
+  <circle cx="1004" cy="130" r="166" fill="#9FA6FF" fill-opacity="0.48"/>
+  <circle cx="184" cy="754" r="190" fill="#CCCC25" fill-opacity="0.38"/>
+  <rect x="70" y="80" width="500" height="740" rx="48" fill="#FFFFFF" stroke="#E2E2E2" stroke-width="2"/>
+  <rect x="112" y="124" width="176" height="24" rx="12" fill="#17150E" fill-opacity="0.16"/>
+  <rect x="112" y="172" width="416" height="82" rx="26" fill="#17150E"/>
+  <text x="144" y="219" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">얼굴 업로드</text>
+  <text x="144" y="244" fill="#FFFFFF" fill-opacity="0.62" font-family="Arial, sans-serif" font-size="15">사진은 병원에게만 공개</text>
+
+  <rect x="130" y="300" width="310" height="360" rx="155" fill="#FFE6DE"/>
+  <path d="M194 530C206 594 245 626 296 626C349 626 388 590 398 528" stroke="#17150E" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="238" cy="430" r="16" fill="#17150E"/>
+  <circle cx="346" cy="430" r="16" fill="#17150E"/>
+  <path d="M268 496C288 510 318 510 338 496" stroke="#17150E" stroke-width="7" stroke-linecap="round"/>
+  <path d="M286 444C274 482 276 506 296 514" stroke="#17150E" stroke-width="6" stroke-linecap="round"/>
+  <path d="M166 398C188 300 266 258 356 288C420 310 456 360 452 434" stroke="#17150E" stroke-width="22" stroke-linecap="round"/>
+
+  <circle cx="216" cy="384" r="24" fill="#CCCC25"/>
+  <circle cx="376" cy="470" r="24" fill="#9FA6FF"/>
+  <circle cx="288" cy="566" r="24" fill="#CCCC25"/>
+  <path d="M216 384L116 342" stroke="#17150E" stroke-width="4" stroke-linecap="round"/>
+  <path d="M376 470L500 440" stroke="#17150E" stroke-width="4" stroke-linecap="round"/>
+  <path d="M288 566L472 640" stroke="#17150E" stroke-width="4" stroke-linecap="round"/>
+  <rect x="78" y="304" width="164" height="54" rx="27" fill="#FFFFFF" stroke="#E2E2E2" stroke-width="2"/>
+  <text x="108" y="337" fill="#17150E" font-family="Arial, sans-serif" font-size="18" font-weight="700">탄력 고민</text>
+  <rect x="398" y="406" width="154" height="56" rx="28" fill="#FFFFFF" stroke="#E2E2E2" stroke-width="2"/>
+  <text x="426" y="440" fill="#17150E" font-family="Arial, sans-serif" font-size="18" font-weight="700">색소 부위</text>
+  <rect x="384" y="622" width="168" height="56" rx="28" fill="#FFFFFF" stroke="#E2E2E2" stroke-width="2"/>
+  <text x="416" y="656" fill="#17150E" font-family="Arial, sans-serif" font-size="18" font-weight="700">모공/흉터</text>
+
+  <rect x="110" y="704" width="186" height="70" rx="35" fill="#CCCC25"/>
+  <circle cx="146" cy="739" r="15" fill="#17150E"/>
+  <rect x="170" y="728" width="84" height="10" rx="5" fill="#17150E"/>
+  <rect x="170" y="748" width="58" height="8" rx="4" fill="#17150E" fill-opacity="0.45"/>
+  <rect x="318" y="704" width="210" height="70" rx="35" fill="#17150E"/>
+  <text x="354" y="746" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" font-weight="700">고민 부위 설명</text>
+
+  <rect x="626" y="112" width="500" height="288" rx="44" fill="#FFFFFF" stroke="#E2E2E2" stroke-width="2"/>
+  <text x="674" y="170" fill="#17150E" font-family="Arial, sans-serif" font-size="29" font-weight="800">AI 추천서 생성</text>
+  <rect x="674" y="204" width="296" height="14" rx="7" fill="#17150E" fill-opacity="0.22"/>
+  <rect x="674" y="236" width="228" height="14" rx="7" fill="#17150E" fill-opacity="0.14"/>
+  <rect x="674" y="284" width="120" height="52" rx="26" fill="#CCCC25"/>
+  <text x="704" y="317" fill="#17150E" font-family="Arial, sans-serif" font-size="18" font-weight="700">리프팅</text>
+  <rect x="814" y="284" width="136" height="52" rx="26" fill="#F0F7F6"/>
+  <text x="848" y="317" fill="#17150E" font-family="Arial, sans-serif" font-size="18" font-weight="700">스킨부스터</text>
+  <rect x="970" y="284" width="98" height="52" rx="26" fill="#9FA6FF"/>
+  <text x="998" y="317" fill="#17150E" font-family="Arial, sans-serif" font-size="18" font-weight="700">제안</text>
+
+  <rect x="626" y="444" width="236" height="264" rx="38" fill="#9FA6FF"/>
+  <text x="672" y="502" fill="#17150E" font-family="Arial, sans-serif" font-size="24" font-weight="800">병원 공개 범위</text>
+  <rect x="672" y="544" width="138" height="15" rx="7.5" fill="#17150E" fill-opacity="0.46"/>
+  <rect x="672" y="578" width="112" height="13" rx="6.5" fill="#17150E" fill-opacity="0.3"/>
+  <rect x="672" y="628" width="142" height="46" rx="23" fill="#FFFFFF"/>
+  <text x="706" y="658" fill="#17150E" font-family="Arial, sans-serif" font-size="17" font-weight="700">선택 공개</text>
+
+  <rect x="890" y="444" width="236" height="264" rx="38" fill="#17150E"/>
+  <text x="936" y="502" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="24" font-weight="800">병원 역제안</text>
+  <rect x="936" y="544" width="132" height="15" rx="7.5" fill="#FFFFFF" fill-opacity="0.52"/>
+  <rect x="936" y="578" width="98" height="13" rx="6.5" fill="#FFFFFF" fill-opacity="0.34"/>
+  <rect x="936" y="628" width="142" height="46" rx="23" fill="#CCCC25"/>
+  <text x="974" y="658" fill="#17150E" font-family="Arial, sans-serif" font-size="17" font-weight="700">예약 안내</text>
+
+  <path d="M570 424C620 382 600 326 626 278" stroke="#17150E" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 16"/>
+  <path d="M570 566C618 608 610 664 626 684" stroke="#17150E" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 16"/>
+  <text x="70" y="858" fill="#17150E" font-family="Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="-1.2">Camera upload, concern mapping, AI recommendation, clinic offer.</text>
+</svg>
