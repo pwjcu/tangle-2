@@ -4,7 +4,7 @@ import { languageLabels, supportedLanguages, type SupportedLanguage } from "../.
 import { useLanguage } from "./LanguageProvider";
 
 export default function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <label
@@ -14,7 +14,7 @@ export default function LanguageSwitcher({ compact = false }: { compact?: boolea
           : "inline-flex items-center gap-2 rounded-full border border-[rgba(32,34,31,0.1)] bg-white/45 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-carbon)] shadow-[0_10px_26px_rgba(32,34,31,0.05)] backdrop-blur-xl sm:text-xs"
       }
     >
-      <span>{compact ? "Lang" : "Language"}</span>
+      <span>{compact ? t("language.short") : t("language.label")}</span>
       <select
         value={language}
         onChange={(event) => setLanguage(event.target.value as SupportedLanguage)}

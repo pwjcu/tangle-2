@@ -12,8 +12,13 @@ It is not a review community. Reviews are increasingly unreliable in the beauty 
 
 - Understand basic treatment options without becoming a heavy user first.
 - Compare treatment candidates by concern, budget, recovery time, and expected fit.
+- Use the free SEO Price Index (`/prices`) for Gangnam-area distribution (median, range, sample count, as-of) without hospital names — then request real quotes.
 - Send a structured request instead of repeatedly explaining the same situation to clinics.
 - Receive reverse proposals from clinics that believe the customer is a good fit.
+
+## Price Index Monetization (later)
+
+Free public index → clinic subscription for named listing/claims. Do not build subscription in MVP.
 
 ## Clinic Value
 
