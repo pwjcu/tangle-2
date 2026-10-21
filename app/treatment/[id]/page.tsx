@@ -6,7 +6,9 @@ import { useParams, useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 import type { SupportedLanguage } from "../../../lib/i18n";
 import { commonUi, formatPriceRange, localizeCategoryName } from "../../../lib/localizedUi";
+import { getStandardPricesForTreatment } from "../../../lib/시술표준가격";
 import { useLanguage } from "../../components/LanguageProvider";
+import StandardPriceTable, { StandardPriceNotice } from "../../components/시술표준가격";
 
 interface TreatmentDetail {
   id: number;
@@ -175,6 +177,7 @@ export default function TreatmentDetailPage() {
     budget: String(Math.round((treatment.price_min + treatment.price_max) / 2)),
     symptom: copy.requestSymptom(treatment.name),
   }).toString()}`;
+  const standardPrices = getStandardPricesForTreatment(treatment.name);
 
   return (
     <div className="pb-10">
@@ -208,6 +211,16 @@ export default function TreatmentDetailPage() {
             <InfoBlock label={copy.labels.recovery} value={treatment.recovery || ui.consultAfterConfirm} />
           </aside>
         </section>
+
+        {standardPrices.length > 0 && (
+          <section className="border-x border-b border-[var(--color-carbon)] p-5 sm:p-8" aria-labelledby="standard-price-title">
+            <p className="eyebrow">규격별 가격 참고</p>
+            <h2 id="standard-price-title" className="type-section mt-6" data-display="true">시술 표준가격표</h2>
+            <p className="mb-6 mt-4 text-[14px] leading-7 text-[var(--color-muted)]">용량·샷 수·횟수별로 사용자 제공 가격자료를 확인하세요.</p>
+            <StandardPriceTable prices={standardPrices} />
+            <div className="mt-4"><StandardPriceNotice /></div>
+          </section>
+        )}
 
         <section className="grid border-x border-b border-[var(--color-carbon)] lg:grid-cols-[0.8fr_1.2fr]">
           <div className="border-b border-[var(--color-carbon)] p-5 sm:p-8 lg:border-b-0 lg:border-r">

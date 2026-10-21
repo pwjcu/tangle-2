@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPriceIndexEntries } from "@/lib/priceIndex";
+import { getStandardPriceTreatmentNames } from "@/lib/시술표준가격";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tangle-2.vercel.app";
 
@@ -19,6 +20,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly",
     priority: 0.8,
   }));
+  const observedNames = new Set(entries.map((entry) => entry.canonical_treatment_name));
+  const standardRoutes: MetadataRoute.Sitemap = getStandardPriceTreatmentNames()
+    .filter((name) => !observedNames.has(name))
+    .map((name) => ({
+      url: `${siteUrl}/prices/${encodeURIComponent(name)}`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    }));
 
-  return [...staticRoutes, ...priceRoutes];
+  return [...staticRoutes, ...priceRoutes, ...standardRoutes];
 }

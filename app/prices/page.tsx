@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PriceIndexNote from "../components/PriceIndexNote";
+import StandardPriceTable, { StandardPriceNotice } from "../components/시술표준가격";
+import { standardTreatmentPrices } from "@/lib/시술표준가격";
 import {
   categoryLabel,
   formatDateKo,
@@ -13,9 +15,9 @@ import {
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "시술 가격 지수 — 강남권 피부 시술 중위가·분포",
+  title: "시술 가격표 — 표준규격 참고가와 강남권 가격 지수",
   description:
-    "리프팅·스킨부스터·필러·보톡스 등 강남권(강남·서초·송파) 피부 시술의 공개 가격 근거를 모아 중위가와 가격 범위를 정리했습니다. 병원명 없이 분포만 공개하는 탱글 프라이스 인덱스.",
+    "2026년 사용자 제공 피부 시술 가격 요약을 샷수·용량·회차별로 정리했습니다. 표준규격 참고 가격과 강남권 공개 가격 근거의 중위가·분포를 각각 확인하세요.",
   alternates: { canonical: "/prices" },
   openGraph: {
     title: "탱글 프라이스 인덱스 — 시술 가격의 기준선",
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CATEGORY_ORDER = ["리프팅", "스킨부스터", "필러", "보톡스", "색소", "모공흉터", "관리"];
+const CATEGORY_ORDER = ["리프팅", "스킨부스터", "필러", "보톡스", "색소", "색소/레이저", "모공흉터", "관리", "바디라인", "제모"];
 
 function groupByCategory(entries: PriceIndexEntry[]): [string, PriceIndexEntry[]][] {
   const groups = new Map<string, PriceIndexEntry[]>();
@@ -71,6 +73,15 @@ export default async function PricesPage() {
     .filter((value): value is string => Boolean(value))
     .sort()
     .at(-1);
+  const standardCategories = [...new Set(standardTreatmentPrices.map((price) => price.category))].sort(
+    (a, b) => {
+      const index = (category: string) => {
+        const found = CATEGORY_ORDER.indexOf(category);
+        return found === -1 ? CATEGORY_ORDER.length : found;
+      };
+      return index(a) - index(b);
+    },
+  );
 
   return (
     <main>
@@ -109,13 +120,13 @@ export default async function PricesPage() {
 
       <div className="shell" style={{ padding: "48px 24px 72px", display: "grid", gap: "36px" }}>
         <section>
-          <span className="eyebrow">Tangle Price Index · 강남권</span>
+          <span className="eyebrow">Tangle · 시술 가격표</span>
           <h1 className="type-title" style={{ fontSize: "42px", margin: "14px 0 16px" }}>
-            시술 가격, 이제 분포로 확인하세요
+            시술 가격, 규격별로 확인하세요
           </h1>
           <p className="type-copy" style={{ maxWidth: "640px" }}>
-            공개된 가격 근거를 모아 시술별 중위가와 가격 범위를 정리했습니다. 병원명은 공개하지 않고,
-            수집일과 근거 수를 함께 보여줍니다. 현재 지역은 강남권(강남·서초·송파) 수집분입니다.
+            샷수·용량·제품·회차에 맞는 참고 가격을 먼저 확인하세요. 아래에는 기존 강남권
+            (강남·서초·송파) 공개 가격 근거의 중위가와 분포도 함께 제공합니다.
           </p>
           {entries.length > 0 ? (
             <div
@@ -129,7 +140,7 @@ export default async function PricesPage() {
               }}
             >
               <span style={{ border: "1px solid var(--color-line)", borderRadius: "999px", padding: "6px 12px" }}>
-                집계 시술 {entries.length}개
+                표준규격 {standardTreatmentPrices.length}개
               </span>
               <span style={{ border: "1px solid var(--color-line)", borderRadius: "999px", padding: "6px 12px" }}>
                 공개 근거 {totalEvidence}건
@@ -141,6 +152,36 @@ export default async function PricesPage() {
               ) : null}
             </div>
           ) : null}
+        </section>
+
+        <section aria-labelledby="standard-prices-title" style={{ display: "grid", gap: "20px" }}>
+          <div>
+            <h2 id="standard-prices-title" className="type-section" style={{ margin: "0 0 12px" }}>
+              2026년 표준규격 참고 가격
+            </h2>
+            <StandardPriceNotice />
+          </div>
+          {standardCategories.map((category) => (
+            <section key={category} style={{ display: "grid", gap: "12px", minWidth: 0 }}>
+              <h3 className="type-section" style={{ margin: 0, fontSize: "20px" }}>
+                {categoryLabel(category)}
+              </h3>
+              <StandardPriceTable
+                prices={standardTreatmentPrices.filter((price) => price.category === category)}
+                showTreatment
+              />
+            </section>
+          ))}
+        </section>
+
+        <section aria-labelledby="observed-prices-title">
+          <h2 id="observed-prices-title" className="type-section" style={{ margin: "0 0 12px" }}>
+            강남권 공개 가격 근거 집계
+          </h2>
+          <p className="type-copy" style={{ margin: 0 }}>
+            아래 {entries.length}개 시술의 중위가와 근거 수는 기존 수집분의 집계입니다.
+            위 표준규격 요약자료는 이 통계의 표본 수나 중위값에 포함하지 않았습니다.
+          </p>
         </section>
 
         {entries.length === 0 ? (

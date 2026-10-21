@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PriceIndexNote from "../../components/PriceIndexNote";
+import StandardPriceTable, { StandardPriceNotice } from "../../components/시술표준가격";
+import { getStandardPricesForTreatment, getStandardPriceTreatmentNames } from "@/lib/시술표준가격";
 import {
   EVIDENCE_KIND_LABELS,
   SOURCE_TYPE_LABELS,
@@ -24,14 +26,30 @@ type PageProps = { params: Promise<{ treatment: string }> };
 
 export async function generateStaticParams() {
   const entries = await getPriceIndexEntries();
-  return entries.map((entry) => ({ treatment: entry.canonical_treatment_name }));
+  const names = new Set([
+    ...entries.map((entry) => entry.canonical_treatment_name),
+    ...getStandardPriceTreatmentNames(),
+  ]);
+  return [...names].map((treatment) => ({ treatment }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { treatment: raw } = await params;
   const treatment = safeDecode(raw);
   const entry = await getPriceIndexEntry(treatment);
+  const standardPrices = getStandardPricesForTreatment(treatment);
   if (!entry) {
+    if (standardPrices.length > 0) {
+      const name = standardPrices[0].treatment_name;
+      const title = `${name} 가격 — 2026년 표준규격 참고 가격`;
+      const description = `${name}의 규격별 가격 범위와 제공 평균을 확인하세요. 2026년 10월 21일 반영한 사용자 제공 요약자료이며, 원본 가격표와 평균 산출 근거는 대조 전입니다.`;
+      return {
+        title,
+        description,
+        alternates: { canonical: `/prices/${encodeURIComponent(name)}` },
+        openGraph: { title, description, type: "article" },
+      };
+    }
     // 지수에 없는 시술은 색인 대상이 아니므로 noindex
     return { title: "시술 가격 지수", robots: { index: false, follow: false } };
   }
@@ -193,17 +211,18 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
   const { treatment: raw } = await params;
   const treatment = safeDecode(raw);
   const [entry, rows] = await Promise.all([getPriceIndexEntry(treatment), getPublicEvidenceRows(treatment)]);
+  const standardPrices = getStandardPricesForTreatment(treatment);
 
   // 지수 미등록 시술도 기존 페이지에서 딥링크로 들어오므로 404 대신 안내 상태를 보여준다
-  const hasAnyData = Boolean(entry) || rows.length > 0;
+  const hasAnyData = Boolean(entry) || rows.length > 0 || standardPrices.length > 0;
 
-  const name = entry?.canonical_treatment_name ?? treatment;
+  const name = entry?.canonical_treatment_name ?? standardPrices[0]?.treatment_name ?? treatment;
   const singleRows = rows.filter((row) => row.evidence_kind === "regular" || row.evidence_kind === "event");
   const packageRows = rows.filter(
     (row) => row.evidence_kind === "package" || row.evidence_kind === "addon" || row.evidence_kind === "unlimited",
   );
   const requestHref = `/request?category=${encodeURIComponent(
-    requestCategoryFor(entry?.category ?? rows[0]?.category ?? null),
+    requestCategoryFor(entry?.category ?? standardPrices[0]?.category ?? rows[0]?.category ?? null),
   )}&budget=${entry?.median_price ?? ""}&symptom=${encodeURIComponent(
     `${name} 시술에 관심이 있습니다. 가격 지수를 보고 문의합니다.`,
   )}`;
@@ -261,8 +280,8 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
       <div className="shell" style={{ padding: "48px 24px 72px", display: "grid", gap: "36px", maxWidth: "860px" }}>
         <section>
           <span className="eyebrow">
-            Tangle Price Index · {entry?.region ?? rows[0]?.region ?? "강남권"} ·{" "}
-            {categoryLabel(entry?.category ?? rows[0]?.category ?? null)}
+            Tangle · {entry?.region ?? rows[0]?.region ?? "표준규격 참고가"} ·{" "}
+            {categoryLabel(entry?.category ?? standardPrices[0]?.category ?? rows[0]?.category ?? null)}
           </span>
           <h1 className="type-title" style={{ fontSize: "38px", margin: "14px 0 16px" }}>
             {name} 가격
@@ -292,6 +311,8 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
                 부위·샷 수·용량에 따라 달라질 수 있으니 아래 원문 근거를 함께 확인하세요.
               </p>
             </>
+          ) : standardPrices.length > 0 ? (
+            <p className="type-copy">샷수·용량·제품·회차별 참고 가격입니다. 아래 표에서 같은 규격끼리 비교하세요.</p>
           ) : (
             <p className="type-copy">
               {hasAnyData
@@ -300,6 +321,16 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
             </p>
           )}
         </section>
+
+        {standardPrices.length > 0 ? (
+          <section aria-labelledby="standard-prices-title" style={{ display: "grid", gap: "16px", minWidth: 0 }}>
+            <h2 id="standard-prices-title" className="type-section" style={{ margin: 0, fontSize: "22px" }}>
+              2026년 표준규격 참고 가격
+            </h2>
+            <StandardPriceNotice />
+            <StandardPriceTable prices={standardPrices} />
+          </section>
+        ) : null}
 
         {entry ? (
           <section style={{ display: "grid", gap: "10px" }}>
@@ -356,7 +387,7 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
             {name}, 내 조건 실제 견적 받아보기
           </h2>
           <p className="type-copy" style={{ margin: 0 }}>
-            중위가는 시장 기준선입니다. 내 부위·예산에 맞는 견적을 병원 역제안으로 받아보세요.
+            내 부위·샷수·용량·예산을 정해 병원 역제안으로 실제 견적을 받아보세요.
           </p>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <Link href={requestHref} className="action-primary" style={{ textDecoration: "none" }}>
@@ -368,7 +399,7 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
           </div>
         </section>
 
-        <PriceIndexNote />
+        {entry || rows.length > 0 ? <PriceIndexNote /> : null}
       </div>
     </main>
   );

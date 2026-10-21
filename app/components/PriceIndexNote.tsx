@@ -14,7 +14,7 @@ export default function PriceIndexNote() {
         className="type-section"
         style={{ fontSize: "16px", color: "var(--color-carbon)", margin: 0 }}
       >
-        안내 — 가격 데이터를 읽는 방법
+        안내 — 기존 강남권 공개 가격 근거
       </h2>
       <ul
         style={{

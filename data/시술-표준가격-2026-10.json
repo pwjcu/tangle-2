@@ -1,0 +1,1488 @@
+{
+  "metadata": {
+    "dataset_name": "2026년 10월 사용자 제공 피부시술 표준가격 요약",
+    "imported_at": "2026-10-21",
+    "source_type": "user_supplied_summary",
+    "verification_status": "unverified_summary",
+    "source_filename": "붙여넣은 텍스트.txt",
+    "source_document_sha256": "2cc7ee28e670c253eb613a74d33f04561cbaf7beb8b9f77939886896f8baa899",
+    "price_unit": "만원",
+    "claimed_image_count": 75,
+    "source_images_provided_for_this_import": 0,
+    "raw_observation_count": 0,
+    "image_evidence_linked": false,
+    "source_bullet_count": 68,
+    "normalized_option_count": 78,
+    "treatment_family_count": 51,
+    "source_urls": [
+      "https://www.modoodoc.com/",
+      "https://www.goodoc.co.kr/dict/127/?query=price_1",
+      "https://www.hira.or.kr/npay/index.do"
+    ],
+    "basis": "첨부 요약문 본문의 가격 bullet 68개를 기준으로 옵션을 정규화함. 후반 표는 반복 요약이므로 추가 가격 행으로 계산하지 않음.",
+    "vat_status": "원문은 부가세 10% 별도 표기 관행을 반영한다고 설명하지만 각 가격의 실제 부가세 포함 여부는 확인되지 않음.",
+    "notes": [
+      "75건 이미지 및 2026년 공개 시세 교차 검증은 첨부문서의 주장임. 이번 반영에서 원본 이미지나 공개 페이지의 가격을 검증하지 않음.",
+      "이 데이터는 사용자 제공 요약 가격이며 기존 이미지 근거 데이터, 병원 원시 관측값 또는 검증된 시장 평균으로 취급하지 않음.",
+      "단일 시술, 패키지 전체 금액, 복합 시술 및 무제한 상품을 구분함. 여러 옵션에 같은 구간이 적용되어도 독립 표본으로 세지 않음.",
+      "본문 bullet에 평균이 없는 항목은 null이며 후반 표의 통합 평균이나 임의 중간값으로 채우지 않음.",
+      "숫자 범위로 제시된 샷수·용량은 그대로 보존하고 임의의 단일 규격으로 축소하지 않음.",
+      "출처 링크는 첨부문서에 기재된 링크이며 관련성·접속 가능 여부·가격 일치 여부를 별도로 검증하지 않음."
+    ]
+  },
+  "treatments": [
+    {
+      "id": "standard-2026-10-01-1",
+      "treatment_name": "울쎄라",
+      "category": "리프팅",
+      "aliases": [
+        "울쎄라피 프라임",
+        "울쎄라피프라임",
+        "울쎄라 프라임",
+        "울쎄라 리프팅"
+      ],
+      "variant": "100샷",
+      "min_price_manwon": 28,
+      "max_price_manwon": 35,
+      "average_price_manwon": 31,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 100샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%9A%B8%EC%8E%84%EB%9D%BC&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-02-1",
+      "treatment_name": "울쎄라",
+      "category": "리프팅",
+      "aliases": [
+        "울쎄라피 프라임",
+        "울쎄라피프라임",
+        "울쎄라 프라임",
+        "울쎄라 리프팅"
+      ],
+      "variant": "300샷",
+      "min_price_manwon": 79,
+      "max_price_manwon": 99,
+      "average_price_manwon": 89,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 300샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%9A%B8%EC%8E%84%EB%9D%BC&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-03-1",
+      "treatment_name": "울쎄라",
+      "category": "리프팅",
+      "aliases": [
+        "울쎄라피 프라임",
+        "울쎄라피프라임",
+        "울쎄라 프라임",
+        "울쎄라 리프팅"
+      ],
+      "variant": "400샷",
+      "min_price_manwon": 119,
+      "max_price_manwon": 140,
+      "average_price_manwon": 126,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 400샷.",
+      "source_urls": [
+        "https://www.repicclinic.com/column/collagen-boosters-juvelook-rejuran"
+      ]
+    },
+    {
+      "id": "standard-2026-10-04-1",
+      "treatment_name": "울쎄라",
+      "category": "리프팅",
+      "aliases": [
+        "울쎄라피 프라임",
+        "울쎄라피프라임",
+        "울쎄라 프라임",
+        "울쎄라 리프팅"
+      ],
+      "variant": "600샷",
+      "min_price_manwon": 160,
+      "max_price_manwon": 175,
+      "average_price_manwon": 168,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 600샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%9A%B8%EC%8E%84%EB%9D%BC&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-05-1",
+      "treatment_name": "써마지 FLX",
+      "category": "리프팅",
+      "aliases": [
+        "써마지",
+        "써마지FLX"
+      ],
+      "variant": "300샷",
+      "min_price_manwon": 110,
+      "max_price_manwon": 139,
+      "average_price_manwon": 125,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 300샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%8D%A8%EB%A7%88%EC%A7%80&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-06-1",
+      "treatment_name": "써마지 FLX",
+      "category": "리프팅",
+      "aliases": [
+        "써마지",
+        "써마지FLX"
+      ],
+      "variant": "600샷",
+      "min_price_manwon": 185,
+      "max_price_manwon": 215,
+      "average_price_manwon": 198,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 600샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%8D%A8%EB%A7%88%EC%A7%80&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-07-1",
+      "treatment_name": "아이 써마지 FLX",
+      "category": "리프팅",
+      "aliases": [
+        "아이써마지",
+        "아이 써마지",
+        "눈가 써마지"
+      ],
+      "variant": "눈가 450샷",
+      "min_price_manwon": 150,
+      "max_price_manwon": 180,
+      "average_price_manwon": 165,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 눈가 450샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%8D%A8%EB%A7%88%EC%A7%80&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-08-1",
+      "treatment_name": "세르프 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "세르프",
+        "XERF",
+        "세르프 (XERF)"
+      ],
+      "variant": "XERF 300샷",
+      "min_price_manwon": 89,
+      "max_price_manwon": 115,
+      "average_price_manwon": 98,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: XERF 300샷.",
+      "source_urls": [
+        "https://www.sereneclinic.kr/column/xerf"
+      ]
+    },
+    {
+      "id": "standard-2026-10-09-1",
+      "treatment_name": "세르프 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "세르프",
+        "XERF",
+        "세르프 (XERF)"
+      ],
+      "variant": "XERF 600샷",
+      "min_price_manwon": 149,
+      "max_price_manwon": 175,
+      "average_price_manwon": 163,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: XERF 600샷.",
+      "source_urls": [
+        "https://www.sereneclinic.kr/column/xerf"
+      ]
+    },
+    {
+      "id": "standard-2026-10-10-1",
+      "treatment_name": "덴서티 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "덴서티",
+        "Density",
+        "덴서티 (Density)"
+      ],
+      "variant": "알파팁 600샷",
+      "min_price_manwon": 150,
+      "max_price_manwon": 180,
+      "average_price_manwon": 165,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 알파팁 600샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EB%8D%B4%EC%84%9C%ED%8B%B0&%EC%84%B8%EB%B6%80+%EC%B9%98%EB%A3%8C%ED%95%AD%EB%AA%A9=%EB%8D%B4%EC%84%9C%ED%8B%B0%ED%95%98%EC%9D%B4%EC%95%84%EC%9D%B4"
+      ]
+    },
+    {
+      "id": "standard-2026-10-11-1",
+      "treatment_name": "올리지오 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "올리지오",
+        "Oligio"
+      ],
+      "variant": "300샷",
+      "min_price_manwon": 38,
+      "max_price_manwon": 49,
+      "average_price_manwon": 43,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 300샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%98%AC%EB%A6%AC%EC%A7%80%EC%98%A4&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-12-1",
+      "treatment_name": "올리지오 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "올리지오",
+        "Oligio"
+      ],
+      "variant": "600샷",
+      "min_price_manwon": 75,
+      "max_price_manwon": 92,
+      "average_price_manwon": 82,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 600샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%98%AC%EB%A6%AC%EC%A7%80%EC%98%A4&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-13-1",
+      "treatment_name": "볼뉴머 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "볼뉴머",
+        "Volnewmer"
+      ],
+      "variant": "600샷",
+      "min_price_manwon": 60,
+      "max_price_manwon": 75,
+      "average_price_manwon": 67,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 600샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EB%B3%BC%EB%89%B4%EB%A8%B8&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-14-1",
+      "treatment_name": "티타늄 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "티타늄"
+      ],
+      "variant": "40KJ",
+      "min_price_manwon": 40,
+      "max_price_manwon": 55,
+      "average_price_manwon": 47,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 40KJ.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%ED%8B%B0%ED%83%80%EB%8A%84%EB%A6%AC%ED%94%84%ED%8C%85&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-15-1",
+      "treatment_name": "티타늄 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "티타늄"
+      ],
+      "variant": "80KJ",
+      "min_price_manwon": 60,
+      "max_price_manwon": 80,
+      "average_price_manwon": 68,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 80KJ.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%ED%8B%B0%ED%83%80%EB%8A%84%EB%A6%AC%ED%94%84%ED%8C%85&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-16-1",
+      "treatment_name": "온다 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "온다",
+        "온다리프팅",
+        "Onda"
+      ],
+      "variant": "얼굴 60KJ",
+      "min_price_manwon": 30,
+      "max_price_manwon": 50,
+      "average_price_manwon": 39,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 얼굴 60KJ.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%98%A8%EB%8B%A4%EB%A6%AC%ED%94%84%ED%8C%85&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-17-1",
+      "treatment_name": "온다 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "온다",
+        "온다리프팅",
+        "Onda"
+      ],
+      "variant": "대용량·바디 80~100KJ",
+      "min_price_manwon": 60,
+      "max_price_manwon": 79,
+      "average_price_manwon": 70,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 대용량·바디 80~100KJ. 후반 표에는 100KJ로 축약되어 있으나 본문 bullet의 대용량·바디 80~100KJ 규격을 유지함.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%98%A8%EB%8B%A4%EB%A6%AC%ED%94%84%ED%8C%85&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-18-1",
+      "treatment_name": "슈링크 유니버스",
+      "category": "리프팅",
+      "aliases": [
+        "슈링크",
+        "슈링크유니버스"
+      ],
+      "variant": "300샷",
+      "min_price_manwon": 12,
+      "max_price_manwon": 20,
+      "average_price_manwon": 15,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 300샷.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%8A%88%EB%A7%81%ED%81%AC&%EC%84%B8%EB%B6%80+%EC%B9%98%EB%A3%8C%ED%95%AD%EB%AA%A9=%EC%8A%88%EB%A7%81%ED%81%AC+%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4"
+      ]
+    },
+    {
+      "id": "standard-2026-10-19-1",
+      "treatment_name": "슈링크 유니버스",
+      "category": "리프팅",
+      "aliases": [
+        "슈링크",
+        "슈링크유니버스"
+      ],
+      "variant": "500~600샷",
+      "min_price_manwon": 28,
+      "max_price_manwon": 36,
+      "average_price_manwon": 32,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 500~600샷. 후반 표에는 600샷으로 축약되어 있으나 본문 bullet의 500~600샷 범위를 유지함.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%8A%88%EB%A7%81%ED%81%AC&%EC%84%B8%EB%B6%80+%EC%B9%98%EB%A3%8C%ED%95%AD%EB%AA%A9=%EC%8A%88%EB%A7%81%ED%81%AC+%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4"
+      ]
+    },
+    {
+      "id": "standard-2026-10-20-1",
+      "treatment_name": "인모드 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "인모드",
+        "InMode"
+      ],
+      "variant": "단일 모드 FX",
+      "min_price_manwon": 6,
+      "max_price_manwon": 11,
+      "average_price_manwon": 8,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 단일 모드 FX 또는 FORMA. 원문은 FX 또는 FORMA 단일 모드를 같은 구간으로 묶어 제시하여 각 선택지를 동일 구간으로 분리함. 독립 관측값이 아님.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%9D%B8%EB%AA%A8%EB%93%9C&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-20-2",
+      "treatment_name": "인모드 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "인모드",
+        "InMode"
+      ],
+      "variant": "단일 모드 FORMA",
+      "min_price_manwon": 6,
+      "max_price_manwon": 11,
+      "average_price_manwon": 8,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 단일 모드 FX 또는 FORMA. 원문은 FX 또는 FORMA 단일 모드를 같은 구간으로 묶어 제시하여 각 선택지를 동일 구간으로 분리함. 독립 관측값이 아님.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%9D%B8%EB%AA%A8%EB%93%9C&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-21-1",
+      "treatment_name": "인모드 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "인모드",
+        "InMode"
+      ],
+      "variant": "풀페이스 2모드 FX+FORMA",
+      "min_price_manwon": 13,
+      "max_price_manwon": 18,
+      "average_price_manwon": 15,
+      "kind": "combination",
+      "session_count": 1,
+      "note": "원문 표준 규격: 풀페이스 2모드 FX+FORMA. FX+FORMA 두 모드를 함께 시행하는 복합 가격으로, 각 단일 모드 가격과 구분함.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%A6%AC%ED%94%84%ED%8C%85%EB%A0%88%EC%9D%B4%EC%A0%80&sub_tc=%EC%9D%B8%EB%AA%A8%EB%93%9C&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-22-1",
+      "treatment_name": "엠페이스",
+      "category": "리프팅",
+      "aliases": [
+        "EMFACE"
+      ],
+      "variant": "EMFACE 1회",
+      "min_price_manwon": 45,
+      "max_price_manwon": 50,
+      "average_price_manwon": 48,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: EMFACE 1회.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-23-1",
+      "treatment_name": "튠페이스 레드",
+      "category": "리프팅",
+      "aliases": [
+        "튠페이스"
+      ],
+      "variant": "50KJ~70KJ",
+      "min_price_manwon": 45,
+      "max_price_manwon": 60,
+      "average_price_manwon": 53,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 50KJ~70KJ.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-24-1",
+      "treatment_name": "올타이트 리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "올타이트"
+      ],
+      "variant": "400샷",
+      "min_price_manwon": 55,
+      "max_price_manwon": 65,
+      "average_price_manwon": 60,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 400샷.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-25-1",
+      "treatment_name": "리쥬란 힐러",
+      "category": "스킨부스터",
+      "aliases": [
+        "리쥬란",
+        "리쥬란힐러"
+      ],
+      "variant": "2cc",
+      "min_price_manwon": 22,
+      "max_price_manwon": 28,
+      "average_price_manwon": 25,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 2cc.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EC%8A%A4%ED%82%A8%EB%B6%80%EC%8A%A4%ED%84%B0&sub_tc=%EB%A6%AC%EC%A5%AC%EB%9E%80&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-26-1",
+      "treatment_name": "리쥬란 힐러",
+      "category": "스킨부스터",
+      "aliases": [
+        "리쥬란",
+        "리쥬란힐러"
+      ],
+      "variant": "4cc 풀페이스",
+      "min_price_manwon": 40,
+      "max_price_manwon": 49,
+      "average_price_manwon": 44,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 4cc 풀페이스.",
+      "source_urls": [
+        "https://www.repicclinic.com/column/collagen-boosters-juvelook-rejuran"
+      ]
+    },
+    {
+      "id": "standard-2026-10-27-1",
+      "treatment_name": "리쥬란 HB Plus",
+      "category": "스킨부스터",
+      "aliases": [
+        "리쥬란 HB",
+        "리쥬란HB플러스",
+        "리쥬란 HB 플러스"
+      ],
+      "variant": "무통 2cc",
+      "min_price_manwon": 28,
+      "max_price_manwon": 34,
+      "average_price_manwon": 30,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 무통 2cc.",
+      "source_urls": [
+        "https://www.produceclinic.com/price/skinbooster.php"
+      ]
+    },
+    {
+      "id": "standard-2026-10-28-1",
+      "treatment_name": "리쥬란 HB Plus",
+      "category": "스킨부스터",
+      "aliases": [
+        "리쥬란 HB",
+        "리쥬란HB플러스",
+        "리쥬란 HB 플러스"
+      ],
+      "variant": "무통 4cc",
+      "min_price_manwon": 44,
+      "max_price_manwon": 55,
+      "average_price_manwon": 48,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 무통 4cc.",
+      "source_urls": [
+        "https://www.produceclinic.com/price/skinbooster.php"
+      ]
+    },
+    {
+      "id": "standard-2026-10-29-1",
+      "treatment_name": "리쥬란 아이",
+      "category": "스킨부스터",
+      "aliases": [
+        "리쥬란아이"
+      ],
+      "variant": "눈가 1cc",
+      "min_price_manwon": 14,
+      "max_price_manwon": 19,
+      "average_price_manwon": 16,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 눈가 1cc.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EC%8A%A4%ED%82%A8%EB%B6%80%EC%8A%A4%ED%84%B0&sub_tc=%EB%A6%AC%EC%A5%AC%EB%9E%80&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-30-1",
+      "treatment_name": "리쥬란 아이",
+      "category": "스킨부스터",
+      "aliases": [
+        "리쥬란아이"
+      ],
+      "variant": "눈가 2cc",
+      "min_price_manwon": 24,
+      "max_price_manwon": 29,
+      "average_price_manwon": 27,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 눈가 2cc.",
+      "source_urls": [
+        "https://www.sereneclinic.kr/skin-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-31-1",
+      "treatment_name": "쥬베룩 스킨",
+      "category": "스킨부스터",
+      "aliases": [
+        "쥬베룩",
+        "쥬베룩스킨"
+      ],
+      "variant": "PDLLA 4cc / 1병",
+      "min_price_manwon": 28,
+      "max_price_manwon": 44,
+      "average_price_manwon": 35,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: PDLLA 4cc / 1병.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%AA%A8%EA%B3%B5%2F%EC%97%AC%EB%93%9C%EB%A6%84%EC%B9%98%EB%A3%8C&sub_tc=%EC%A5%AC%EB%B2%A0%EB%A3%A9&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-32-1",
+      "treatment_name": "쥬베룩 볼륨",
+      "category": "스킨부스터",
+      "aliases": [
+        "쥬베룩볼륨"
+      ],
+      "variant": "2cc 부분",
+      "min_price_manwon": 19,
+      "max_price_manwon": 22,
+      "average_price_manwon": 20,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 2cc 부분.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-33-1",
+      "treatment_name": "쥬베룩 볼륨",
+      "category": "스킨부스터",
+      "aliases": [
+        "쥬베룩볼륨"
+      ],
+      "variant": "4cc 반병",
+      "min_price_manwon": 28,
+      "max_price_manwon": 40,
+      "average_price_manwon": 34,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 4cc 반병.",
+      "source_urls": [
+        "https://www.repicclinic.com/column/collagen-boosters-juvelook-rejuran"
+      ]
+    },
+    {
+      "id": "standard-2026-10-34-1",
+      "treatment_name": "쥬베룩 볼륨",
+      "category": "스킨부스터",
+      "aliases": [
+        "쥬베룩볼륨"
+      ],
+      "variant": "8cc 1병 풀페이스",
+      "min_price_manwon": 50,
+      "max_price_manwon": 65,
+      "average_price_manwon": 58,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 8cc 1병 풀페이스.",
+      "source_urls": [
+        "https://www.repicclinic.com/column/collagen-boosters-juvelook-rejuran"
+      ]
+    },
+    {
+      "id": "standard-2026-10-35-1",
+      "treatment_name": "리투오",
+      "category": "스킨부스터",
+      "aliases": [
+        "Re2O",
+        "리투오 ECM 스킨부스터",
+        "리투오 ECM"
+      ],
+      "variant": "Re2O ECM 콜라겐 1병 5~6cc",
+      "min_price_manwon": 50,
+      "max_price_manwon": 65,
+      "average_price_manwon": 58,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: Re2O ECM 콜라겐 1병 5~6cc.",
+      "source_urls": [
+        "https://www.produceclinic.com/price/skinbooster.php"
+      ]
+    },
+    {
+      "id": "standard-2026-10-36-1",
+      "treatment_name": "셀르디엠",
+      "category": "스킨부스터",
+      "aliases": [
+        "CellREDM",
+        "셀르디엠 ECM"
+      ],
+      "variant": "CellREDM ECM 콜라겐 1시린지 5~6cc",
+      "min_price_manwon": 45,
+      "max_price_manwon": 62,
+      "average_price_manwon": 54,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: CellREDM ECM 콜라겐 1시린지 5~6cc.",
+      "source_urls": [
+        "https://www.produceclinic.com/price/skinbooster.php"
+      ]
+    },
+    {
+      "id": "standard-2026-10-37-1",
+      "treatment_name": "레티젠",
+      "category": "스킨부스터",
+      "aliases": [
+        "Laetigen"
+      ],
+      "variant": "순수 콜라겐 2cc",
+      "min_price_manwon": 45,
+      "max_price_manwon": 55,
+      "average_price_manwon": 50,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 순수 콜라겐 2cc.",
+      "source_urls": [
+        "https://www.sereneclinic.kr/skin-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-38-1",
+      "treatment_name": "힐로웨이브",
+      "category": "스킨부스터",
+      "aliases": [
+        "Hilo Wave"
+      ],
+      "variant": "이중 히알루론산 2cc",
+      "min_price_manwon": 30,
+      "max_price_manwon": 40,
+      "average_price_manwon": 36,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 이중 히알루론산 2cc.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-39-1",
+      "treatment_name": "힐로웨이브",
+      "category": "스킨부스터",
+      "aliases": [
+        "Hilo Wave"
+      ],
+      "variant": "이중 히알루론산 4cc",
+      "min_price_manwon": 60,
+      "max_price_manwon": 69,
+      "average_price_manwon": 65,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 이중 히알루론산 4cc.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-40-1",
+      "treatment_name": "스컬트라",
+      "category": "스킨부스터",
+      "aliases": [
+        "Sculptra"
+      ],
+      "variant": "PLLA 콜라겐 1병 1Vial",
+      "min_price_manwon": 75,
+      "max_price_manwon": 95,
+      "average_price_manwon": 84,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: PLLA 콜라겐 1병 1Vial.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%AA%A8%EA%B3%B5%2F%EC%97%AC%EB%93%9C%EB%A6%84%EC%B9%98%EB%A3%8C&sub_tc=%EC%8A%A4%EC%BB%AC%ED%8A%B8%EB%9D%BC&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-41-1",
+      "treatment_name": "레디어스",
+      "category": "스킨부스터",
+      "aliases": [
+        "Radiesse"
+      ],
+      "variant": "CaHA 콜라겐 1시린지",
+      "min_price_manwon": 75,
+      "max_price_manwon": 89,
+      "average_price_manwon": 80,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: CaHA 콜라겐 1시린지.",
+      "source_urls": [
+        "https://www.sereneclinic.kr/skin-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-42-1",
+      "treatment_name": "고우리",
+      "category": "스킨부스터",
+      "aliases": [
+        "Gouri"
+      ],
+      "variant": "액상 PCL 콜라겐 1시린지",
+      "min_price_manwon": 44,
+      "max_price_manwon": 58,
+      "average_price_manwon": 49,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 액상 PCL 콜라겐 1시린지.",
+      "source_urls": [
+        "https://www.sereneclinic.kr/skin-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-43-1",
+      "treatment_name": "스킨바이브",
+      "category": "스킨부스터",
+      "aliases": [
+        "Skinvive"
+      ],
+      "variant": "히알루론산 광채 2cc",
+      "min_price_manwon": 33,
+      "max_price_manwon": 45,
+      "average_price_manwon": 38,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 히알루론산 광채 2cc.",
+      "source_urls": [
+        "https://suwon-ingye.drevers.com/event/flash-3/"
+      ]
+    },
+    {
+      "id": "standard-2026-10-44-1",
+      "treatment_name": "벨로테로 리바이브",
+      "category": "스킨부스터",
+      "aliases": [
+        "리바이브",
+        "Belotero Revive"
+      ],
+      "variant": "1cc",
+      "min_price_manwon": 28,
+      "max_price_manwon": 40,
+      "average_price_manwon": 35,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1cc / 2cc. 원문의 1cc와 2cc 가격 및 기재 평균을 각각 분리함.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-44-2",
+      "treatment_name": "벨로테로 리바이브",
+      "category": "스킨부스터",
+      "aliases": [
+        "리바이브",
+        "Belotero Revive"
+      ],
+      "variant": "2cc",
+      "min_price_manwon": 70,
+      "max_price_manwon": 77,
+      "average_price_manwon": 74,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1cc / 2cc. 원문의 1cc와 2cc 가격 및 기재 평균을 각각 분리함.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-45-1",
+      "treatment_name": "잘루프로",
+      "category": "스킨부스터",
+      "aliases": [
+        "Jalupro"
+      ],
+      "variant": "아미노산 미백 부스터 풀페이스 6cc",
+      "min_price_manwon": 50,
+      "max_price_manwon": 58,
+      "average_price_manwon": 55,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 아미노산 미백 부스터 풀페이스 6cc.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-46-1",
+      "treatment_name": "물광주사",
+      "category": "스킨부스터",
+      "aliases": [
+        "물광 주사"
+      ],
+      "variant": "히알루론산 2.5~5cc 1회",
+      "min_price_manwon": 9,
+      "max_price_manwon": 16,
+      "average_price_manwon": 12,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 히알루론산 2.5~5cc 1회.",
+      "source_urls": [
+        "https://www.produceclinic.com/price/skinbooster.php"
+      ]
+    },
+    {
+      "id": "standard-2026-10-47-1",
+      "treatment_name": "포텐자",
+      "category": "모공흉터",
+      "aliases": [
+        "포텐자 단독",
+        "포텐자 (단독)"
+      ],
+      "variant": "모공·나비존 단독 1회, 팁 포함",
+      "min_price_manwon": 12,
+      "max_price_manwon": 25,
+      "average_price_manwon": 18,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 모공·나비존 단독 1회, 팁 포함. 후반 표에는 얼굴 1회로 적혀 있으나 본문 bullet의 모공·나비존 단독 1회, 팁 포함 규격을 우선함. 얼굴 전체 가격으로 확장하지 않음.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%AA%A8%EA%B3%B5%2F%EC%97%AC%EB%93%9C%EB%A6%84%EC%B9%98%EB%A3%8C&sub_tc=%ED%8F%AC%ED%85%90%EC%9E%90&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-48-1",
+      "treatment_name": "포텐자 펌핑팁 + 쥬베룩/스킨부스터",
+      "category": "모공흉터",
+      "aliases": [
+        "포텐자 펌핑팁 + 부스터",
+        "포텐자 펌핑팁+스킨부스터"
+      ],
+      "variant": "복합 1회",
+      "min_price_manwon": 26,
+      "max_price_manwon": 40,
+      "average_price_manwon": 35,
+      "kind": "combination",
+      "session_count": 1,
+      "note": "원문 표준 규격: 복합 1회. 후반 표의 쥬베룩/엑소좀 표현 대신 본문 bullet의 쥬베룩/스킨부스터 복합 규격을 유지함. 부스터 단독 가격과 구분함.",
+      "source_urls": [
+        "https://suwon-ingye.drevers.com/event/flash-3/"
+      ]
+    },
+    {
+      "id": "standard-2026-10-49-1",
+      "treatment_name": "모피우스8",
+      "category": "모공흉터",
+      "aliases": [
+        "모피어스8",
+        "Morpheus8"
+      ],
+      "variant": "고주파 니들 1회",
+      "min_price_manwon": 35,
+      "max_price_manwon": 50,
+      "average_price_manwon": 42,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 고주파 니들 1회.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-50-1",
+      "treatment_name": "피코토닝 / 듀얼토닝",
+      "category": "색소/레이저",
+      "aliases": [
+        "피코토닝",
+        "듀얼토닝"
+      ],
+      "variant": "1회",
+      "min_price_manwon": 6,
+      "max_price_manwon": 11,
+      "average_price_manwon": 9,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1회. 피코토닝과 듀얼토닝을 함께 요약한 원문의 공통 구간이며 기기별 독립 관측값이 아님.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EC%A0%90%EB%B9%BC%EA%B8%B0%2F%EB%AF%B8%EB%B0%B1&sub_tc=%ED%94%BC%EC%BD%94%ED%86%A0%EB%8B%9D&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-51-1",
+      "treatment_name": "피코토닝 / 듀얼토닝",
+      "category": "색소/레이저",
+      "aliases": [
+        "피코토닝",
+        "듀얼토닝"
+      ],
+      "variant": "5회 패키지",
+      "min_price_manwon": 35,
+      "max_price_manwon": 60,
+      "average_price_manwon": 48,
+      "kind": "package",
+      "session_count": 5,
+      "note": "원문 표준 규격: 5회 패키지. 5회 패키지 전체 금액이며 회당 가격으로 나누지 않음.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-52-1",
+      "treatment_name": "홍조·혈관 레이저",
+      "category": "색소/레이저",
+      "aliases": [
+        "혈관레이저",
+        "홍조 레이저",
+        "엑셀V",
+        "브이레이저",
+        "클라리티"
+      ],
+      "variant": "엑셀V·브이레이저·클라리티 1회",
+      "min_price_manwon": 12,
+      "max_price_manwon": 25,
+      "average_price_manwon": 18,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 엑셀V·브이레이저·클라리티 1회. 엑셀V·브이레이저·클라리티를 함께 요약한 홍조·혈관 시술 공통 구간이며 제모 가격이 아님.",
+      "source_urls": [
+        "https://contact.clinicnb.com/ko/policy/non-covered-service-price-list"
+      ]
+    },
+    {
+      "id": "standard-2026-10-53-1",
+      "treatment_name": "골드 PTT / 여드름 PDT",
+      "category": "관리",
+      "aliases": [
+        "골드PTT",
+        "여드름 PDT",
+        "PDT"
+      ],
+      "variant": "1회",
+      "min_price_manwon": 14,
+      "max_price_manwon": 25,
+      "average_price_manwon": 19,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1회. 골드 PTT와 여드름 PDT를 함께 요약한 원문 공통 구간이며 각 시술의 독립 관측값이 아님.",
+      "source_urls": [
+        "https://contact.clinicnb.com/ko/policy/non-covered-service-price-list"
+      ]
+    },
+    {
+      "id": "standard-2026-10-54-1",
+      "treatment_name": "아쿠아필",
+      "category": "관리",
+      "aliases": [
+        "아쿠아 필"
+      ],
+      "variant": "1~3단계 1회",
+      "min_price_manwon": 4,
+      "max_price_manwon": 7,
+      "average_price_manwon": 5.5,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1~3단계 1회.",
+      "source_urls": [
+        "https://suwon-ingye.drevers.com/event/flash-3/"
+      ]
+    },
+    {
+      "id": "standard-2026-10-55-1",
+      "treatment_name": "라라필 / 플라필",
+      "category": "관리",
+      "aliases": [
+        "라라필",
+        "플라필"
+      ],
+      "variant": "4세대 필링 1회",
+      "min_price_manwon": 6,
+      "max_price_manwon": 11,
+      "average_price_manwon": 8,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 4세대 필링 1회. 라라필과 플라필을 함께 요약한 원문의 공통 구간이며 각 시술의 독립 관측값이 아님.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-56-1",
+      "treatment_name": "LDM 물방울 리프팅",
+      "category": "관리",
+      "aliases": [
+        "LDM",
+        "물방울 리프팅"
+      ],
+      "variant": "12분 단독 1회",
+      "min_price_manwon": 5,
+      "max_price_manwon": 12,
+      "average_price_manwon": 8,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 12분 단독 1회.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-57-1",
+      "treatment_name": "주름 보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "보톡스",
+        "주름보톡스"
+      ],
+      "variant": "1부위 · 국산",
+      "min_price_manwon": 1.5,
+      "max_price_manwon": 4,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1부위, 국산 / 수입·내성케어. 국산 및 코어톡스·제오민 가격군을 원문 그대로 구분함. 코어톡스의 원산지를 수입으로 판정한 데이터가 아님. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%B3%B4%ED%86%A1%EC%8A%A4&sub_tc=%EB%B3%B4%ED%86%A1%EC%8A%A4&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-57-2",
+      "treatment_name": "주름 보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "보톡스",
+        "주름보톡스"
+      ],
+      "variant": "1부위 · 코어톡스·제오민 (원문 수입·내성케어 그룹)",
+      "min_price_manwon": 4,
+      "max_price_manwon": 6,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1부위, 국산 / 수입·내성케어. 국산 및 코어톡스·제오민 가격군을 원문 그대로 구분함. 코어톡스의 원산지를 수입으로 판정한 데이터가 아님. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%EB%B3%B4%ED%86%A1%EC%8A%A4&sub_tc=%EB%B3%B4%ED%86%A1%EC%8A%A4&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-58-1",
+      "treatment_name": "사각턱 보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "사각턱보톡스",
+        "턱 보톡스"
+      ],
+      "variant": "50U · 국산",
+      "min_price_manwon": 2,
+      "max_price_manwon": 5,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 50U, 국산 / 수입·내성케어. 국산 및 코어톡스·제오민 가격군을 원문 그대로 구분함. 코어톡스의 원산지를 수입으로 판정한 데이터가 아님. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-58-2",
+      "treatment_name": "사각턱 보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "사각턱보톡스",
+        "턱 보톡스"
+      ],
+      "variant": "50U · 코어톡스·제오민 (원문 수입·내성케어 그룹)",
+      "min_price_manwon": 6,
+      "max_price_manwon": 10,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 50U, 국산 / 수입·내성케어. 국산 및 코어톡스·제오민 가격군을 원문 그대로 구분함. 코어톡스의 원산지를 수입으로 판정한 데이터가 아님. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-59-1",
+      "treatment_name": "얼굴 전체 스킨보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "스킨보톡스",
+        "더모톡신"
+      ],
+      "variant": "더모톡신 · 국산 · 얼굴 전체",
+      "min_price_manwon": 8,
+      "max_price_manwon": 12,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 더모톡신, 국산 / 수입. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-59-2",
+      "treatment_name": "얼굴 전체 스킨보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "스킨보톡스",
+        "더모톡신"
+      ],
+      "variant": "더모톡신 · 제오민 · 얼굴 전체",
+      "min_price_manwon": 15,
+      "max_price_manwon": 19,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 더모톡신, 국산 / 수입. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-60-1",
+      "treatment_name": "바디 보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "바디보톡스"
+      ],
+      "variant": "승모근·종아리·다한증 100U · 국산",
+      "min_price_manwon": 10,
+      "max_price_manwon": 14,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 승모근·종아리·다한증 100U. 국산 및 코어톡스·독일산 가격군을 원문 그대로 구분함. 개별 제품의 원산지를 추가 판정하지 않음. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-60-2",
+      "treatment_name": "바디 보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "바디보톡스"
+      ],
+      "variant": "승모근·종아리·다한증 100U · 코어톡스·독일산",
+      "min_price_manwon": 16,
+      "max_price_manwon": 25,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 승모근·종아리·다한증 100U. 국산 및 코어톡스·독일산 가격군을 원문 그대로 구분함. 개별 제품의 원산지를 추가 판정하지 않음. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-61-1",
+      "treatment_name": "침샘 보톡스",
+      "category": "보톡스",
+      "aliases": [
+        "침샘보톡스"
+      ],
+      "variant": "귀밑·턱밑",
+      "min_price_manwon": 6,
+      "max_price_manwon": 15,
+      "average_price_manwon": 10,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 귀밑·턱밑.",
+      "source_urls": [
+        "https://barogclinicyuseong.com/price-filler-botox-booster"
+      ]
+    },
+    {
+      "id": "standard-2026-10-62-1",
+      "treatment_name": "윤곽주사 / DCA 지방분해주사",
+      "category": "바디라인",
+      "aliases": [
+        "윤곽주사",
+        "DCA 지방분해주사",
+        "지방분해주사"
+      ],
+      "variant": "얼굴 1회 · 일반 윤곽·소용량 DCA",
+      "min_price_manwon": 6,
+      "max_price_manwon": 12,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 얼굴 1회. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-62-2",
+      "treatment_name": "윤곽주사 / DCA 지방분해주사",
+      "category": "바디라인",
+      "aliases": [
+        "윤곽주사",
+        "DCA 지방분해주사",
+        "지방분해주사"
+      ],
+      "variant": "얼굴 1회 · 정품 DCA·브이올렛(1병)",
+      "min_price_manwon": 15,
+      "max_price_manwon": 23,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 얼굴 1회. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-63-1",
+      "treatment_name": "히알루론산 필러",
+      "category": "필러",
+      "aliases": [
+        "필러",
+        "HA 필러"
+      ],
+      "variant": "1cc · 국산(아띠에르·뉴라미스·리쥬비엘)",
+      "min_price_manwon": 7,
+      "max_price_manwon": 13,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1cc, 국산 / 수입. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%ED%95%84%EB%9F%AC&sub_tc=%ED%95%84%EB%9F%AC&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-63-2",
+      "treatment_name": "히알루론산 필러",
+      "category": "필러",
+      "aliases": [
+        "필러",
+        "HA 필러"
+      ],
+      "variant": "1cc · 수입(벨로테로·레스틸렌·쥬비덤)",
+      "min_price_manwon": 23,
+      "max_price_manwon": 35,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1cc, 국산 / 수입. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://www.modoodoc.com/blog/price-detail?tc=%ED%95%84%EB%9F%AC&sub_tc=%ED%95%84%EB%9F%AC&"
+      ]
+    },
+    {
+      "id": "standard-2026-10-64-1",
+      "treatment_name": "코그 실리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "코그실리프팅",
+        "민트실 리프팅"
+      ],
+      "variant": "민트실 등 8~12줄",
+      "min_price_manwon": 55,
+      "max_price_manwon": 90,
+      "average_price_manwon": 72,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 민트실 등 8~12줄.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-65-1",
+      "treatment_name": "모노 실리프팅",
+      "category": "리프팅",
+      "aliases": [
+        "모노실리프팅",
+        "탄력실 리프팅"
+      ],
+      "variant": "탄력실 50줄",
+      "min_price_manwon": 20,
+      "max_price_manwon": 40,
+      "average_price_manwon": 30,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 탄력실 50줄.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-66-1",
+      "treatment_name": "남성 수염 레이저 제모",
+      "category": "제모",
+      "aliases": [
+        "남성 수염 제모",
+        "수염 레이저 제모",
+        "수염 제모"
+      ],
+      "variant": "1회",
+      "min_price_manwon": 3,
+      "max_price_manwon": 6,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 1회 / 1년 무제한. 1회와 1년 무제한 상품을 구분함. 무제한 상품의 실제 시행 횟수는 정해져 있지 않음. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://contact.clinicnb.com/ko/policy/non-covered-service-price-list"
+      ]
+    },
+    {
+      "id": "standard-2026-10-66-2",
+      "treatment_name": "남성 수염 레이저 제모",
+      "category": "제모",
+      "aliases": [
+        "남성 수염 제모",
+        "수염 레이저 제모",
+        "수염 제모"
+      ],
+      "variant": "1년 무제한",
+      "min_price_manwon": 40,
+      "max_price_manwon": 50,
+      "average_price_manwon": null,
+      "kind": "unlimited",
+      "session_count": null,
+      "note": "원문 표준 규격: 1회 / 1년 무제한. 1회와 1년 무제한 상품을 구분함. 무제한 상품의 실제 시행 횟수는 정해져 있지 않음. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": [
+        "https://contact.clinicnb.com/ko/policy/non-covered-service-price-list"
+      ]
+    },
+    {
+      "id": "standard-2026-10-67-1",
+      "treatment_name": "기능성 영양수액",
+      "category": "관리",
+      "aliases": [
+        "기능성 수액",
+        "영양수액",
+        "수액류·영양주사"
+      ],
+      "variant": "백옥·신데렐라·마늘·글루타치온·태반 1회",
+      "min_price_manwon": 2.5,
+      "max_price_manwon": 5,
+      "average_price_manwon": 3.8,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 백옥·신데렐라·마늘·글루타치온·태반 1회.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-68-1",
+      "treatment_name": "프리미엄 항노화 수액",
+      "category": "관리",
+      "aliases": [
+        "항노화 수액"
+      ],
+      "variant": "싸이모신알파1 1회",
+      "min_price_manwon": 7,
+      "max_price_manwon": 12,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 싸이모신알파1 / NAD+ 1회. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": []
+    },
+    {
+      "id": "standard-2026-10-68-2",
+      "treatment_name": "프리미엄 항노화 수액",
+      "category": "관리",
+      "aliases": [
+        "항노화 수액"
+      ],
+      "variant": "NAD+ 1회",
+      "min_price_manwon": 9,
+      "max_price_manwon": 13,
+      "average_price_manwon": null,
+      "kind": "single",
+      "session_count": 1,
+      "note": "원문 표준 규격: 싸이모신알파1 / NAD+ 1회. 본문 bullet에 중심 평균이 없어 평균값은 미기재로 유지함.",
+      "source_urls": []
+    }
+  ]
+}
