@@ -187,7 +187,7 @@ export default function CategoryPage() {
       const { data, error } = await supabase.from("treatments").select("*").eq("category", dataCategoryName);
 
       if (error) {
-        console.error(error);
+        setList(getLocalTreatmentsByCategory(dataCategoryName));
       } else {
         const remoteTreatments = data || [];
         const existingNames = new Set(remoteTreatments.map((item) => item.name.replace(/\s+/g, "").toLowerCase()));

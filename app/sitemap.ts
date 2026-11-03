@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPriceIndexEntries } from "@/lib/priceIndex";
 import { getStandardPriceTreatmentNames } from "@/lib/시술표준가격";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tangle-2.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tangle.kr";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries = await getPriceIndexEntries();
@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/recommend`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${siteUrl}/request`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${siteUrl}/prices`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${siteUrl}/clinics`, changeFrequency: "monthly", priority: 0.9 },
   ];
 
   const priceRoutes: MetadataRoute.Sitemap = entries.map((entry) => ({

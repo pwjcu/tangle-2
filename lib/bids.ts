@@ -26,8 +26,9 @@ export function buildBidComment({ plan, reason, reservation }: BidCommentInput) 
   ].join("\n");
 }
 
-export function parseBidComment(comment: string) {
-  const lines = comment
+export function parseBidComment(comment: string | null | undefined) {
+  const raw = typeof comment === "string" ? comment : "";
+  const lines = raw
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean);
@@ -36,30 +37,37 @@ export function parseBidComment(comment: string) {
     plan: "",
     reason: "",
     reservation: "",
-    raw: comment,
+    raw,
   };
+
+  let currentField: "plan" | "reason" | "reservation" | null = null;
 
   for (const line of lines) {
     const plan = stripPrefix(line, PLAN_PREFIXES);
     if (plan) {
       parsed.plan = plan;
+      currentField = "plan";
       continue;
     }
 
     const reason = stripPrefix(line, REASON_PREFIXES);
     if (reason) {
       parsed.reason = reason;
+      currentField = "reason";
       continue;
     }
 
     const reservation = stripPrefix(line, RESERVATION_PREFIXES);
     if (reservation) {
       parsed.reservation = reservation;
+      currentField = "reservation";
+      continue;
     }
+    if (currentField) parsed[currentField] += `\n${line}`;
   }
 
   if (!parsed.plan && !parsed.reason && !parsed.reservation) {
-    parsed.reason = comment;
+    parsed.reason = raw;
   }
 
   return parsed;

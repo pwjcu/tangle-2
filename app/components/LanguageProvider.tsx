@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useSyncExternalStore } from "react";
 import { getTranslation, supportedLanguages, type SupportedLanguage } from "../../lib/i18n";
 
 interface LanguageContextValue {
@@ -19,16 +19,32 @@ function normalizeLanguage(value: string | null): SupportedLanguage {
   return "ko";
 }
 
-export default function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<SupportedLanguage>(() => {
-    if (typeof window === "undefined") return "ko";
+let currentLanguage: SupportedLanguage = "ko";
+let memoryOnly = false;
+function readLanguage() {
+  if (memoryOnly) return currentLanguage;
+  try { return normalizeLanguage(window.localStorage.getItem("tangle-language")); }
+  catch { return currentLanguage; }
+}
+function subscribeLanguage(onChange: () => void) {
+  window.addEventListener("storage", onChange);
+  window.addEventListener("tangle-language-change", onChange);
+  return () => {
+    window.removeEventListener("storage", onChange);
+    window.removeEventListener("tangle-language-change", onChange);
+  };
+}
+function setLanguageState(language: SupportedLanguage) {
+  currentLanguage = language;
+  try { window.localStorage.setItem("tangle-language", language); memoryOnly = false; } catch { memoryOnly = true; }
+  window.dispatchEvent(new Event("tangle-language-change"));
+}
 
-    return normalizeLanguage(window.localStorage.getItem("tangle-language"));
-  });
+export default function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const language = useSyncExternalStore(subscribeLanguage, readLanguage, () => "ko" as SupportedLanguage);
 
   useEffect(() => {
     document.documentElement.lang = language;
-    window.localStorage.setItem("tangle-language", language);
   }, [language]);
 
   const value = useMemo(

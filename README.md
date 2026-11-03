@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 탱글 · Tangle
 
-## Getting Started
+서울 시술별 경험 추천과 가격 비교, 조건별 후보 탐색, 상담 준비를 연결하는 Next.js 서비스입니다.
 
-First, run the development server:
+## 주요 화면
 
-```bash
+- `/clinics`: 사용자 제공 서울 경험 25개 분야, 병원·원장·시술 검색, 분야·정보상태 필터, 브라우저 저장, 공유 링크
+- `/prices`: 기존 공개 가격 지수와 사용자 제공 78개 규격 참고표
+- `/recommend`: 고민·예산 상한·나이대·목표·회복 조건으로 후보 탐색
+- `/request`, `/booking`: 상담 메모와 예약 전 확인사항
+- `/my`, `/hospital`: 인증·소유권·승인 병원 권한을 적용하는 견적 연결 화면
+
+## 개발·검증
+
+Node.js 20.9 이상이 필요합니다. 이 작업은 Node.js 24와 기존 lockfile 의존성으로 검증했습니다.
+
+```powershell
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run check
+npm run build -- --webpack
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Supabase 환경변수가 없어도 추천 목록·참고 가격·저장 자료 기반 탐색은 동작합니다. 인증정보는 `.env.local` 또는 배포 환경변수로 관리하고 저장소에 넣지 않습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 데이터와 서비스 범위
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+경험 추천의 이름은 원문 표기입니다. 병원명·현재 소속·장비 보유·진료 가능 여부를 외부 확인한 명단이 아니며, 20년·2억원·내돈내산은 원문 작성자의 주장입니다. 부족·비공개 항목도 빠뜨리지 않고 상태로 남겼습니다.
 
-## Learn More
+시술 추천과 챗 안내는 등록 자료를 조회하며 외부 AI 공급자에게 질문·설문·사진을 전송하지 않습니다. 사진 업로드와 이미지 분석은 비활성 상태입니다.
 
-To learn more about Next.js, take a look at the following resources:
+견적 전송은 `QUOTE_WORKFLOW_ENABLED=true` 설정과 Supabase 연결이 모두 있어야 켜집니다. 운영 DB 정책을 검증하지 않은 상태에서는 활성화하지 않습니다. 구체적인 권한 계약과 검토용 SQL은 `docs/접근권한-점검-2026-11-03.md`에 있습니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+작업 범위·검증·배포 상태는 `docs/플랫폼-개선-2026-11-03.md`를 참고하세요.

@@ -22,10 +22,10 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   ko: {
     "language.label": "언어",
     "language.short": "언어",
-    "nav.recommend": "AI 추천",
-    "nav.prices": "가격 지수",
+    "nav.recommend": "조건별 추천",
+    "nav.prices": "시술 가격표",
     "nav.request": "견적 요청",
-    "nav.booking": "병원 예약",
+    "nav.booking": "상담 준비",
     "nav.hospital": "병원 센터",
     "nav.kakao": "카카오 채널",
     "nav.my": "받은 제안",
@@ -78,7 +78,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   en: {
     "language.label": "Language",
     "language.short": "Lang",
-    "nav.recommend": "AI Match",
+    "nav.recommend": "Find Candidates",
     "nav.prices": "Price Index",
     "nav.request": "Request Quote",
     "nav.booking": "Book Clinic",
@@ -134,7 +134,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   zh: {
     "language.label": "语言",
     "language.short": "语言",
-    "nav.recommend": "AI 推荐",
+    "nav.recommend": "条件推荐",
     "nav.prices": "价格行情",
     "nav.request": "申请报价",
     "nav.booking": "预约医院",
@@ -190,7 +190,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   ja: {
     "language.label": "言語",
     "language.short": "言語",
-    "nav.recommend": "AI 推薦",
+    "nav.recommend": "条件別候補",
     "nav.prices": "価格インデックス",
     "nav.request": "見積依頼",
     "nav.booking": "予約",
@@ -246,7 +246,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   th: {
     "language.label": "ภาษา",
     "language.short": "ภาษา",
-    "nav.recommend": "AI แนะนำ",
+    "nav.recommend": "ค้นหาตามเงื่อนไข",
     "nav.prices": "ดัชนีราคา",
     "nav.request": "ขอใบเสนอราคา",
     "nav.booking": "จองคลินิก",

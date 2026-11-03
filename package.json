@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:price-index": "node scripts/generate-price-index-sql.mjs"
+    "generate:price-index": "node scripts/generate-price-index-sql.mjs",
+    "check": "node scripts/시술표준가격-검증.mjs && node scripts/플랫폼-회귀검증.mjs && tsc --noEmit && eslint app lib scripts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",

@@ -1,118 +1,88 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import LanguageSwitcher from "./LanguageSwitcher";
 import { useLanguage } from "./LanguageProvider";
+
+type Message = { role: "user" | "guide"; text: string };
 
 export default function ChatBot() {
   const { language, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<{ role: string; text: string }[]>([
-    {
-      role: "bot",
-      text: t("chat.initial"),
-    },
-  ]);
   const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [failedQuery, setFailedQuery] = useState("");
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const requestRef = useRef<AbortController | null>(null);
+  const ko = language === "ko";
+  const title = ko ? "탱글 정보 찾기" : "Tangle information guide";
 
+  useEffect(() => () => requestRef.current?.abort(), []);
   useEffect(() => {
-    setMessages((prev) => {
-      if (prev.length > 1) return prev;
-
-      return [{ role: "bot", text: t("chat.initial") }];
-    });
-  }, [language, t]);
-
+    if (!isOpen) return;
+    inputRef.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setIsOpen(false); toggleRef.current?.focus(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen]);
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [messages, loading]);
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const userMessage = input;
-    setMessages((prev) => [...prev, { role: "user", text: userMessage }]);
+  const send = async (query = input) => {
+    const message = query.trim();
+    if (!message || requestRef.current) return;
+    const controller = new AbortController();
+    requestRef.current = controller;
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    setMessages((previous) => [...previous.slice(-39), { role: "user", text: message }]);
     setInput("");
+    setFailedQuery("");
     setLoading(true);
-
     try {
       const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage, language }),
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, language }), signal: controller.signal,
       });
       const data = await response.json();
-      setMessages((prev) => [...prev, { role: "bot", text: data.reply }]);
+      if (!response.ok || typeof data.reply !== "string") throw new Error("Search unavailable");
+      setMessages((previous) => [...previous, { role: "guide", text: data.reply }]);
     } catch {
-      setMessages((prev) => [
-        ...prev,
-        { role: "bot", text: t("chat.error") },
-      ]);
+      setFailedQuery(message);
     } finally {
+      clearTimeout(timeout);
+      requestRef.current = null;
       setLoading(false);
     }
   };
 
-  return (
-    <div className="fixed bottom-5 right-5 z-50 sm:bottom-6 sm:right-6">
-      {isOpen && (
-        <div className="mb-4 flex h-[28rem] w-[21rem] flex-col overflow-hidden border border-[var(--color-carbon)] bg-[var(--color-paper)] animate-fade-up sm:w-[24rem]">
-          <div className="flex items-center justify-between border-b border-[var(--color-carbon)] bg-[var(--color-carbon)] px-4 py-4 text-[var(--color-ghost-white)]">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-white/55">{t("chat.eyebrow")}</p>
-              <span className="text-base font-bold">{t("chat.title")}</span>
-            </div>
-            <LanguageSwitcher compact />
-            <button onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white">
-              ✕
-            </button>
-          </div>
-
-          <div className="flex-1 space-y-3 overflow-y-auto bg-[var(--color-fog-canvas)] p-4">
-            {messages.map((message, index) => (
-              <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div
-                  className={`max-w-[85%] border p-3 text-sm leading-6 ${
-                    message.role === "user"
-                      ? "border-[var(--color-carbon)] bg-[var(--color-carbon)] text-[var(--color-ghost-white)]"
-                      : "border-[var(--color-carbon)] bg-[var(--color-paper)] text-[var(--color-carbon)]"
-                  }`}
-                >
-                  {message.text}
-                </div>
-              </div>
-            ))}
-            {loading && <div className="text-center text-xs text-stone-400">{t("chat.loading")}</div>}
-            <div ref={messagesEndRef} />
-          </div>
-
-          <div className="flex gap-2 border-t border-[var(--color-carbon)] bg-[var(--color-paper)] p-3">
-            <input
-              type="text"
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={(event) => event.key === "Enter" && sendMessage()}
-              placeholder={t("chat.placeholder")}
-              className="flex-1 border border-[var(--color-carbon)] bg-transparent px-3 py-2 text-sm outline-none focus:bg-white/30"
-            />
-            <button
-              onClick={sendMessage}
-              className="flex h-10 w-10 items-center justify-center bg-[var(--color-carbon)] text-[var(--color-ghost-white)] hover:bg-[var(--color-obsidian)]"
-            >
-              →
-            </button>
-          </div>
-        </div>
-      )}
-
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex h-14 w-14 items-center justify-center border border-[var(--color-carbon)] bg-[var(--color-carbon)] text-[13px] font-semibold uppercase tracking-[0.16em] text-[var(--color-ghost-white)] hover:bg-[var(--color-obsidian)]"
-      >
-        AI
-      </button>
-    </div>
-  );
+  return <div className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
+    {isOpen && <section id="tangle-chat" aria-label={title} className="mb-3 flex h-[min(36rem,calc(100dvh-7rem))] w-[min(25rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-[var(--color-silver-mist)] bg-white shadow-2xl">
+      <div className="flex shrink-0 items-center justify-between bg-[#183e34] px-5 py-4 text-white">
+        <div><p className="text-[10px] tracking-widest text-white/60">TANGLE GUIDE</p><h2 className="mt-1 text-base font-semibold">{title}</h2></div>
+        <button type="button" aria-label={t("chat.close")} onClick={() => { setIsOpen(false); toggleRef.current?.focus(); }} className="h-9 w-9 rounded-full hover:bg-white/10">✕</button>
+      </div>
+      <div ref={scrollRef} role="log" aria-live="polite" aria-relevant="additions" className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4">
+        <div className="rounded-2xl bg-[#f0f7f3] p-4 text-sm leading-7">{ko ? "시술명이나 병원·원장 이름을 입력해 보세요. 등록된 서울 경험 추천과 참고 가격에서 찾아드려요. 실시간 검색·의료 진단은 제공하지 않습니다." : "Search registered Seoul experience notes and reference prices by treatment, clinic, or doctor. This guide does not provide live search or medical diagnosis."}</div>
+        {messages.length === 0 && <div className="flex flex-wrap gap-2">{["리쥬란", "써마지", "여드름 흉터", "채선경"].map((query) => <button key={query} onClick={() => void send(query)} disabled={loading} className="rounded-full border px-3 py-2 text-xs hover:bg-[#f0f7f3]">{query}</button>)}</div>}
+        {messages.map((message, index) => <div key={index} className={message.role === "user" ? "flex justify-end" : "flex justify-start"}><p className={"max-w-[94%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-7 " + (message.role === "user" ? "bg-[#183e34] text-white" : "border border-[#dce9e7] bg-white")}>{message.text}</p></div>)}
+        {loading && <p role="status" className="text-xs text-stone-500">{t("chat.loading")}</p>}
+        {failedQuery && <div role="alert" className="rounded-2xl bg-amber-50 p-3 text-sm"><p>{t("chat.error")}</p><button onClick={() => void send(failedQuery)} className="mt-2 font-semibold underline">{ko ? "다시 시도" : "Retry"}</button></div>}
+      </div>
+      <div className="shrink-0 border-t border-[#dce9e7] p-3">
+        <div className="mb-3 flex gap-4 text-xs font-semibold"><Link href="/clinics">{ko ? "추천 목록" : "Seoul notes"} ↗</Link><Link href="/prices">{ko ? "가격표" : "Prices"} ↗</Link></div>
+        <form onSubmit={(event) => { event.preventDefault(); void send(); }} className="flex gap-2">
+          <input ref={inputRef} aria-label={ko ? "시술·병원·원장 검색" : "Search treatments, clinics, doctors"} value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && event.nativeEvent.isComposing) event.preventDefault(); }} maxLength={2000} placeholder={ko ? "시술·병원·원장 이름" : "Treatment, clinic, doctor"} className="field min-w-0 flex-1 !rounded-xl !py-2.5 !text-sm" />
+          <button type="submit" disabled={loading || !input.trim()} aria-label={t("chat.send")} className="rounded-xl bg-[#183e34] px-4 text-white disabled:opacity-40">↑</button>
+        </form>
+        <p className="mt-2 text-[10px] leading-5 text-stone-500">{ko ? "사진 업로드·외부 AI 분석은 현재 제공하지 않아요." : "Photo upload and external AI analysis are unavailable."}</p>
+      </div>
+    </section>}
+    <button ref={toggleRef} type="button" aria-label={isOpen ? t("chat.close") : title} aria-expanded={isOpen} aria-controls="tangle-chat" onClick={() => setIsOpen(!isOpen)} className="ml-auto flex h-14 items-center gap-2 rounded-full bg-[#183e34] px-5 text-sm font-semibold text-white shadow-lg hover:bg-[#245747]"><span aria-hidden="true">⌕</span>{ko ? "정보 찾기" : "Guide"}</button>
+  </div>;
 }

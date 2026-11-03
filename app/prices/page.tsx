@@ -108,6 +108,7 @@ export default async function PricesPage() {
             Tangle
           </Link>
           <nav style={{ display: "flex", gap: "18px", alignItems: "center" }}>
+            <Link href="/clinics" className="ghost-link">서울 경험 추천</Link>
             <Link href="/recommend" className="ghost-link">
               AI 추천
             </Link>

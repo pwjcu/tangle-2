@@ -1,0 +1,190 @@
+{
+  "metadata": {
+    "title": "서울 시술별 경험 추천",
+    "region": "서울",
+    "received_at": "2026-10-29",
+    "experience_date": null,
+    "source_type": "사용자가 공유한 개인 경험·기억 기반 추천문",
+    "source_claim": "원문 작성자는 내돈내산, 20년 경험·2억 원 인사이트라고 소개했습니다. 지출·기간·시술 이력은 별도로 확인하지 않았습니다.",
+    "verification_status": "외부 검증 전",
+    "scope_note": "서울 한정으로 공유된 목록입니다. 병원명, 의료진의 현재 소속, 지점과 장비 운영 여부는 확인되지 않았습니다.",
+    "notice": "개인의 경험을 정리한 참고 목록이며 진료 실력의 순위나 안전성·효과를 보장하지 않습니다. 목록에 없다는 이유로 의료진의 전문성을 판단하지 않습니다.",
+    "missing_information_policy": "원문에 없는 병원명, 소속, 주소, 가격, 장비 현황은 추정하지 않았습니다. 데이터 부족과 비공개는 그대로 남겼습니다."
+  },
+  "recommendations": [
+    {
+      "id": "skin-injections", "category": "skin", "title": "스킨보톡스·리쥬란 등 주사시술",
+      "treatments": ["스킨보톡스", "리쥬란", "주사시술"], "aliases": ["스킨 보톡스"], "status": "experience",
+      "providers": [{ "clinic": "네스트의원", "doctors": ["이경연"], "location_hint": null, "note": null }],
+      "note": null, "source_text": "스킨보톡스, 리쥬란 등 주사시술 : 네스트의원 이경연 님"
+    },
+    {
+      "id": "rituo", "category": "skin", "title": "리투오",
+      "treatments": ["리투오"], "aliases": [], "status": "experience",
+      "providers": [{ "clinic": "닥터미 의원", "doctors": ["전윤주", "이서하"], "location_hint": null, "note": null }],
+      "note": null, "source_text": "리투오 : 닥터미 의원 전윤주, 이서하님"
+    },
+    {
+      "id": "gouri", "category": "skin", "title": "고우리",
+      "treatments": ["고우리"], "aliases": [], "status": "insufficient",
+      "providers": [], "note": "원문에 추천할 병원·의료진 정보가 없습니다.", "source_text": "고우리 : 데이터 부족"
+    },
+    {
+      "id": "sofwave-toning-hair-removal", "category": "skin", "title": "소프웨이브·토닝·제모",
+      "treatments": ["소프웨이브", "토닝", "제모"], "aliases": ["소프 웨이브"], "status": "experience",
+      "providers": [{ "clinic": "신사디온", "doctors": ["박지영"], "location_hint": "신사", "note": null }],
+      "note": null, "source_text": "소프웨이브, 토닝, 제모: 신사디온 박지영 님"
+    },
+    {
+      "id": "custom-hand-injections", "category": "skin", "title": "개인 커스텀·손주사",
+      "treatments": ["개인 커스텀", "손주사"], "aliases": ["맞춤 시술", "손 주사"], "status": "experience",
+      "providers": [
+        { "clinic": "드네의원", "doctors": ["신예진"], "location_hint": null, "note": null },
+        { "clinic": "소은의원", "doctors": ["김소은"], "location_hint": null, "note": null }
+      ],
+      "note": "원문에서 개인 맞춤과 손주사 경험으로 추천한 항목입니다.", "source_text": "개인 커스텀 , 손주사 맛집 : 드네의원 신예진 님, 소은의원 김소은 님"
+    },
+    {
+      "id": "thread-lifting-fillers", "category": "skin", "title": "실리프팅·필러",
+      "treatments": ["실리프팅", "압토스", "필러"], "aliases": ["실 리프팅"], "status": "experience",
+      "providers": [
+        { "clinic": "페이스플러스", "doctors": ["박정근"], "location_hint": null, "note": null },
+        { "clinic": "창피부과", "doctors": ["김창식"], "location_hint": null, "note": null }
+      ],
+      "note": "원문은 압토스를 실리프팅 항목에 포함했습니다. 병원별 세부 시술 가능 여부는 미확인입니다.", "source_text": "실리프팅 (압토스 포함), 필러 : 페이스플러스 박정근 님 , 창피부과 김창식 님"
+    },
+    {
+      "id": "acne-scars", "category": "skin", "title": "여드름 흉터",
+      "treatments": ["여드름 흉터"], "aliases": ["여드름흉터", "흉터"], "status": "experience",
+      "providers": [{ "clinic": "창피부과", "doctors": ["김창식"], "location_hint": null, "note": null }],
+      "note": null, "source_text": "여드름 흉터 : 창피부과 김창식 님"
+    },
+    {
+      "id": "acne-hair-removal", "category": "skin", "title": "여드름·제모",
+      "treatments": ["여드름", "제모"], "aliases": ["선릉 라엘르", "라엘르"], "status": "confirm",
+      "providers": [{ "clinic": null, "doctors": ["채선경"], "location_hint": "구 선릉 라엘르, 현 대치동? (원문 기억)", "note": "현재 병원 이름과 소속·위치는 미확인입니다. 과거 병원을 현재 소속으로 표시하지 않았습니다." }],
+      "note": "원문 작성자가 병원명을 기억하지 못한 항목입니다.", "source_text": "여드름, 제모 : 채선경 님 (병원 이름 까먹음, 구 선릉 라엘르, 현 대치동?)"
+    },
+    {
+      "id": "hair-transplant", "category": "surgery", "title": "모발이식 — 비절개",
+      "treatments": ["모발이식", "비절개 모발이식"], "aliases": ["비절개", "모발 이식"], "status": "experience",
+      "providers": [{ "clinic": "참닥터", "doctors": ["김주용"], "location_hint": null, "note": null }],
+      "note": null, "source_text": "모발이식(비절개) : 참닥터 김주용 님"
+    },
+    {
+      "id": "nose", "category": "surgery", "title": "코",
+      "treatments": ["코"], "aliases": ["코 성형", "자가늑"], "status": "confirm",
+      "providers": [
+        { "clinic": null, "doctors": ["이지성"], "location_hint": null, "note": "원문에 자가늑을 함께 언급했습니다. 병원명·현재 소속은 미확인입니다." },
+        { "clinic": null, "doctors": ["안승현"], "location_hint": null, "note": "원문에 병원명이 없습니다. 현재 소속 미확인입니다." },
+        { "clinic": null, "doctors": ["김주연"], "location_hint": null, "note": "원문에 병원명이 없습니다. 현재 소속 미확인입니다." }
+      ],
+      "note": "의료진 이름만 제공된 항목으로 병원 소속을 추정하지 않았습니다.", "source_text": "코 : 이지성 님 (자가늑), 안승현 님 , 김주연 님"
+    },
+    {
+      "id": "facial-contouring", "category": "surgery", "title": "윤곽",
+      "treatments": ["윤곽"], "aliases": ["윤곽 성형"], "status": "confirm",
+      "providers": [
+        { "clinic": null, "doctors": ["안승현"], "location_hint": null, "note": "윤곽 항목에는 병원명이 없습니다. 현재 소속 미확인입니다." },
+        { "clinic": null, "doctors": ["박정근"], "location_hint": null, "note": "윤곽 항목에는 병원명이 없습니다. 다른 시술에 등장한 병원을 현재 소속으로 추정하지 않았습니다." }
+      ],
+      "note": null, "source_text": "윤곽 : 안승현 님, 박정근 님"
+    },
+    {
+      "id": "eyes", "category": "surgery", "title": "눈",
+      "treatments": ["눈"], "aliases": ["눈 성형"], "status": "confirm",
+      "providers": [{ "clinic": null, "doctors": ["배인호"], "location_hint": null, "note": "원문에 병원명이 없습니다. 현재 소속 미확인입니다." }],
+      "note": null, "source_text": "눈 : 배인호 님"
+    },
+    {
+      "id": "breast", "category": "surgery", "title": "가슴",
+      "treatments": ["가슴"], "aliases": ["가슴 성형"], "status": "insufficient",
+      "providers": [], "note": "원문에 추천할 병원·의료진 정보가 없습니다.", "source_text": "가슴 : 데이터 부족"
+    },
+    {
+      "id": "fat-removal", "category": "surgery", "title": "지방흡입·지방제거",
+      "treatments": ["지방흡입", "지방제거"], "aliases": ["지방 흡입", "지방 제거"], "status": "withheld",
+      "providers": [], "note": "원문 작성자가 아직 공개하지 않은 항목입니다. 병원이나 의료진을 추정하지 않았습니다.", "source_text": "지방흡입, 지방제거 : ?? 아직 비공개"
+    },
+    {
+      "id": "under-eyes", "category": "surgery", "title": "눈밑지",
+      "treatments": ["눈밑지"], "aliases": ["눈밑"], "status": "insufficient",
+      "providers": [], "note": "원문 표기인 ‘눈밑지’를 유지했습니다. 세부 시술명과 추천 정보가 없습니다.", "source_text": "눈밑지 : 데이터 부족"
+    },
+    {
+      "id": "face-lift", "category": "surgery", "title": "거상",
+      "treatments": ["거상"], "aliases": ["안면거상"], "status": "experience",
+      "providers": [
+        { "clinic": "온리프", "doctors": [], "location_hint": null, "note": "원문에 담당 의료진이 지정되지 않았습니다." },
+        { "clinic": "제이준", "doctors": [], "location_hint": null, "note": "원문에 담당 의료진이 지정되지 않았습니다." },
+        { "clinic": "브라운", "doctors": [], "location_hint": null, "note": "원문에 담당 의료진이 지정되지 않았습니다." },
+        { "clinic": "닥터미", "doctors": [], "location_hint": null, "note": "원문에 담당 의료진이 지정되지 않았습니다." }
+      ],
+      "note": null, "source_text": "거상 : 온리프, 제이준, 브라운, 닥터미"
+    },
+    {
+      "id": "profound", "category": "skin", "title": "프로파운드",
+      "treatments": ["프로파운드"], "aliases": [], "status": "confirm",
+      "providers": [{ "clinic": "닥터스의원 신사", "doctors": ["성현철"], "location_hint": "신사", "note": "원문에 ‘기계 없앤다함’이라는 전언이 있습니다. 현재 장비 보유·시술 운영 여부는 미확인입니다." }],
+      "note": "장비 처분 여부를 확인된 사실로 표시하지 않았습니다.", "source_text": "프로파운드 : 닥터스의원 신사 성현철 님  (근데 기계 없앤다함 ㅠ )"
+    },
+    {
+      "id": "thermage", "category": "skin", "title": "써마지",
+      "treatments": ["써마지"], "aliases": [], "status": "experience",
+      "providers": [{ "clinic": "바비리팅 의원", "doctors": [], "location_hint": null, "note": "원문의 ‘원장님들’ 표현을 유지하며 개별 이름은 제공되지 않았습니다." }],
+      "note": "병원명은 원문 표기를 그대로 사용했습니다.", "source_text": "써마지 : 바비리팅 의원 원장님들"
+    },
+    {
+      "id": "shape-consulting", "category": "skin", "title": "전체적인 윤곽 컨설팅·쉐잎",
+      "treatments": ["윤곽 컨설팅", "쉐잎"], "aliases": ["셰이프", "전체적인 윤곽"], "status": "experience",
+      "providers": [{ "clinic": "창피부과", "doctors": ["김창식"], "location_hint": null, "note": null }],
+      "note": null, "source_text": "전체적인 윤곽 컨설팅, 쉐잎 : 창피부과 김창식 님"
+    },
+    {
+      "id": "eyebrow-tattoo", "category": "surgery", "title": "눈썹문신",
+      "treatments": ["눈썹문신"], "aliases": ["눈썹 문신"], "status": "experience",
+      "providers": [{ "clinic": "드보라 성형외과", "doctors": [], "location_hint": null, "note": "원문에 담당자가 지정되지 않았습니다." }],
+      "note": "분야 구분은 원문의 목록 편제를 따른 탐색용 분류입니다.", "source_text": "눈썹문신 : 드보라 성형외과"
+    },
+    {
+      "id": "renuvion-general-skin", "category": "skin", "title": "리뉴비온·일반피부·최신기계 진료",
+      "treatments": ["리뉴비온", "일반피부진료", "최신기계진료"], "aliases": ["일반 피부", "최신 기계", "신사 더힐"], "status": "experience",
+      "providers": [{ "clinic": "신사 더힐", "doctors": [], "location_hint": "신사", "note": "원문에 담당 의료진이 지정되지 않았습니다. 최신 장비라는 표현은 원문 작성자의 표현입니다." }],
+      "note": null, "source_text": "리뉴비온, 일반피부진료, 최신기계진료 : 신사 더힐"
+    },
+    {
+      "id": "inmode", "category": "skin", "title": "인모드 — 시간 관련 경험",
+      "treatments": ["인모드"], "aliases": ["시간보장 인모드", "시간 보장"], "status": "experience",
+      "providers": [{ "clinic": "뷰티앤영", "doctors": [], "location_hint": null, "note": "원문 작성자의 ‘시간보장’ 경험 표현입니다. 현재 시술 시간이나 보장 정책은 미확인입니다." }],
+      "note": null, "source_text": "시간보장  인모드 : 뷰티앤영"
+    },
+    {
+      "id": "ulthera-thermage-output", "category": "skin", "title": "울쎄라·써마지 — 출력 관련 경험",
+      "treatments": ["울쎄라", "써마지"], "aliases": ["강한 출력", "울세라"], "status": "experience",
+      "providers": [{ "clinic": "뷰앤플 의원", "doctors": [], "location_hint": null, "note": "‘강한 출력’은 원문 작성자의 경험 표현입니다. 출력 강도를 권장하거나 효과·안전성의 기준으로 평가하지 않습니다." }],
+      "note": null, "source_text": "강한 출력 울쎄라, 써마지 : 뷰앤플 의원"
+    },
+    {
+      "id": "body-care", "category": "body", "title": "체형 관리",
+      "treatments": ["체형 관리"], "aliases": ["체형관리", "한의원"], "status": "experience",
+      "providers": [
+        { "clinic": "삼성 모드니 한의원", "doctors": [], "location_hint": "삼성", "note": null },
+        { "clinic": "삼성 바디웰 한의원", "doctors": [], "location_hint": "삼성", "note": null },
+        { "clinic": "대치 터한의원", "doctors": [], "location_hint": "대치", "note": null }
+      ],
+      "note": "원문에 세부 관리 방식과 담당자가 지정되지 않았습니다.", "source_text": "체형 관리 : 삼성 모드니 한의원, 삼성 바디웰 한의원 대치 터한의원"
+    },
+    {
+      "id": "massage", "category": "body", "title": "경락",
+      "treatments": ["경락"], "aliases": ["레비나스"], "status": "experience",
+      "providers": [
+        { "clinic": "드네의원", "doctors": ["신예진"], "location_hint": null, "note": "원문에 ‘레비나스’를 함께 언급했습니다." },
+        { "clinic": "어메이징빅토리아", "doctors": [], "location_hint": "압구정", "note": null },
+        { "clinic": "금단비가", "doctors": [], "location_hint": "잠실", "note": null },
+        { "clinic": "약손명가", "doctors": [], "location_hint": "청담", "note": null },
+        { "clinic": "위뷰티", "doctors": [], "location_hint": null, "note": null }
+      ],
+      "note": "원문에 의료기관과 관리 업체가 함께 포함되어 있습니다. 지점 표기는 원문에 나온 범위만 유지했습니다.", "source_text": "경락 : 레비나스 드네의원 신예진 님, 어메이징빅토리아(압구정), 금단비가(잠실), 약손명가 (청담), 위뷰티"
+    }
+  ]
+}

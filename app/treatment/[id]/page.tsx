@@ -7,11 +7,12 @@ import { supabase } from "../../../lib/supabaseClient";
 import type { SupportedLanguage } from "../../../lib/i18n";
 import { commonUi, formatPriceRange, localizeCategoryName } from "../../../lib/localizedUi";
 import { getStandardPricesForTreatment } from "../../../lib/시술표준가격";
+import { localTreatments } from "../../../lib/localTreatments";
 import { useLanguage } from "../../components/LanguageProvider";
 import StandardPriceTable, { StandardPriceNotice } from "../../components/시술표준가격";
 
 interface TreatmentDetail {
-  id: number;
+  id: number | string;
   name: string;
   category: string;
   price_min: number;
@@ -148,13 +149,13 @@ export default function TreatmentDetailPage() {
   useEffect(() => {
     const fetchDetail = async () => {
       if (!id) return;
+      const local = localTreatments.find((item) => item.id === id);
+      if (local) { setTreatment(local); setLoading(false); return; }
 
       const { data, error } = await supabase.from("treatments").select("*").eq("id", id).single();
 
       if (error) {
-        console.error(error);
-        alert(copy.loadFail);
-        router.push("/recommend");
+        setTreatment(null);
       } else {
         setTreatment(data);
       }
@@ -169,7 +170,7 @@ export default function TreatmentDetailPage() {
   }
 
   if (!treatment) {
-    return <div className="p-10 text-center text-[var(--color-muted)]">{ui.noData}</div>;
+    return <div className="p-10 text-center text-[var(--color-muted)]"><p>{copy.loadFail}</p><Link href="/prices" className="action-secondary mt-5">{copy.priceIndexCta}</Link></div>;
   }
 
   const requestHref = `/request?${new URLSearchParams({

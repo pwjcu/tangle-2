@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import type { SupportedLanguage } from "../lib/i18n";
 import { displayCategoryName, treatmentCategories } from "../lib/siteContent";
 import LanguageSwitcher from "./components/LanguageSwitcher";
@@ -36,26 +35,26 @@ const homeContent: Record<
   }
 > = {
   ko: {
-    brand: "Tangle: 관리가 최고의 재테크다",
-    heroEyebrow: "beauty connect infrastructure",
-    heroTitle: ["나에게 가장 필요한", "시술 정보안내와", "병원 제안 받기"],
+    brand: "탱글 tangle",
+    heroEyebrow: "서울에서 시작하는 뷰티 가이드",
+    heroTitle: ["나를 위한 선택,", "조금 더 알고", "시작하세요."],
     heroBody:
-      "탱글은 시술 정보 탐색, 개인 맞춤 추천, 견적 요청, 병원 역제안을 하나의 흐름으로 연결, 소비자의 선택피로도를 감소시키고 병원의 상담시간과 홍보비용을 줄이며 재방문율을 높입니다.",
-    primaryCta: "추천 시작",
-    secondaryCta: "견적 요청하기",
-    helper: "정보 탐색, 추천, 견적 요청, 병원 제안까지 이어주는 해결사",
+      "어떤 시술을 어디서 받을지 막막할 때. 시술별 병원·원장 경험 추천부터 규격별 가격까지, 상담 전에 궁금했던 정보를 한곳에 모았습니다.",
+    primaryCta: "서울 경험 추천 보기",
+    secondaryCta: "시술 가격 비교하기",
+    helper: "개인 경험 · 참고 가격 · 확인이 필요한 정보, 출처와 함께 살펴보세요.",
     imageAlt: "카메라로 얼굴을 업로드하고 고민 부위를 표시한 뒤 병원에게만 공개하는 탱글 기능 안내",
     metrics: [
-      { label: "개인화 추천", value: "5단계", body: "고민, 예산, 나이대, 목표, 다운타임 기준" },
-      { label: "시술 카테고리", value: `${treatmentCategories.length}개`, body: "리프팅부터 제모, 항노화 관리까지" },
-      { label: "병원 연결", value: "역제안", body: "추천 이유, 시술 조합, 예약 안내 비교" },
+      { label: "서울 경험 노트", value: "25개 분야", body: "피부 시술·성형·체형 관리와 경락" },
+      { label: "조건을 맞춘 가격 비교", value: "78개 규격", body: "샷수, 용량, 회차, 패키지를 구분한 참고가" },
+      { label: "나에게 맞는 후보 탐색", value: "5개 질문", body: "고민·예산·나이대·목표·회복 기간으로 정리" },
     ],
     decisionEyebrow: "decision board",
-    decisionTitle: "시술이 처음이라도 안심하세요",
-    decisionBody: "탱글이 신뢰를 바탕으로 꼭 필요한 곳으로 연결 시켜드립니다.",
+    decisionTitle: "상담 전에, 내 기준부터 정리해요",
+    decisionBody: "추천 목록을 살펴보고 가격과 조건을 비교해 궁금한 점을 준비하세요.",
     steps: [
       { label: "01", title: "정보 입력", body: "고민, 예산, 나이대, 원하는 결과, 회복 가능 시간을 짧게 입력합니다." },
-      { label: "02", title: "AI 맞춤 추천", body: "입력한 조건을 바탕으로 필요한 시술 후보와 가격대를 좁혀줍니다." },
+      { label: "02", title: "조건별 후보 탐색", body: "입력한 조건을 바탕으로 비교할 시술 후보와 등록 가격대를 좁혀줍니다." },
       { label: "03", title: "견적 요청", body: "병원이 바로 이해할 수 있는 요청서로 바꿔 반복 상담을 줄입니다." },
       { label: "04", title: "병원 역제안", body: "병원은 고객에게 맞는 시술 조합과 예약 안내를 제안합니다." },
     ],
@@ -86,7 +85,7 @@ const homeContent: Record<
     categoryTitle: ["시술 카테고리", "한눈에 보기"],
     categoryBody: "리프팅, 스킨부스터, 보톡스, 색소/레이저, 모공/흉터, 제모처럼 사용자가 실제로 찾는 기준으로 정리했습니다.",
     clinicEyebrow: "clinic side",
-    clinicTitle: ["23조 시장,", "국내외 소비자에게 신뢰를 확보하고 재방문을 유도하세요."],
+    clinicTitle: ["좋은 상담의 시작은", "서로를 이해하는 정보에서."],
     clinicBody:
       "탱글은 상담 전 고객의 고민과 예산을 구조화해 병원의 반복 상담을 줄이고, 관심 고객에게 맞춤 제안을 보내는 새로운 유입 채널이 됩니다.",
     clinicBenefits: ["상담 전 고객 고민과 예산을 먼저 확인", "핏이 맞는 고객에게만 시술 조합 제안", "국내외 신규 고객 유입과 재방문 관리"],
@@ -111,7 +110,7 @@ const homeContent: Record<
     decisionBody: "Tangle helps you move toward the clinic options that actually fit your needs.",
     steps: [
       { label: "01", title: "Enter details", body: "Share your concern, budget, age range, desired result, and available recovery time." },
-      { label: "02", title: "AI matching", body: "Your inputs narrow down suitable treatment candidates and price ranges." },
+      { label: "02", title: "Find candidates", body: "Your inputs narrow down suitable treatment candidates and price ranges." },
       { label: "03", title: "Request quote", body: "Tangle turns your needs into a clear request clinics can understand quickly." },
       { label: "04", title: "Clinic offers", body: "Clinics suggest treatment combinations and booking guidance that fit your case." },
     ],
@@ -166,7 +165,7 @@ const homeContent: Record<
     decisionBody: "Tangle 基于你的需求，帮助你连接更合适的医院选择。",
     steps: [
       { label: "01", title: "填写信息", body: "简单输入烦恼、预算、年龄段、想要的效果和可接受恢复时间。" },
-      { label: "02", title: "AI 推荐", body: "根据输入条件缩小适合的项目候选和价格范围。" },
+      { label: "02", title: "条件筛选", body: "根据输入条件缩小适合的项目候选和价格范围。" },
       { label: "03", title: "申请报价", body: "把需求整理成医院容易理解的请求，减少重复咨询。" },
       { label: "04", title: "医院提案", body: "医院提供适合你的项目组合和预约说明。" },
     ],
@@ -203,7 +202,7 @@ const homeContent: Record<
     decisionBody: "Tangle が必要な情報を整理し、合うクリニック選びをサポートします。",
     steps: [
       { label: "01", title: "情報入力", body: "悩み、予算、年齢層、希望する結果、回復可能時間を簡単に入力します。" },
-      { label: "02", title: "AI 推薦", body: "入力条件に基づいて施術候補と価格帯を絞ります。" },
+      { label: "02", title: "条件で絞り込み", body: "入力条件に基づいて施術候補と価格帯を絞ります。" },
       { label: "03", title: "見積依頼", body: "クリニックが理解しやすい依頼内容に変換します。" },
       { label: "04", title: "クリニック提案", body: "クリニックが施術プランと予約案内を提案します。" },
     ],
@@ -240,7 +239,7 @@ const homeContent: Record<
     decisionBody: "Tangle ช่วยจัดข้อมูลที่จำเป็นและพาคุณไปหาตัวเลือกคลินิกที่เหมาะกว่า",
     steps: [
       { label: "01", title: "กรอกข้อมูล", body: "ระบุปัญหา งบประมาณ ช่วงอายุ ผลลัพธ์ที่ต้องการ และเวลาพักฟื้นที่รับได้" },
-      { label: "02", title: "AI แนะนำ", body: "ระบบช่วยคัดหัตถการและช่วงราคาที่เหมาะกับเงื่อนไขของคุณ" },
+      { label: "02", title: "ค้นหาตามเงื่อนไข", body: "ระบบช่วยคัดหัตถการและช่วงราคาที่เหมาะกับเงื่อนไขของคุณ" },
       { label: "03", title: "ขอราคา", body: "เปลี่ยนความต้องการให้เป็นคำขอที่คลินิกเข้าใจง่าย" },
       { label: "04", title: "ข้อเสนอคลินิก", body: "คลินิกเสนอชุดหัตถการและแนวทางการจองที่เหมาะกับคุณ" },
     ],
@@ -319,8 +318,10 @@ export default function Home() {
   const content = homeContent[language];
   const localizedCategory = categoryCopy[language];
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [authNotice, setAuthNotice] = useState("");
 
   useEffect(() => {
+    if (!isSupabaseConfigured) return;
     const syncUser = async () => {
       const {
         data: { user },
@@ -340,6 +341,10 @@ export default function Home() {
   }, []);
 
   const handleKakaoLogin = async () => {
+    if (!isSupabaseConfigured) {
+      setAuthNotice("현재 로그인 연결을 준비 중입니다. 추천 목록과 가격표는 로그인 없이 볼 수 있어요.");
+      return;
+    }
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
@@ -348,18 +353,12 @@ export default function Home() {
     });
 
     if (error) {
-      alert(`로그인에 실패했어요. ${error.message}`);
+      setAuthNotice("로그인에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.");
     }
   };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-  };
-
-  const handleKakaoChannelOpen = () => {
-    if (!kakaoChannelUrl) {
-      alert("카카오 채널 URL이 아직 연결되지 않았어요. Vercel 환경변수 NEXT_PUBLIC_KAKAO_CHANNEL_URL에 채널 링크를 넣으면 바로 연결됩니다.");
-    }
   };
 
   return (
@@ -376,7 +375,8 @@ export default function Home() {
               </span>
             </Link>
 
-            <nav className="flex w-full flex-wrap items-center justify-center gap-1 sm:w-auto sm:justify-end">
+            <nav aria-label="주 메뉴" className="flex w-full flex-wrap items-center justify-center gap-1 sm:w-auto sm:justify-end">
+              <Link href="/clinics" className="ghost-link bg-[#e4f2ed]">{language === "ko" ? "서울 경험 추천" : "Seoul guide"}</Link>
               <Link href="/prices" className="ghost-link">
                 {t("nav.prices")}
               </Link>
@@ -397,15 +397,11 @@ export default function Home() {
                 <a href={kakaoChannelUrl} target="_blank" rel="noreferrer" className="ghost-link">
                   {t("nav.kakao")}
                 </a>
-              ) : (
-                <button onClick={handleKakaoChannelOpen} className="ghost-link">
-                  {t("nav.kakao")}
-                </button>
-              )}
+              ) : null}
               <LanguageSwitcher />
               {userEmail ? (
                 <>
-                  <Link href={`/my?email=${encodeURIComponent(userEmail)}`} className="ghost-link">
+                  <Link href="/my" className="ghost-link">
                     {t("nav.my")}
                   </Link>
                   <button onClick={handleLogout} className="action-secondary !px-3 !py-2 !text-[12px] sm:!px-4 sm:!text-[14px]">
@@ -423,6 +419,7 @@ export default function Home() {
       </header>
 
       <main className="shell pt-5 sm:pt-10">
+        {authNotice && <p role="status" className="mb-4 rounded-2xl bg-white p-4 text-sm">{authNotice}</p>}
         <section className="overflow-hidden rounded-[34px] border border-[rgba(32,34,31,0.06)] bg-white/82 px-4 py-5 shadow-[0_30px_100px_rgba(32,34,31,0.08)] backdrop-blur-xl sm:rounded-[44px] sm:px-7 sm:py-7 lg:px-8 lg:py-8">
           <div className="grid items-center gap-6 lg:grid-cols-[0.76fr_1.24fr]">
             <div className="max-w-[640px]">
@@ -443,10 +440,10 @@ export default function Home() {
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Link href="/recommend" className="action-primary">
+                <Link href={language === "ko" ? "/clinics" : "/recommend"} className="action-primary">
                   {content.primaryCta}
                 </Link>
-                <Link href="/request" className="action-secondary">
+                <Link href={language === "ko" ? "/prices" : "/request"} className="action-secondary">
                   {content.secondaryCta}
                 </Link>
               </div>
@@ -455,16 +452,17 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] border border-[rgba(32,34,31,0.06)] bg-[var(--color-porcelain-gray)] shadow-[0_26px_80px_rgba(32,34,31,0.08)] sm:rounded-[40px]">
-              <Image
-                src="/tangle-face-consult.png"
-                alt={content.imageAlt}
-                fill
-                priority
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-contain object-center"
-              />
-            </div>
+            {language === "ko" ? (
+              <div className="relative overflow-hidden rounded-[28px] bg-[#183e34] p-6 text-white sm:p-9">
+                <div className="flex items-center justify-between text-xs tracking-widest text-[#c5e2d2]"><span>탱글의 서울 경험 노트</span><span>SEOUL ONLY</span></div>
+                <h2 className="mt-8 text-3xl font-semibold leading-snug sm:text-4xl">시술은 다르니까,<br />찾는 기준도 다르게.</h2>
+                <p className="mt-4 text-sm leading-7 text-[#d4e4dc]">한 사람의 경험에서 시작한 25개 분야.<br />이름이 정확하지 않은 곳과 아직 정보가 없는 분야까지 그대로 담았습니다.</p>
+                <div className="mt-7 grid grid-cols-2 gap-3">
+                  {[{ name: "주사·스킨부스터", query: "리쥬란", note: "병원과 원장별로" }, { name: "리프팅·레이저", query: "써마지", note: "장비와 시술별로" }, { name: "성형·모발이식", query: "모발이식", note: "관심 부위별로" }, { name: "체형 관리·경락", query: "경락", note: "관리 목적별로" }].map((item) => <Link key={item.name} href={`/clinics?q=${encodeURIComponent(item.query)}`} className="rounded-2xl border border-white/20 bg-white/[0.06] p-4 hover:bg-white/[0.14]"><span className="text-[11px] text-[#b8d4c6]">{item.note}</span><span className="mt-2 flex items-center justify-between text-sm font-semibold">{item.name}<span aria-hidden="true">↗</span></span></Link>)}
+                </div>
+                <div className="mt-7 flex flex-wrap items-center gap-2 text-[11px] text-[#d4e4dc]"><span className="rounded-full border border-white/25 px-3 py-1">사용자 제공 경험</span><span>현재 소속·장비는 확인 필요</span></div>
+              </div>
+            ) : <div className="rounded-[28px] bg-[#183e34] p-8 text-white"><p className="text-xs tracking-widest text-[#c5e2d2]">SEOUL EXPERIENCE NOTES</p><h2 className="mt-8 text-4xl font-semibold leading-tight">Explore 25 treatment<br />and care topics.</h2><p className="mt-6 text-sm leading-7 text-[#d4e4dc]">Personal experience notes with original Korean text, reference prices, and information to confirm before consultation.</p><Link href="/clinics" className="mt-8 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#183e34]">Explore Seoul notes ↗</Link></div>}
           </div>
         </section>
 

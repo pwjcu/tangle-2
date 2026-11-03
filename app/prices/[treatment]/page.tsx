@@ -396,6 +396,7 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
             <Link href="/prices" className="ghost-link">
               다른 시술 지수 보기
             </Link>
+            <Link href={`/clinics?q=${encodeURIComponent(name)}`} className="ghost-link">관련 서울 경험 추천 보기 →</Link>
           </div>
         </section>
 

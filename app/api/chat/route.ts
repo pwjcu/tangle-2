@@ -1,113 +1,66 @@
 import { NextResponse } from "next/server";
-import OpenAI from "openai";
-import { createClient } from "@supabase/supabase-js";
-import { languageInstructions, supportedLanguages, type SupportedLanguage } from "../../../lib/i18n";
-import { mergeLocalTreatments } from "../../../lib/localTreatments";
+import { type SupportedLanguage } from "../../../lib/i18n";
 import { standardTreatmentPrices } from "../../../lib/시술표준가격";
+import { loadConsultTreatments, type ConsultTreatment } from "../../../lib/상담시술자료";
+import { ConsultInputError, normalizeConsultLanguage, readConsultBody, readConsultText } from "../../../lib/상담입력검증";
+import { findClinicRecommendationText } from "../../../lib/서울경험추천";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+function normalized(value: string) {
+  return value.normalize("NFKC").replace(/\s+/g, "").toLowerCase();
+}
 
-const apiKey = process.env.OPENAI_API_KEY;
+function priceReferences(message: string) {
+  const query = normalized(message);
+  return standardTreatmentPrices.filter((price) => [price.treatment_name, ...price.aliases]
+    .some((name) => normalized(name).length >= 2 && query.includes(normalized(name))));
+}
 
-function normalizeLanguage(value: unknown): SupportedLanguage {
-  if (typeof value === "string" && supportedLanguages.includes(value as SupportedLanguage)) {
-    return value as SupportedLanguage;
+const localIntro: Record<SupportedLanguage, string> = {
+  ko: "등록 자료에서 찾은 참고 정보입니다. 실시간 검색이나 개인별 진료 결과는 아닙니다.",
+  en: "These are stored reference records, not live search results or an individual medical assessment. Source text may be in Korean.",
+  zh: "以下是已登记的参考资料，并非实时搜索或个人医疗判断。原始资料可能为韩语。",
+  ja: "登録済みの参考情報です。リアルタイム検索や個別の医療判断ではありません。原文は韓国語の場合があります。",
+  th: "ข้อมูลนี้เป็นข้อมูลอ้างอิงที่บันทึกไว้ ไม่ใช่การค้นหาแบบสดหรือการประเมินทางการแพทย์เฉพาะบุคคล ข้อมูลต้นฉบับอาจเป็นภาษาเกาหลี",
+};
+
+function localReply(message: string, language: SupportedLanguage, treatments: ConsultTreatment[]) {
+  const prices = priceReferences(message);
+  const clinicText = findClinicRecommendationText(message);
+  const isClinicQuestion = /병원|원장|의사|의원|명의|클리닉|어디|clinic|doctor/i.test(message);
+  const isPriceQuestion = /가격|얼마|비용|견적|price|cost|budget/i.test(message);
+  const query = normalized(message);
+  const matched = treatments.filter((item) => query.includes(normalized(item.name))).slice(0, 3);
+  if (clinicText && (isClinicQuestion || (!isPriceQuestion && matched.length === 0))) {
+    return `${localIntro[language]}\n\n${clinicText}\n\n전체 경험추천: /clinics`;
   }
-
-  return "ko";
+  if (prices.length && (isPriceQuestion || !matched.length)) {
+    const rows = prices.slice(0, 8).map((price) => `${price.treatment_name} · ${price.variant}: ${price.min_price_manwon}~${price.max_price_manwon}만원 (${price.kind === "single" ? "단일" : price.kind === "package" ? "패키지" : price.kind === "combination" ? "복합" : "무제한권"})`);
+    return `${localIntro[language]}\n\n${rows.join("\n")}\n\n2026-10-21 반영 사용자 제공 요약자료 · VAT 10% 별도. 규격·회차가 다른 가격은 직접 비교할 수 없으며 병원의 현재 견적과 다를 수 있습니다.${prices.length > 8 ? ` 나머지 ${prices.length - 8}개 규격은 가격표에서 확인해주세요.` : ""}\n전체 가격표: /prices`;
+  }
+  if (matched.length) {
+    return `${localIntro[language]}\n\n${matched.map((item) => `${item.name}\n${item.description}\n등록 회복 정보: ${item.recovery || "미기재"}\n등록 주의사항: ${item.side_effects || "미기재"}`).join("\n\n")}\n\n시술 적합성과 개인별 회복은 진료에서 확인해주세요. 가격은 규격별 가격표(/prices)를 참고하세요.`;
+  }
+  const guidance: Record<SupportedLanguage, string> = {
+    ko: "시술명과 궁금한 내용을 함께 적어주세요. 예: ‘리쥬란 가격’, ‘프로파운드 회복’, ‘창피부과 경험추천’. 서울 병원·원장 경험담은 /clinics, 규격별 가격은 /prices에서 볼 수 있습니다. 기록에 없는 병원·의사나 효능은 추측하지 않습니다.",
+    en: "Please include a treatment or clinic name from the catalog, such as 리쥬란. See /clinics for Seoul experience notes and /prices for reference prices. We do not invent missing facts.",
+    zh: "请填写目录中的项目或医院名称，例如 리쥬란。首尔经验记录见 /clinics，规格价格见 /prices。未记录的信息不会推测。",
+    ja: "リストにある施術名や医院名（例: 리쥬란）を入力してください。ソウルの体験記録は /clinics、規格別価格は /prices で確認できます。未記載の情報は推測しません。",
+    th: "โปรดระบุชื่อหัตถการหรือคลินิกจากรายการ เช่น 리쥬란 ดูบันทึกประสบการณ์ในโซลที่ /clinics และราคาอ้างอิงที่ /prices เราจะไม่คาดเดาข้อมูลที่ไม่มี",
+  };
+  return guidance[language];
 }
 
 export async function POST(req: Request) {
-  if (!apiKey) {
-    return NextResponse.json({
-      reply: "현재 AI 연결이 꺼져 있어요. 시술 가격대나 회복 정보는 관리자에게 먼저 확인해주세요.",
-    });
-  }
-
-  const openai = new OpenAI({ apiKey });
-
+  let language: SupportedLanguage = "ko";
   try {
-    const { message, language } = await req.json();
-    const responseLanguage = normalizeLanguage(language);
-
-    const { data: treatments } = await supabase
-      .from("treatments")
-      .select("name, price_min, price_max, category, description, side_effects, recovery, synergy, cycle, recommended_for");
-
-    const mergedTreatments = mergeLocalTreatments(treatments);
-
-    const treatmentInfo = mergedTreatments
-      ?.map((treatment) =>
-        [
-          `- 시술명: ${treatment.name}`,
-          `카테고리: ${treatment.category}`,
-          `가격대: ${treatment.price_min}~${treatment.price_max}만원`,
-          `설명: ${treatment.description}`,
-          `부작용: ${treatment.side_effects || "별도 기재 없음"}`,
-          `회복: ${treatment.recovery || "별도 기재 없음"}`,
-          `추천 대상: ${treatment.recommended_for || "별도 기재 없음"}`,
-          `시너지: ${treatment.synergy || "별도 기재 없음"}`,
-          `권장 주기: ${treatment.cycle || "별도 기재 없음"}`,
-        ].join(" / "),
-      )
-      .join("\n");
-
-    const standardPriceInfo = standardTreatmentPrices
-      .map((price) =>
-        [
-          `- 시술명: ${price.treatment_name}`,
-          `별칭: ${price.aliases.join(", ") || "별도 기재 없음"}`,
-          `규격: ${price.variant}`,
-          `가격대: ${price.min_price_manwon}~${price.max_price_manwon}만원`,
-          `제공 평균: ${price.average_price_manwon === null ? "미제공" : `${price.average_price_manwon}만원`}`,
-          `가격 유형(kind): ${price.kind}`,
-          `회차: ${price.session_count === null ? "환산 불가 또는 미제공" : `${price.session_count}회`}`,
-        ].join(" / "),
-      )
-      .join("\n");
-
-    const systemPrompt = `
-      너는 가격과 회복 정보까지 같이 설명하는 뷰티 상담 가이드다.
-      아래 시술 데이터와 표준규격 가격 자료만 근거로 답변해야 하며, 없는 정보는 추측하지 않는다.
-
-      [시술 데이터]
-      ${treatmentInfo}
-
-      [표준규격 가격 자료 — 2026-10-21 반영]
-      사용자가 제공한 요약자료이며 가격은 만원 단위, 부가세(VAT) 10% 별도 기준이다.
-      원본 가격표 이미지 75건을 독립적으로 검증한 자료가 아니며, 실시간 시세나 검증된 실측 통계로 표현하지 않는다.
-      제공 평균은 사용자 자료에 적힌 값이며 새로 계산한 통계가 아니다. 미제공된 평균을 임의로 계산하지 않는다.
-      kind는 single=단일 시술, package=패키지, combination=복합 시술, unlimited=무제한권을 뜻한다.
-      ${standardPriceInfo}
-
-      [답변 원칙]
-      1. 가격 질문에서 같은 시술과 규격이 표준규격 가격 자료에 있으면 그 가격대를 우선 사용하고 시술명, 용량·샷수·회차 등의 규격과 부가세 별도 기준을 함께 말한다. 규격이 불명확하면 용량이나 샷수 등 비교에 필요한 조건을 먼저 질문한다.
-      2. 부작용이나 회복 질문이면 데이터에 있는 표현만 요약한다.
-      3. 진단처럼 단정하지 말고, 최종 판단은 실제 병원 상담이 필요하다고 안내한다.
-      4. 답변은 3~5문장으로 간결하게 작성한다.
-      5. 시술 비교를 요청받으면 가격, 회복, 시너지 기준으로 정리한다.
-      6. 반드시 ${languageInstructions[responseLanguage]}로 답변한다.
-      7. 단일 시술, 패키지, 복합 시술, 무제한권의 가격을 섞거나 규격이 다른 가격을 하나의 범위로 합치지 않는다. 무제한권을 임의로 1회 가격으로 환산하지 않는다.
-      8. 표준규격 가격 자료에 없는 시술의 가격은 기존 시술 데이터에 있는 범위만 말하며, 해당 규격의 가격 근거가 없으면 확인이 필요하다고 안내한다.
-      9. 자료의 행 수나 이미지 75건을 시술별 근거 표본 수로 말하지 않으며, 제공 평균·범위에 통계적 검증이 끝났다고 표현하지 않는다.
-    `;
-
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: message },
-      ],
-      temperature: 0.7,
-    });
-
-    return NextResponse.json({ reply: completion.choices[0].message.content });
+    const body = await readConsultBody(req);
+    language = normalizeConsultLanguage(body.language);
+    const message = readConsultText(body.message, "질문", 2_000);
+    const treatments = await loadConsultTreatments();
+    // Search stored references locally. Questions are never sent to an external AI provider.
+    return NextResponse.json({ reply: localReply(message, language, treatments), source: "reference", aiAvailable: false });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({
-      reply: "답변을 정리하는 중 문제가 생겼어요. 잠시 후 다시 질문해주세요.",
-    });
+    const known = error instanceof ConsultInputError;
+    return NextResponse.json({ reply: known ? error.message : localIntro[language], source: "error" }, { status: known ? error.status : 500 });
   }
 }

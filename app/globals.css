@@ -55,7 +55,7 @@ h2,
 h3,
 h4 {
   letter-spacing: -0.05em;
-  line-height: 1.04;
+  line-height: 1.18;
 }
 
 p,
@@ -231,4 +231,11 @@ span {
 
 .animate-fade-up {
   animation: fade-up 0.35s ease-out;
+}
+
+:focus-visible { outline: 3px solid #3b7565; outline-offset: 4px; }
+button:disabled { cursor: not-allowed; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
