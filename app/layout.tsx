@@ -4,6 +4,7 @@ import ChatBot from "./components/ChatBot";
 import LanguageDock from "./components/LanguageDock";
 import LanguageProvider from "./components/LanguageProvider";
 import Link from "next/link";
+import TangleXDrAidee from "./components/탱글x닥터에이디";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://tangle.kr"),
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | Tangle",
   },
   description:
-    "서울 시술별 병원·원장 경험 추천, 규격별 참고 가격, 조건별 시술 후보를 한곳에서 비교하고 상담을 준비하세요.",
+    "사람과 정보, 병원을 잇는 탱글. 광고·후기가 아닌 경험과 추천을 바탕으로 시술별 병원·원장 정보와 참고 가격을 정리해 상담과 선택을 돕습니다.",
 };
 
 export default function RootLayout({
@@ -31,11 +32,13 @@ export default function RootLayout({
               <Link href="/" className="text-xl font-bold text-[var(--color-carbon)]">탱글 <span className="text-xs font-medium">Tangle</span></Link>
               <nav aria-label="서비스 바로가기" className="flex flex-wrap gap-x-5 gap-y-3">
                 <Link href="/clinics">서울 경험 추천</Link>
+                <Link href="/guide/breast">가슴성형 가이드</Link>
                 <Link href="/prices">시술 가격표</Link>
                 <Link href="/recommend">조건별 추천</Link>
                 <Link href="/my">내 요청</Link>
               </nav>
             </div>
+            <div className="mt-5"><TangleXDrAidee variant="strip" placement="footer" /></div>
             <p className="mt-4 max-w-3xl text-xs leading-6">경험 추천과 참고 가격은 상담 준비를 위한 정보입니다. 개인별 시술 적합성·비용·현재 진료 여부는 의료기관에 확인해 주세요.</p>
           </footer>
           <ChatBot />

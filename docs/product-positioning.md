@@ -1,5 +1,15 @@
 # Tangle Product Positioning
 
+## Mission (2026-11)
+
+탱글은 사람과 정보, 그리고 병원을 잇는 허브입니다.
+
+- 후기나 광고가 아니라, 실제로 다녀온 사람의 경험과 추천을 바탕으로 정보를 짜임새 있게 정리합니다.
+- 경험은 주관적이라는 점을 숨기지 않습니다. 누가, 언제, 어떤 경로로 얻은 정보인지 출처와 범위를 함께 보여 줍니다.
+- 목표는 순위를 매기는 것이 아니라 환자가 스스로 선택할 수 있도록 돕는 것입니다.
+- 광고비로 병원 노출이나 순위를 바꾸지 않습니다. 서비스 운영을 돕는 파트너(협찬)는 병원 정보와 분리하고, 협찬임을 항상 표시합니다.
+- 다음 단계: 웹을 마무리한 뒤 앱으로 출시하고 홍보합니다.
+
 ## Core Purpose
 
 Tangle connects consumers and clinics.
@@ -75,3 +85,21 @@ Implementation direction:
 - expose a `카카오 채널` menu item
 - connect it with `NEXT_PUBLIC_KAKAO_CHANNEL_URL`
 - use it for quick inquiry, channel add, and future consultation routing
+
+## Experience Guides
+
+분야별로 경험을 깊게 정리한 가이드를 둡니다. 첫 가이드는 `/guide/breast`(가슴성형)입니다.
+
+- 근거: 운영진이 2026년 11월 직접 다녀온 서울 성형외과 10곳 상담, 치과의사·간호사·성형외과 전문의·일반의 지인의 의견.
+- 제품 사실(FDA 승인, 제조사 상태, 보증 조건)은 공개 자료로 확인하고 출처를 링크합니다.
+- 업계 추측(공급 계약, 리베이트 등)과 특정 병원 이름을 엮은 추측은 공개 화면에 싣지 않습니다.
+- 상담 경험과 수술 후기를 구분해 표기합니다.
+
+## Partner (Sponsor)
+
+`탱글 × 닥터에이디` — 운영진이 함께 만드는 헤어케어 브랜드를 파트너로 노출합니다.
+
+- 설정: `lib/파트너.ts` (자사몰 주소는 `NEXT_PUBLIC_DRAIDEE_SHOP_URL`, UTM 자동 부착)
+- 노출 위치: 홈 하단 섹션, 전 페이지 푸터 띠. 의료 가이드 본문 안에는 넣지 않습니다.
+- 링크는 `rel="sponsored"`, 화면에는 SPONSORED 표기와 관계 고지 문구를 둡니다.
+- 모델 이미지: `public/partners/draidee/`, 브랜드 폰트: `public/fonts/draidee-brand.*`

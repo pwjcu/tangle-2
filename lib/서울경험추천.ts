@@ -17,6 +17,8 @@ export type ClinicRecommendation = {
   status: ClinicStatus;
   providers: ClinicProvider[];
   note: string | null;
+  /** 이 분야를 더 깊게 정리한 탱글 가이드 경로 */
+  guide_href?: string;
   source_text: string;
 };
 

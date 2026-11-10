@@ -22,7 +22,7 @@ const expected = {
   "thread-lifting-fillers": ["압토스", "페이스플러스", "박정근", "창피부과", "김창식"],
   "acne-scars": ["창피부과", "김창식"], "acne-hair-removal": ["채선경", "선릉 라엘르", "대치동?"],
   "hair-transplant": ["비절개", "참닥터", "김주용"], "nose": ["이지성", "자가늑", "안승현", "김주연"],
-  "facial-contouring": ["안승현", "박정근"], "eyes": ["배인호"], "breast": ["데이터 부족"],
+  "facial-contouring": ["안승현", "박정근"], "eyes": ["배인호"], "breast": ["더 성형외과", "옥재진", "바노바기 성형외과", "반재상", "위시 성형외과", "윈느 성형외과", "김의건", "/guide/breast"],
   "fat-removal": ["비공개"], "under-eyes": ["데이터 부족"], "face-lift": ["온리프", "제이준", "브라운", "닥터미"],
   "profound": ["닥터스의원 신사", "성현철", "기계 없앤다함"],
   "thermage": ["바비리팅 의원", "원장님들"], "shape-consulting": ["창피부과", "김창식"],
@@ -35,7 +35,8 @@ for (const [id, keywords] of Object.entries(expected)) {
   assert.ok(item, id);
   for (const keyword of keywords) assert.ok(JSON.stringify(item).includes(keyword), id + ": " + keyword);
 }
-assert.equal(items.filter((row) => row.status === "insufficient").length, 3);
+assert.equal(items.filter((row) => row.status === "insufficient").length, 2);
+assert.equal(items.find((row) => row.id === "breast").providers.length, 10);
 assert.equal(items.filter((row) => row.status === "withheld").length, 1);
 assert.ok(items.filter((row) => ["insufficient", "withheld"].includes(row.status)).every((row) => row.providers.length === 0));
 assert.equal(items.find((row) => row.id === "acne-hair-removal").providers[0].clinic, null);
@@ -87,7 +88,7 @@ for (const budget of [true, null, {}, "", "Infinity", -1, 10001]) {
 const chat = route("chat").POST;
 assert.equal((await chat(request({ message: "" }))).status, 400);
 assert.equal((await chat(request({ message: "a".repeat(18000) }))).status, 413);
-for (const [query, expectedText] of [["리쥬란 병원", "네스트"], ["써마지 가격", "만원"], ["채선경 원장", "미확인"], ["고우리 병원", "데이터 부족"]]) {
+for (const [query, expectedText] of [["리쥬란 병원", "네스트"], ["써마지 가격", "만원"], ["채선경 원장", "미확인"], ["고우리 병원", "데이터 부족"], ["가슴 보형물 뭐가 좋아요", "/guide/breast"], ["모티바 병원", "바노바기"]]) {
  const response = await chat(request({ message: query }));
  assert.equal(response.status, 200);
  const body = await response.json();
@@ -104,5 +105,13 @@ assert.equal((await route("requests").POST(quoteRequest)).status, 503);
 assert.equal((await route("requests").POST(request({}))).status, 403);
 const status = await route("quote-status").GET();
 assert.deepEqual(await status.json(), { enabled: false });
-console.log("서울 25개 분야 원문·검색·정보상태, 인증권한·외부전송 차단 검증 통과");
+const guide = require(path.join(root, "lib/가슴성형가이드.ts"));
+assert.deepEqual(guide.breastGuidePriority.map((item) => item.title), ["의사 실력", "체형과 체질", "수술 방법", "보형물 브랜드"]);
+assert.deepEqual(guide.breastImplants.map((item) => item.id), ["mentor-smooth", "mentor-xtra", "mentor-boost", "bouns", "motiva"]);
+assert.ok(guide.breastImplants.every((item) => (item.facts ?? []).every((fact) => fact.url.startsWith("https://"))));
+assert.ok(JSON.stringify(guide.breastImplants).includes("SmoothSilk"), "모티바는 텍스쳐가 아닌 매끈한 표면");
+assert.ok(guide.formatBreastGuideText().includes("진단이나 병원·제품 추천이 아닙니다"));
+const partner = require(path.join(root, "lib/파트너.ts"));
+assert.ok(partner.drAideePartner.disclosure.includes("파트너 브랜드"));
+console.log("서울 25개 분야·가슴성형 가이드·파트너 표기 원문·검색·정보상태, 인증권한·외부전송 차단 검증 통과");
 console.log("추천 105개 조건 검증 통과: 결과 " + successCount + "개, 자료 부족 " + noResultCount + "개");

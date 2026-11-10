@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "title": "가슴성형 상담 가이드",
+    "region": "서울",
+    "received_at": "2026-11-09",
+    "consulted_at": "2026-11",
+    "source_type": "탱글 운영진이 직접 다녀온 서울 성형외과 10곳 상담과, 치과의사·간호사·성형외과 전문의·일반의 지인에게 들은 의견",
+    "verification_status": "개인 경험·의견 정리 / 제품 사실은 공개 자료로 확인",
+    "price_note": "가격대는 2026년 11월 상담 시점에 안내받은 범위입니다. 병원·사이즈·수술 방법에 따라 달라집니다.",
+    "notice": "개인 상담 경험과 의료진 지인의 의견을 정리한 참고 자료이며, 의학적 진단이나 특정 병원·제품의 추천·보증이 아닙니다. 병원이나 보형물 제조사의 협찬·대가 없이 작성했습니다. 최종 결정은 집도의와 충분히 상담한 뒤 내려 주세요."
+  },
+  "summary": "어떤 보형물을 고르느냐보다 누가, 어떤 층에, 어떤 사이즈로, 얼마나 깨끗하게 수술하느냐가 결과를 더 크게 좌우합니다.",
+  "priority": [
+    { "title": "의사 실력", "detail": "경력이나 수술 횟수보다, 공부와 연습을 많이 하고 많이 가르치는 의사가 수술을 잘한다는 의견이었습니다." },
+    { "title": "체형과 체질", "detail": "모양 만족도는 지방·살성 > 키 > 체형 > 보형물 순으로 영향을 받습니다. 어느 정도 지방이 있는 분이 라인이 가장 자연스럽습니다." },
+    { "title": "수술 방법", "detail": "어느 층(근막하·이중평면)에, 어떤 사이즈를 넣느냐." },
+    { "title": "보형물 브랜드", "detail": "프리미엄급끼리는 안전성 차이를 비교하는 의미가 거의 없어, 모양과 촉감 취향을 환자가 고르게 하는 경우가 많습니다." }
+  ],
+  "implants": [
+    {
+      "id": "mentor-smooth", "name": "멘토 스무스", "maker": "Mentor (미국)", "price": null,
+      "feel": "부드러움", "strengths": "오랫동안 쓰인 제품", "cautions": "리플링 보고가 많아 요즘은 잘 쓰지 않음",
+      "fit": "마른 분에게는 권하지 않음", "long_term_data": "많음"
+    },
+    {
+      "id": "mentor-xtra", "name": "멘토 엑스트라", "maker": "Mentor (미국)", "price": "450~650만 원",
+      "feel": "촉감 만족도가 가장 높다는 평", "strengths": "부드러운 촉감, 균형 있는 볼륨, 크게 할 때 유리, 장기 데이터 많음",
+      "cautions": "마른 분은 작은 사이즈로", "fit": "살집 있는 분, 사이즈 욕심 있는 분", "long_term_data": "많음"
+    },
+    {
+      "id": "mentor-boost", "name": "멘토 부스트", "maker": "Mentor (미국)", "price": "750~950만 원",
+      "feel": "탱글하면서 말랑 (엑스트라와 모티바의 중간)", "strengths": "형태 안정성, 윗가슴 볼륨, 지지력, 리플링 감소",
+      "cautions": "출시가 비교적 최근이라 임상 결과가 적음", "fit": "윗볼륨이 아쉬운 분", "long_term_data": "중간"
+    },
+    {
+      "id": "bouns", "name": "바운스", "maker": "한스바이오메드 (국내)", "price": "850~1,100만 원",
+      "feel": "부드럽고 자연스러움", "strengths": "흉곽 폭·볼륨·돌출도를 고려한 5단계 사이즈 체계로 체형 보완, 파열 평생 보증",
+      "cautions": "사람에게 쓴 장기 데이터가 가장 적음. 같은 회사의 이전 제품(벨라젤) 이슈를 찜찜해하는 분도 있음",
+      "fit": "체형 보완이 필요한 분", "long_term_data": "적음",
+      "facts": [
+        { "text": "2026년 4월 국내 판매 시작, 식약처 허가", "url": "https://www.hankyung.com/article/202607305049i", "source": "한국경제" },
+        { "text": "파열은 평생, 가슴확대의 구형구축(Baker 3·4등급)도 평생 무상 교체 보증", "url": "https://www.inthenews.co.kr/news/article.html?no=90211", "source": "인더뉴스" }
+      ]
+    },
+    {
+      "id": "motiva", "name": "모티바", "maker": "Establishment Labs (코스타리카)", "price": "950~1,200만 원",
+      "feel": "비교적 단단함 ('밥그릇' 느낌이 날 수 있음)", "strengths": "자세에 따른 자연스러운 형태 변화, 구형구축 확률이 낮은 편, 재수술에도 많이 쓰임",
+      "cautions": "단단한 촉감이 맞지 않을 수 있음, 공급 상황이 병원마다 다를 수 있음", "fit": "마른 분, 새가슴, 윗볼륨 없는 분", "long_term_data": "많음",
+      "facts": [
+        { "text": "2024년 9월 미국 FDA 승인 (SmoothSilk Round·Ergonomix)", "url": "https://businesswire.com/news/home/20240926359459/en/Establishment-Labs-Receives-U.S.-FDA-Approval-for-Motiva-Implants/", "source": "Business Wire" },
+        { "text": "표면은 매끈한 SmoothSilk이며, 블루씰은 수술 전 막이 온전한지 눈으로 확인하는 파란 차단층 (수술 후 파열 알림 기능 아님)", "url": "https://wlddevelopment.wpengine.com/blog/motiva-breast-implants/", "source": "Motiva 설명 자료" }
+      ]
+    }
+  ],
+  "implant_note": "요즘 상담에서 주로 권하는 멘토 엑스트라·부스트, 바운스, 모티바는 모두 매끈한(스무스) 계열이라, 과거 문제가 된 림프종(BIA-ALCL) 측면에서는 비교적 안전한 편이라는 의견이었습니다. 국내 연구는 소규모·단기여서 '합병증 없음' 결과를 그대로 일반화하기는 어렵습니다.",
+  "discontinued": {
+    "name": "세빈 (Sebbin)",
+    "detail": "프랑스 제조사가 2023년 회생절차를 거쳐 2025년 청산 절차에 들어가, 제조사 보증·무상 교체를 기대하기 어렵다는 이유로 상담한 의료진은 쓰지 않는다고 했습니다.",
+    "url": "https://diabetologie-endocrinologie.lequotidiendumedecin.fr/specialites/chirurgie/patrick-lichtle-sebbin-fabricant-dimplants-je-suis-desole-de-placer-les-chirurgiens-dans-une",
+    "source": "Le Quotidien du Médecin"
+  },
+  "comparisons": [
+    {
+      "id": "xtra-vs-boost", "title": "멘토 엑스트라 vs 멘토 부스트", "a": "엑스트라", "b": "부스트",
+      "lead": "차이는 비율입니다. 부스트가 대부분 낫지만 비교적 단단하고, 그래도 비싼 이유는 리플링을 줄이는 게 더 중요해서라고 합니다.",
+      "rows": [["촉감", "부드러움", "상대적으로 단단함, 탄력감"], ["볼륨", "균형 있는 볼륨", "윗가슴 볼륨"], ["강점", "크게 할 때 유리", "형태 안정성, 지지력, 리플링 감소"]]
+    },
+    {
+      "id": "plane", "title": "근막하 vs 이중평면", "a": "근막하", "b": "이중평면",
+      "lead": "이중평면은 보형물이 덜 비친다는 장점 하나, 나머지는 대부분 근막하가 유리하다는 의견이었습니다.",
+      "rows": [["보형물 비침·리플링", "마른 경우 윤곽·리플링 위험", "덜 비침"], ["회복·통증", "유리", "불리"], ["자연스러운 생착", "유리", "불리"], ["움직일 때 가슴 변형", "적음", "상대적으로 많음"]]
+    }
+  ],
+  "advice": [
+    { "title": "무게와 크기는 영구적입니다", "detail": "수술 직후엔 붓기 있을 때와 없을 때, 옷 입었을 때와 벗었을 때를 번갈아 보게 되는데, 그 5분의 모습에 현혹되면 안 됩니다. 평생 갖고 가는 이물질이고 후폭풍이 클 수 있어요." },
+    { "title": "몸에 비해 크면 체형이 무너집니다", "detail": "결국 제거하거나 마사지·체형관리를 달고 살게 됩니다. 남들 눈에는 밸런스가 무너진 사람으로 보일 수 있어요." },
+    { "title": "커서 하는 재수술은 많고, 작아서 하는 재수술은 드뭅니다", "detail": "작아서 아쉬워하는 분은 있어도 재수술까지는 잘 하지 않습니다." },
+    { "title": "처음엔 누구나 크고 화려한 걸 원해요", "detail": "열등감 있는 부분을 고치러 오다 보니 객관적 판단이 어렵습니다. 대부분 나중에 후회하고, 요즘 추세도 자연스러운 쪽입니다." },
+    { "title": "구축은 운이지만, 무리하지 않으면 대부분 경과가 좋습니다", "detail": null },
+    { "title": "의사가 강하게 밀지 않는 데는 이유가 있어요", "detail": "어떤 방식이든 환자가 모양을 후회하면 의사 탓을 하기 때문에 선택권을 환자에게 넘깁니다. 그렇다고 상담실장 말이나 후기에 혹하지는 마세요." },
+    { "title": "병원마다 권하는 브랜드가 다른 이유", "detail": "비급여라 병원이 가격을 자유롭게 정하고, 보형물은 사이즈가 많아 자주 쓰는 브랜드 재고를 많이 둡니다. 재고가 많은 제품을 권하고 싶어지는 건 자연스러우니 추천 이유를 꼭 물어보세요." }
+  ],
+  "checklist": [
+    { "title": "\"가격이 같다면 원장님 몸에는 어떤 걸 쓰시겠어요?\"", "detail": "의료진 지인이 가장 추천한 질문입니다. 가격과 영업을 빼고 의사의 생각을 들을 수 있어요." },
+    { "title": "정품 등록증·시리얼 번호·보증서", "detail": "나중에 보증이나 무상 교체를 받을 때 필요합니다." },
+    { "title": "제조사 보증 조건", "detail": "파열·구형구축 각각 몇 년까지, 어떤 조건에서 무상 교체인지." },
+    { "title": "CCTV 열람 가능 여부", "detail": "병원은 번거로워서 꺼리지만, 환자가 원하면 안 보여줄 이유도 없다고 합니다." },
+    { "title": "후기 동의 할인", "detail": "동의하면 사진·데이터는 누구나 볼 수 있게 됩니다. 동의하지 않아도 치료 목적으로 병원 직원은 엑스레이부터 모든 사진을 볼 수 있고, 좋은 사례는 학회 등에 공유되기도 해요. 사진이 어디까지 쓰이는지 물어보세요." },
+    { "title": "원하는 보형물·사이즈 재고", "detail": "모티바처럼 공급이 빠듯할 수 있는 제품은 수술일에 원하는 사이즈가 확보되는지 미리 확인하세요." },
+    { "title": "상담실장이 아닌 집도의에게 직접", "detail": "사이즈와 수술 층은 집도할 원장의 판단을 들어야 합니다." }
+  ],
+  "sources": [
+    { "title": "Establishment Labs Receives U.S. FDA Approval for Motiva Implants (Business Wire, 2024-09)", "url": "https://businesswire.com/news/home/20240926359459/en/Establishment-Labs-Receives-U.S.-FDA-Approval-for-Motiva-Implants/" },
+    { "title": "Motiva Breast Implants: Unique Safety & Technology Features", "url": "https://wlddevelopment.wpengine.com/blog/motiva-breast-implants/" },
+    { "title": "한스바이오메드 가슴보형물 바운스 공급 확대 (한국경제)", "url": "https://www.hankyung.com/article/202607305049i" },
+    { "title": "바운스 평생 보장 워런티 운영 (인더뉴스)", "url": "https://www.inthenews.co.kr/news/article.html?no=90211" },
+    { "title": "Sebbin 청산 관련 인터뷰 (Le Quotidien du Médecin)", "url": "https://diabetologie-endocrinologie.lequotidiendumedecin.fr/specialites/chirurgie/patrick-lichtle-sebbin-fabricant-dimplants-je-suis-desole-de-placer-les-chirurgiens-dans-une" }
+  ]
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import TangleXDrAidee from "./components/탱글x닥터에이디";
 import { useEffect, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import type { SupportedLanguage } from "../lib/i18n";
@@ -460,6 +461,7 @@ export default function Home() {
                 <div className="mt-7 grid grid-cols-2 gap-3">
                   {[{ name: "주사·스킨부스터", query: "리쥬란", note: "병원과 원장별로" }, { name: "리프팅·레이저", query: "써마지", note: "장비와 시술별로" }, { name: "성형·모발이식", query: "모발이식", note: "관심 부위별로" }, { name: "체형 관리·경락", query: "경락", note: "관리 목적별로" }].map((item) => <Link key={item.name} href={`/clinics?q=${encodeURIComponent(item.query)}`} className="rounded-2xl border border-white/20 bg-white/[0.06] p-4 hover:bg-white/[0.14]"><span className="text-[11px] text-[#b8d4c6]">{item.note}</span><span className="mt-2 flex items-center justify-between text-sm font-semibold">{item.name}<span aria-hidden="true">↗</span></span></Link>)}
                 </div>
+                <Link href="/guide/breast" className="mt-3 flex items-center justify-between rounded-2xl bg-white px-4 py-4 text-[#183e34] hover:bg-[#eef7f1]"><span><span className="block text-[11px] font-semibold text-[#4a705d]">NEW · 상담 10곳 정리</span><span className="mt-1 block text-sm font-semibold">가슴성형 가이드: 보형물 5종 비교</span></span><span aria-hidden="true">→</span></Link>
                 <div className="mt-7 flex flex-wrap items-center gap-2 text-[11px] text-[#d4e4dc]"><span className="rounded-full border border-white/25 px-3 py-1">사용자 제공 경험</span><span>현재 소속·장비는 확인 필요</span></div>
               </div>
             ) : <div className="rounded-[28px] bg-[#183e34] p-8 text-white"><p className="text-xs tracking-widest text-[#c5e2d2]">SEOUL EXPERIENCE NOTES</p><h2 className="mt-8 text-4xl font-semibold leading-tight">Explore 25 treatment<br />and care topics.</h2><p className="mt-6 text-sm leading-7 text-[#d4e4dc]">Personal experience notes with original Korean text, reference prices, and information to confirm before consultation.</p><Link href="/clinics" className="mt-8 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#183e34]">Explore Seoul notes ↗</Link></div>}
@@ -595,6 +597,10 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <div className="mt-16">
+          <TangleXDrAidee placement="home" />
+        </div>
       </main>
     </div>
   );

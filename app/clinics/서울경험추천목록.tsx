@@ -212,6 +212,7 @@ export default function ClinicRecommendationsList() {
                     <button type="button" onClick={() => toggleSaved(item)} aria-label={`${item.title} ${isSaved ? "저장 해제" : "저장"}`} aria-pressed={isSaved} className={`-mr-2 -mt-2 shrink-0 rounded-full p-2.5 ${isSaved ? "bg-[#f0f5e9] text-[#507744]" : "text-[#929f89] hover:bg-[#f5f7f0]"}`}><BookmarkIcon filled={isSaved} /></button>
                   </div>
                   <h3 id={`title-${item.id}`} className="mt-4 text-xl font-semibold !leading-snug text-[#31492e]">{item.title}</h3>
+                  {item.guide_href && <Link href={item.guide_href} className="mt-4 flex items-center justify-between rounded-xl bg-[#315640] px-4 py-3 text-sm font-semibold text-white hover:bg-[#244530]">보형물 비교·상담 체크리스트 보기<span aria-hidden="true">→</span></Link>}
                   <div className="mt-5 space-y-4">
                     {item.providers.map((provider, index) => <div key={`${provider.clinic}-${index}`} className={index ? "border-t border-[#eef1e9] pt-4" : ""}>
                       <p className="text-[15px] font-semibold text-[#3f5138]">{provider.clinic ?? "병원명 미확인"}</p>

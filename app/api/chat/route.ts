@@ -4,6 +4,7 @@ import { standardTreatmentPrices } from "../../../lib/시술표준가격";
 import { loadConsultTreatments, type ConsultTreatment } from "../../../lib/상담시술자료";
 import { ConsultInputError, normalizeConsultLanguage, readConsultBody, readConsultText } from "../../../lib/상담입력검증";
 import { findClinicRecommendationText } from "../../../lib/서울경험추천";
+import { formatBreastGuideText } from "../../../lib/가슴성형가이드";
 
 function normalized(value: string) {
   return value.normalize("NFKC").replace(/\s+/g, "").toLowerCase();
@@ -26,6 +27,9 @@ const localIntro: Record<SupportedLanguage, string> = {
 function localReply(message: string, language: SupportedLanguage, treatments: ConsultTreatment[]) {
   const prices = priceReferences(message);
   const clinicText = findClinicRecommendationText(message);
+  if (/가슴|보형물|멘토|모티바|바운스|breast|implant/i.test(message)) {
+    return `${localIntro[language]}\n\n${formatBreastGuideText()}${clinicText ? `\n\n${clinicText}` : ""}\n\n전체 가이드: /guide/breast`;
+  }
   const isClinicQuestion = /병원|원장|의사|의원|명의|클리닉|어디|clinic|doctor/i.test(message);
   const isPriceQuestion = /가격|얼마|비용|견적|price|cost|budget/i.test(message);
   const query = normalized(message);
