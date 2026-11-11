@@ -25,8 +25,14 @@ export type ClinicRecommendation = {
 export const clinicRecommendationMeta = source.metadata;
 export const clinicRecommendations = source.recommendations as ClinicRecommendation[];
 export const clinicCategoryLabels: Record<ClinicCategory, string> = {
-  skin: "피부 시술", surgery: "성형·모발", body: "체형·경락",
+  skin: "피부", surgery: "성형", body: "체형·경락",
 };
+/** 화면에서는 피부(피부 시술 + 체형·경락)와 성형 두 갈래로 크게 나눕니다. */
+export const clinicGroups: readonly { id: ClinicCategory; label: string; detail: string; categories: readonly ClinicCategory[] }[] = [
+  { id: "skin", label: "피부", detail: "주사·리프팅·레이저·관리", categories: ["skin", "body"] },
+  { id: "surgery", label: "성형", detail: "눈·코·윤곽·가슴·거상·모발이식", categories: ["surgery"] },
+];
+
 export const clinicStatusLabels: Record<ClinicStatus, string> = {
   experience: "경험 정보", confirm: "추가 확인 필요", insufficient: "데이터 부족", withheld: "비공개",
 };
@@ -51,7 +57,7 @@ export function getClinicRecommendations(
 ): ClinicRecommendation[] {
   const terms = query.trim().split(/\s+/).map(normalizeClinicSearch).filter(Boolean);
   return clinicRecommendations.filter((item) =>
-    (category === "all" || item.category === category) &&
+    (category === "all" || item.category === category || (category === "skin" && item.category === "body")) &&
     (status === "all" || item.status === status) &&
     terms.every((term) => searchText(item).includes(term)),
   );

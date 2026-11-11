@@ -13,7 +13,7 @@
 
 ## 파트너 (탱글 × 닥터에이디)
 
-`lib/파트너.ts`에서 문구와 모델 이미지를 관리합니다. 자사몰 주소는 `NEXT_PUBLIC_DRAIDEE_SHOP_URL` 환경변수로 넣으며, 비어 있으면 "공식몰 오픈 준비 중"으로 표시됩니다. 브랜드 폰트는 `public/fonts/draidee-brand.woff2`(또는 .otf/.ttf)로 넣으면 적용됩니다.
+`lib/파트너.ts`에서 문구와 배너 이미지(`public/partners/draidee/banner-wide.webp`)를 관리합니다. 자사몰 주소는 기본 `https://doctoraidee.com`이며 `NEXT_PUBLIC_DRAIDEE_SHOP_URL` 환경변수로 바꿀 수 있습니다. 브랜드 폰트는 `public/fonts/draidee-brand.woff2`(또는 .otf/.ttf)로 넣으면 적용됩니다.
 
 ## 개발·검증
 

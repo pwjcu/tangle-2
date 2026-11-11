@@ -5,6 +5,7 @@ import { useMemo, useState, useSyncExternalStore } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   clinicCategoryLabels,
+  clinicGroups,
   clinicRecommendationMeta,
   clinicRecommendations,
   clinicStatusLabels,
@@ -128,7 +129,7 @@ export default function ClinicRecommendationsList() {
         <div className="shell flex flex-wrap items-center justify-between gap-3 py-5">
           <Link href="/" className="text-2xl font-semibold tracking-[-0.06em] text-[#244e3e]" aria-label="탱글 홈">tangle<span className="text-[#8caa80]">.</span></Link>
           <nav aria-label="주요 메뉴" className="flex flex-wrap items-center gap-1 text-sm">
-            <Link href="/clinics" aria-current="page" className="rounded-full bg-[#edf4ec] px-4 py-2 font-semibold text-[#294f3e]">서울 경험 추천</Link>
+            {clinicGroups.map((group) => <Link key={group.id} href={`/clinics?category=${group.id}`} aria-current={category === group.id ? "page" : undefined} className={category === group.id ? "rounded-full bg-[#edf4ec] px-4 py-2 font-semibold text-[#294f3e]" : "ghost-link"}>{group.label}</Link>)}
             <Link href="/prices" className="ghost-link">가격 참고표</Link>
             <Link href="/recommend" className="ghost-link">시술 탐색</Link>
           </nav>
@@ -164,6 +165,16 @@ export default function ClinicRecommendationsList() {
       </section>
 
       <section className="shell" aria-labelledby="search-heading">
+        <div className="mb-4 grid grid-cols-2 gap-3 sm:gap-4" role="group" aria-label="피부·성형 선택">
+          {clinicGroups.map((group) => {
+            const active = category === group.id;
+            const count = clinicRecommendations.filter((item) => group.categories.includes(item.category)).length;
+            return <button key={group.id} type="button" aria-pressed={active} onClick={() => updateFilters({ category: active ? "all" : group.id })} className={`rounded-[24px] border p-5 text-left sm:rounded-[28px] sm:p-7 ${active ? "border-[#315640] bg-[#315640] text-white" : "border-[#dce8df] bg-white text-[#304a3a] hover:bg-[#f3f6ee]"}`}>
+              <span className="flex items-baseline justify-between gap-2"><span className="text-2xl font-semibold sm:text-4xl">{group.label}</span><span className="text-sm opacity-70">{count}개</span></span>
+              <span className="mt-2 block text-xs leading-5 opacity-75 sm:text-sm">{group.detail}</span>
+            </button>;
+          })}
+        </div>
         <div className="rounded-[28px] border border-[#dce8df] bg-white p-5 shadow-[0_12px_40px_rgba(35,68,49,0.04)] sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 id="search-heading" className="text-lg font-semibold !leading-snug text-[#304a3a]">찾고 싶은 시술이나 이름이 있나요?</h2>
@@ -174,9 +185,6 @@ export default function ClinicRecommendationsList() {
             <input key={query} id="clinic-search" name="q" type="search" defaultValue={query} maxLength={100} placeholder="예: 리쥬란, 김창식, 창피부과" className="min-w-0 flex-1 rounded-2xl border border-[#dce5da] bg-[#fafcf8] px-4 py-3 text-sm outline-none focus:border-[#719579] focus:ring-2 focus:ring-[#dce9d9]" />
             <button className="rounded-2xl bg-[#315640] px-5 py-3 text-sm font-semibold text-white hover:bg-[#244530]" type="submit">검색</button>
           </form>
-          <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="분야별 필터">
-            {(["all", "skin", "surgery", "body"] as const).map((value) => <button key={value} type="button" aria-pressed={category === value} onClick={() => updateFilters({ category: value })} className={`rounded-full border px-4 py-2 text-sm font-medium ${category === value ? "border-[#315640] bg-[#315640] text-white" : "border-[#e0e6db] text-[#647160] hover:bg-[#f3f6ee]"}`}>{value === "all" ? "전체" : clinicCategoryLabels[value]}<span className="ml-2 text-xs opacity-70">{value === "all" ? clinicRecommendations.length : clinicRecommendations.filter((item) => item.category === value).length}</span></button>)}
-          </div>
           <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-[#edf0e9] pt-4">
             <label htmlFor="clinic-status" className="text-xs font-medium text-[#6c7968]">정보 상태</label>
             <select id="clinic-status" value={status} onChange={(event) => updateFilters({ status: event.target.value })} className="rounded-lg border border-[#e0e6db] bg-white px-3 py-2 text-sm text-[#4c604d]">
@@ -212,7 +220,7 @@ export default function ClinicRecommendationsList() {
                     <button type="button" onClick={() => toggleSaved(item)} aria-label={`${item.title} ${isSaved ? "저장 해제" : "저장"}`} aria-pressed={isSaved} className={`-mr-2 -mt-2 shrink-0 rounded-full p-2.5 ${isSaved ? "bg-[#f0f5e9] text-[#507744]" : "text-[#929f89] hover:bg-[#f5f7f0]"}`}><BookmarkIcon filled={isSaved} /></button>
                   </div>
                   <h3 id={`title-${item.id}`} className="mt-4 text-xl font-semibold !leading-snug text-[#31492e]">{item.title}</h3>
-                  {item.guide_href && <Link href={item.guide_href} className="mt-4 flex items-center justify-between rounded-xl bg-[#315640] px-4 py-3 text-sm font-semibold text-white hover:bg-[#244530]">보형물 비교·상담 체크리스트 보기<span aria-hidden="true">→</span></Link>}
+                  {item.guide_href && <Link href={item.guide_href} className="mt-3 inline-block text-sm font-semibold text-[#315640] underline underline-offset-4">자세히 보기 →</Link>}
                   <div className="mt-5 space-y-4">
                     {item.providers.map((provider, index) => <div key={`${provider.clinic}-${index}`} className={index ? "border-t border-[#eef1e9] pt-4" : ""}>
                       <p className="text-[15px] font-semibold text-[#3f5138]">{provider.clinic ?? "병원명 미확인"}</p>

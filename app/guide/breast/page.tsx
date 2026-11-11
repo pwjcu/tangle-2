@@ -36,15 +36,15 @@ export default function BreastGuidePage() {
         <div className="shell flex flex-wrap items-center justify-between gap-3 py-5">
           <Link href="/" className="text-2xl font-semibold tracking-[-0.06em] text-[#244e3e]" aria-label="탱글 홈">tangle<span className="text-[#8caa80]">.</span></Link>
           <nav aria-label="주요 메뉴" className="flex flex-wrap items-center gap-1 text-sm">
-            <Link href="/clinics" className="ghost-link">서울 경험 추천</Link>
-            <Link href="/guide/breast" aria-current="page" className="rounded-full bg-[#edf4ec] px-4 py-2 font-semibold text-[#294f3e]">가슴성형 가이드</Link>
+            <Link href="/clinics?category=skin" className="ghost-link">피부</Link>
+            <Link href="/clinics?category=surgery" className="rounded-full bg-[#edf4ec] px-4 py-2 font-semibold text-[#294f3e]">성형</Link>
             <Link href="/prices" className="ghost-link">가격 참고표</Link>
           </nav>
         </div>
       </header>
 
       <section className="shell pb-10 pt-10 sm:pt-16" aria-labelledby="guide-title">
-        <p className="mb-5 flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-[#4a705d]"><span className="h-2 w-2 rounded-full bg-[#6b9277]" /> TANGLE GUIDE · BREAST</p>
+        <p className="mb-5 flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-[#4a705d]"><span className="h-2 w-2 rounded-full bg-[#6b9277]" /> <Link href="/clinics?category=surgery" className="underline underline-offset-4">성형</Link> · 가슴</p>
         <h1 id="guide-title" className="text-[2.2rem] font-semibold !leading-[1.18] text-[#243f33] sm:text-[3.4rem]">상담 10곳을 다녀와서<br /><span className="text-[#75947a]">정리한 가슴성형 가이드.</span></h1>
         <p className="mt-6 max-w-2xl text-[16px] leading-8 text-[#4f5f55] sm:text-[17px]"><strong className="text-[#243f33]">{breastGuideSummary}</strong></p>
         <div className="mt-6 flex flex-wrap gap-2 text-xs font-medium text-[#53665b]">

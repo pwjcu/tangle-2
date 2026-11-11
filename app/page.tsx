@@ -40,10 +40,10 @@ const homeContent: Record<
     heroEyebrow: "서울에서 시작하는 뷰티 가이드",
     heroTitle: ["나를 위한 선택,", "조금 더 알고", "시작하세요."],
     heroBody:
-      "어떤 시술을 어디서 받을지 막막할 때. 시술별 병원·원장 경험 추천부터 규격별 가격까지, 상담 전에 궁금했던 정보를 한곳에 모았습니다.",
+      "병원·원장 경험 추천과 시술 가격을 상담 전에 무료로 확인하세요.",
     primaryCta: "서울 경험 추천 보기",
     secondaryCta: "시술 가격 비교하기",
-    helper: "개인 경험 · 참고 가격 · 확인이 필요한 정보, 출처와 함께 살펴보세요.",
+    helper: "",
     imageAlt: "카메라로 얼굴을 업로드하고 고민 부위를 표시한 뒤 병원에게만 공개하는 탱글 기능 안내",
     metrics: [
       { label: "서울 경험 노트", value: "25개 분야", body: "피부 시술·성형·체형 관리와 경락" },
@@ -84,7 +84,7 @@ const homeContent: Record<
     ],
     categoryEyebrow: "category index",
     categoryTitle: ["시술 카테고리", "한눈에 보기"],
-    categoryBody: "리프팅, 스킨부스터, 보톡스, 색소/레이저, 모공/흉터, 제모처럼 사용자가 실제로 찾는 기준으로 정리했습니다.",
+    categoryBody: "",
     clinicEyebrow: "clinic side",
     clinicTitle: ["좋은 상담의 시작은", "서로를 이해하는 정보에서."],
     clinicBody:
@@ -377,7 +377,7 @@ export default function Home() {
             </Link>
 
             <nav aria-label="주 메뉴" className="flex w-full flex-wrap items-center justify-center gap-1 sm:w-auto sm:justify-end">
-              <Link href="/clinics" className="ghost-link bg-[#e4f2ed]">{language === "ko" ? "서울 경험 추천" : "Seoul guide"}</Link>
+              {language === "ko" ? <><Link href="/clinics?category=skin" className="ghost-link bg-[#e4f2ed]">피부</Link><Link href="/clinics?category=surgery" className="ghost-link bg-[#e4f2ed]">성형</Link></> : <Link href="/clinics" className="ghost-link bg-[#e4f2ed]">Seoul guide</Link>}
               <Link href="/prices" className="ghost-link">
                 {t("nav.prices")}
               </Link>
@@ -448,21 +448,30 @@ export default function Home() {
                   {content.secondaryCta}
                 </Link>
               </div>
-              <p className="mt-4 text-[12px] font-semibold text-[var(--color-muted)] sm:text-[13px]">
-                {content.helper}
-              </p>
+              {content.helper && (
+                <p className="mt-4 text-[12px] font-semibold text-[var(--color-muted)] sm:text-[13px]">
+                  {content.helper}
+                </p>
+              )}
             </div>
 
             {language === "ko" ? (
               <div className="relative overflow-hidden rounded-[28px] bg-[#183e34] p-6 text-white sm:p-9">
-                <div className="flex items-center justify-between text-xs tracking-widest text-[#c5e2d2]"><span>탱글의 서울 경험 노트</span><span>SEOUL ONLY</span></div>
-                <h2 className="mt-8 text-3xl font-semibold leading-snug sm:text-4xl">시술은 다르니까,<br />찾는 기준도 다르게.</h2>
-                <p className="mt-4 text-sm leading-7 text-[#d4e4dc]">한 사람의 경험에서 시작한 25개 분야.<br />이름이 정확하지 않은 곳과 아직 정보가 없는 분야까지 그대로 담았습니다.</p>
-                <div className="mt-7 grid grid-cols-2 gap-3">
-                  {[{ name: "주사·스킨부스터", query: "리쥬란", note: "병원과 원장별로" }, { name: "리프팅·레이저", query: "써마지", note: "장비와 시술별로" }, { name: "성형·모발이식", query: "모발이식", note: "관심 부위별로" }, { name: "체형 관리·경락", query: "경락", note: "관리 목적별로" }].map((item) => <Link key={item.name} href={`/clinics?q=${encodeURIComponent(item.query)}`} className="rounded-2xl border border-white/20 bg-white/[0.06] p-4 hover:bg-white/[0.14]"><span className="text-[11px] text-[#b8d4c6]">{item.note}</span><span className="mt-2 flex items-center justify-between text-sm font-semibold">{item.name}<span aria-hidden="true">↗</span></span></Link>)}
+                <div className="flex items-center justify-between text-xs tracking-widest text-[#c5e2d2]"><span>서울 경험 추천</span><span>25개 분야</span></div>
+                <h2 className="mt-6 text-2xl font-semibold leading-snug sm:text-3xl">무엇을 찾으세요?</h2>
+                <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                  {[
+                    { id: "skin", name: "피부", items: ["리쥬란", "써마지", "실리프팅", "여드름 흉터", "경락"] },
+                    { id: "surgery", name: "성형", items: ["눈", "코", "윤곽", "가슴", "거상", "모발이식"] },
+                  ].map((group) => (
+                    <div key={group.id} className="rounded-3xl border border-white/20 bg-white/[0.06] p-5">
+                      <Link href={`/clinics?category=${group.id}`} className="flex items-center justify-between text-3xl font-semibold hover:opacity-80">{group.name}<span aria-hidden="true" className="text-xl">→</span></Link>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {group.items.map((label) => <Link key={label} href={`/clinics?category=${group.id}&q=${encodeURIComponent(label)}`} className="rounded-full border border-white/25 px-3 py-1.5 text-xs hover:bg-white/[0.14]">{label}</Link>)}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <Link href="/guide/breast" className="mt-3 flex items-center justify-between rounded-2xl bg-white px-4 py-4 text-[#183e34] hover:bg-[#eef7f1]"><span><span className="block text-[11px] font-semibold text-[#4a705d]">NEW · 상담 10곳 정리</span><span className="mt-1 block text-sm font-semibold">가슴성형 가이드: 보형물 5종 비교</span></span><span aria-hidden="true">→</span></Link>
-                <div className="mt-7 flex flex-wrap items-center gap-2 text-[11px] text-[#d4e4dc]"><span className="rounded-full border border-white/25 px-3 py-1">사용자 제공 경험</span><span>현재 소속·장비는 확인 필요</span></div>
               </div>
             ) : <div className="rounded-[28px] bg-[#183e34] p-8 text-white"><p className="text-xs tracking-widest text-[#c5e2d2]">SEOUL EXPERIENCE NOTES</p><h2 className="mt-8 text-4xl font-semibold leading-tight">Explore 25 treatment<br />and care topics.</h2><p className="mt-6 text-sm leading-7 text-[#d4e4dc]">Personal experience notes with original Korean text, reference prices, and information to confirm before consultation.</p><Link href="/clinics" className="mt-8 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#183e34]">Explore Seoul notes ↗</Link></div>}
           </div>
@@ -480,6 +489,7 @@ export default function Home() {
           ))}
         </section>
 
+        {language !== "ko" && <>
         <section className="mt-16">
           <div className="mx-auto max-w-[820px] text-center">
             <p className="eyebrow">{content.decisionEyebrow}</p>
@@ -529,6 +539,7 @@ export default function Home() {
             </Link>
           ))}
         </section>
+        </>}
 
         <section className="mt-16 rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-6 shadow-[0_30px_100px_rgba(32,34,31,0.07)] backdrop-blur-xl sm:p-8 lg:p-10">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
@@ -566,7 +577,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mt-16 overflow-hidden rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/82 shadow-[0_30px_100px_rgba(32,34,31,0.07)] backdrop-blur-xl">
+        {language !== "ko" && <section className="mt-16 overflow-hidden rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/82 shadow-[0_30px_100px_rgba(32,34,31,0.07)] backdrop-blur-xl">
           <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
             <div className="p-6 sm:p-8 lg:p-10">
               <p className="eyebrow">{content.clinicEyebrow}</p>
@@ -596,7 +607,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </section>
+        </section>}
 
         <div className="mt-16">
           <TangleXDrAidee placement="home" />

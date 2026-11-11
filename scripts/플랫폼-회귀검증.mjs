@@ -112,6 +112,7 @@ assert.ok(guide.breastImplants.every((item) => (item.facts ?? []).every((fact) =
 assert.ok(JSON.stringify(guide.breastImplants).includes("SmoothSilk"), "모티바는 텍스쳐가 아닌 매끈한 표면");
 assert.ok(guide.formatBreastGuideText().includes("진단이나 병원·제품 추천이 아닙니다"));
 const partner = require(path.join(root, "lib/파트너.ts"));
-assert.ok(partner.drAideePartner.disclosure.includes("파트너 브랜드"));
+assert.ok(partner.drAideePartner.disclosure.includes("운영진") && partner.drAideePartner.disclosure.includes("광고"), "운영진 브랜드의 광고임을 밝혀야 함");
+assert.ok(partner.partnerShopHref("test").startsWith("https://doctoraidee.com/"));
 console.log("서울 25개 분야·가슴성형 가이드·파트너 표기 원문·검색·정보상태, 인증권한·외부전송 차단 검증 통과");
 console.log("추천 105개 조건 검증 통과: 결과 " + successCount + "개, 자료 부족 " + noResultCount + "개");

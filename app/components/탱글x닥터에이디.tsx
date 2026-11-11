@@ -6,7 +6,6 @@ type Props = { variant?: "feature" | "strip"; placement: string };
 /** 탱글 × 닥터에이디 협찬 표기. 병원 정보와 시각적으로 분리하고 협찬임을 항상 밝힙니다. */
 export default function TangleXDrAidee({ variant = "feature", placement }: Props) {
   const href = partnerShopHref(placement);
-  const [first, second, third] = drAideePartner.models;
 
   if (variant === "strip") {
     return (
@@ -24,36 +23,30 @@ export default function TangleXDrAidee({ variant = "feature", placement }: Props
     );
   }
 
+  const { banner, bannerTall } = drAideePartner;
+  const images = (
+    <>
+      <Image src={bannerTall.src} alt={bannerTall.alt} width={bannerTall.width} height={bannerTall.height} sizes="100vw" className="h-auto w-full sm:hidden" />
+      <Image src={banner.src} alt={banner.alt} width={banner.width} height={banner.height} sizes="(min-width: 1100px) 1080px, 100vw" className="hidden h-auto w-full sm:block" />
+    </>
+  );
+
   return (
-    <section aria-labelledby={`partner-${placement}`} className="overflow-hidden rounded-[36px] border border-[rgba(32,34,31,0.06)] bg-[#f7f6f2] shadow-[0_30px_100px_rgba(32,34,31,0.08)]">
-      <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:p-10">
-        <div>
-          <p className="inline-flex rounded-full border border-[rgba(32,34,31,0.15)] px-3 py-1 text-[10px] font-semibold tracking-[0.16em] text-[var(--color-muted)]">{drAideePartner.label} · PARTNER</p>
-          <h2 id={`partner-${placement}`} className="mt-6 text-[2rem] font-semibold leading-[1.1] tracking-[-0.04em] text-[var(--color-carbon)] sm:text-[2.6rem]">
-            탱글 <span className="font-normal text-[var(--color-muted-light)]">×</span>{" "}
-            <span className="font-draidee font-normal tracking-normal">Doctor Aidee</span>
-          </h2>
-          <p className="mt-2 text-sm font-medium text-[var(--color-muted)]">{drAideePartner.name} · {drAideePartner.line}</p>
-          <p className="mt-5 max-w-[480px] text-[15px] leading-7 text-[var(--color-muted)]">
-            탱글은 광고비로 병원 순위를 정하지 않습니다. 대신 서비스를 함께 만들어 가는 파트너가 있습니다.
-            {" "}{drAideePartner.name}는 {drAideePartner.tagline} 브랜드입니다.
-          </p>
-          <p className="font-draidee mt-5 text-[15px] italic text-[var(--color-carbon)]">{drAideePartner.product}</p>
-          <div className="mt-7">
-            {href
-              ? <a href={href} target="_blank" rel="sponsored noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-[var(--color-carbon)] px-6 py-3 text-sm font-semibold text-white hover:opacity-90 sm:w-auto">{drAideePartner.name} 공식몰 보기 ↗</a>
-              : <span className="inline-flex rounded-full border border-[rgba(32,34,31,0.15)] px-5 py-3 text-sm text-[var(--color-muted)]">공식몰 오픈 준비 중</span>}
+    <aside aria-label="탱글 파트너 브랜드" className="mx-auto max-w-[1080px]">
+      <div className="overflow-hidden rounded-[24px] border border-[rgba(32,34,31,0.08)] bg-white sm:rounded-[32px]">
+        {href ? <a href={href} target="_blank" rel="sponsored noopener noreferrer" aria-label={`${drAideePartner.name} 공식몰 열기`} className="block hover:opacity-95">{images}</a> : images}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[rgba(32,34,31,0.06)] px-5 py-5 sm:px-8">
+          <div>
+            <p className="text-xl font-semibold tracking-[-0.03em] text-[var(--color-carbon)] sm:text-2xl">{drAideePartner.tagline}</p>
+            <p className="mt-1 text-sm text-[var(--color-muted)]">{drAideePartner.product}</p>
           </div>
-        </div>
-        <div className="order-first grid grid-cols-3 items-start gap-2 sm:gap-3 lg:order-none">
-          {[first, second, third].map((model, index) => (
-            <div key={model.src} className={`overflow-hidden rounded-[20px] bg-white sm:rounded-[26px] ${index === 1 ? "mt-0" : "mt-6 sm:mt-10"}`}>
-              <Image src={model.src} alt={model.alt} width={model.width} height={model.height} sizes="(min-width: 1024px) 240px, 33vw" className="aspect-[4/5] h-auto w-full object-cover object-top" />
-            </div>
-          ))}
+          {href && <a href={href} target="_blank" rel="sponsored noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-[var(--color-carbon)] px-6 py-3 text-sm font-semibold text-white hover:opacity-90 sm:w-auto">공식몰에서 보기 ↗</a>}
         </div>
       </div>
-      <p className="border-t border-[rgba(32,34,31,0.08)] px-6 py-4 text-[12px] leading-6 text-[var(--color-muted)] sm:px-8 lg:px-10">{drAideePartner.disclosure}</p>
-    </section>
+      <p className="mt-2 flex flex-wrap items-center gap-x-2 px-1 text-[11px] leading-5 text-[var(--color-muted)]">
+        <span className="font-semibold tracking-[0.12em]">{drAideePartner.label}</span>
+        <span>{drAideePartner.disclosure}</span>
+      </p>
+    </aside>
   );
 }
