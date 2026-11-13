@@ -7,6 +7,8 @@ export type ClinicProvider = {
   doctors: string[];
   location_hint: string | null;
   note: string | null;
+  /** 탱글 운영진이 직접 수술·시술을 받은 경험 요약 */
+  experience?: string;
 };
 export type ClinicRecommendation = {
   id: string;
@@ -23,6 +25,7 @@ export type ClinicRecommendation = {
 };
 
 export const clinicRecommendationMeta = source.metadata;
+export const hasFirsthand = (item: ClinicRecommendation) => item.providers.some((provider) => Boolean(provider.experience));
 export const clinicRecommendations = source.recommendations as ClinicRecommendation[];
 export const clinicCategoryLabels: Record<ClinicCategory, string> = {
   skin: "피부", surgery: "성형", body: "체형·경락",
@@ -44,7 +47,7 @@ export function normalizeClinicSearch(value: string): string {
 function searchText(item: ClinicRecommendation): string {
   return normalizeClinicSearch([
     item.title, ...item.treatments, ...item.aliases,
-    ...item.providers.flatMap((provider) => [provider.clinic ?? "", ...provider.doctors, provider.location_hint ?? "", provider.note ?? ""]),
+    ...item.providers.flatMap((provider) => [provider.clinic ?? "", ...provider.doctors, provider.location_hint ?? "", provider.note ?? "", provider.experience ?? ""]),
     item.source_text,
   ].join(" "));
 }
@@ -87,6 +90,7 @@ function formatEntries(items: ClinicRecommendation[]): string {
     `원문: ${item.source_text}`,
     item.note,
     ...item.providers.map((provider) => provider.note),
+    ...item.providers.filter((provider) => provider.experience).map((provider) => `운영진 직접 경험(${provider.clinic}): ${provider.experience}`),
   ].filter(Boolean).join("\n")).join("\n\n");
 }
 
@@ -94,7 +98,7 @@ export function formatClinicRecommendationContext(query?: string): string {
   const items = query === undefined ? clinicRecommendations : getClinicRecommendationsForQuestion(query);
   if (!items.length) return "";
   return [
-    "[서울 한정 개인 경험 참고자료 / 외부 검증 전]",
+    "[서울 중심 개인 경험 참고자료 / 외부 검증 전]",
     clinicRecommendationMeta.source_claim,
     clinicRecommendationMeta.scope_note,
     clinicRecommendationMeta.notice,
@@ -110,6 +114,6 @@ export function findClinicRecommendationText(query: string): string {
   return [
     "사용자가 공유한 서울 개인 경험 목록에는 다음 내용이 있습니다. 병원명·현재 소속·운영 여부는 외부 검증 전이며, 추천 순위나 안전성·효과를 보장하지 않습니다.",
     formatEntries(items),
-    "전체 25개 항목과 원문은 서울 경험 추천(/clinics)에서 확인할 수 있습니다.",
+    `전체 ${clinicRecommendations.length}개 항목과 원문은 경험 추천(/clinics)에서 확인할 수 있습니다.`,
   ].join("\n\n");
 }

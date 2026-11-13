@@ -4,7 +4,7 @@ import 서울경험추천목록 from "./서울경험추천목록";
 
 export const metadata: Metadata = {
   title: "서울 경험 추천 — 시술별 병원·의료진 참고 목록",
-  description: "사용자가 공유한 서울 시술별 개인 경험 25개 항목. 병원·의료진·시술명으로 검색하고, 원문과 확인이 필요한 정보를 함께 살펴보세요.",
+  description: "탱글 운영진이 직접 받은 수술·시술 경험과 공유받은 병원·원장 정보를 피부·성형으로 정리했습니다. 병원·의료진·시술명으로 검색해 보세요.",
   alternates: { canonical: "/clinics" },
 };
 

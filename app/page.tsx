@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import type { SupportedLanguage } from "../lib/i18n";
 import { displayCategoryName, treatmentCategories } from "../lib/siteContent";
+import { clinicRecommendations } from "../lib/서울경험추천";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import { useLanguage } from "./components/LanguageProvider";
 
@@ -46,7 +47,7 @@ const homeContent: Record<
     helper: "",
     imageAlt: "카메라로 얼굴을 업로드하고 고민 부위를 표시한 뒤 병원에게만 공개하는 탱글 기능 안내",
     metrics: [
-      { label: "서울 경험 노트", value: "25개 분야", body: "피부 시술·성형·체형 관리와 경락" },
+      { label: "경험 노트", value: `${clinicRecommendations.length}개 분야`, body: "운영진이 직접 받은 수술·시술과 공유받은 병원·원장" },
       { label: "조건을 맞춘 가격 비교", value: "78개 규격", body: "샷수, 용량, 회차, 패키지를 구분한 참고가" },
       { label: "나에게 맞는 후보 탐색", value: "5개 질문", body: "고민·예산·나이대·목표·회복 기간으로 정리" },
     ],
@@ -457,12 +458,12 @@ export default function Home() {
 
             {language === "ko" ? (
               <div className="relative overflow-hidden rounded-[28px] bg-[#183e34] p-6 text-white sm:p-9">
-                <div className="flex items-center justify-between text-xs tracking-widest text-[#c5e2d2]"><span>서울 경험 추천</span><span>25개 분야</span></div>
+                <div className="flex items-center justify-between text-xs tracking-widest text-[#c5e2d2]"><span>경험 추천</span><span>{clinicRecommendations.length}개 분야</span></div>
                 <h2 className="mt-6 text-2xl font-semibold leading-snug sm:text-3xl">무엇을 찾으세요?</h2>
                 <div className="mt-7 grid gap-3 sm:grid-cols-2">
                   {[
-                    { id: "skin", name: "피부", items: ["리쥬란", "써마지", "실리프팅", "여드름 흉터", "경락"] },
-                    { id: "surgery", name: "성형", items: ["눈", "코", "윤곽", "가슴", "거상", "모발이식"] },
+                    { id: "skin", name: "피부", items: ["리쥬란", "입술필러", "써마지", "실리프팅", "여드름 흉터", "외국인"] },
+                    { id: "surgery", name: "성형", items: ["눈", "코재수술", "윤곽", "가슴", "거상", "모발이식"] },
                   ].map((group) => (
                     <div key={group.id} className="rounded-3xl border border-white/20 bg-white/[0.06] p-5">
                       <Link href={`/clinics?category=${group.id}`} className="flex items-center justify-between text-3xl font-semibold hover:opacity-80">{group.name}<span aria-hidden="true" className="text-xl">→</span></Link>

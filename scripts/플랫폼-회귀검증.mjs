@@ -13,22 +13,24 @@ delete process.env.QUOTE_WORKFLOW_ENABLED;
 const root = path.resolve(import.meta.dirname, "..");
 const recommendations = require(path.join(root, "lib/서울경험추천.ts"));
 const items = recommendations.clinicRecommendations;
-assert.equal(items.length, 25);
-assert.equal(new Set(items.map((item) => item.id)).size, 25);
+assert.equal(items.length, 31);
+assert.equal(new Set(items.map((item) => item.id)).size, 31);
 const expected = {
   "skin-injections": ["네스트의원", "이경연"], "rituo": ["닥터미 의원", "전윤주", "이서하"],
   "gouri": ["데이터 부족"], "sofwave-toning-hair-removal": ["신사디온", "박지영"],
   "custom-hand-injections": ["드네의원", "신예진", "소은의원", "김소은"],
   "thread-lifting-fillers": ["압토스", "페이스플러스", "박정근", "창피부과", "김창식"],
   "acne-scars": ["창피부과", "김창식"], "acne-hair-removal": ["채선경", "선릉 라엘르", "대치동?"],
-  "hair-transplant": ["비절개", "참닥터", "김주용"], "nose": ["이지성", "자가늑", "안승현", "김주연"],
-  "facial-contouring": ["안승현", "박정근"], "eyes": ["배인호"], "breast": ["더 성형외과", "옥재진", "바노바기 성형외과", "반재상", "위시 성형외과", "윈느 성형외과", "김의건", "/guide/breast"],
+  "hair-transplant": ["비절개", "참닥터", "김주용", "뉴헤어모발성형외과", "1,693모낭"], "nose": ["이지성", "자가늑", "안승현", "김주연", "4월31일성형외과", "김찬우", "진피"],
+  "facial-contouring": ["안승현", "박정근"], "eyes": ["배인호", "조셉성형외과", "디엠성형외과", "빵트임"], "breast": ["더 성형외과", "옥재진", "바노바기 성형외과", "반재상", "위시 성형외과", "윈느 성형외과", "김의건", "/guide/breast"],
   "fat-removal": ["비공개"], "under-eyes": ["데이터 부족"], "face-lift": ["온리프", "제이준", "브라운", "닥터미"],
   "profound": ["닥터스의원 신사", "성현철", "기계 없앤다함"],
   "thermage": ["바비리팅 의원", "원장님들"], "shape-consulting": ["창피부과", "김창식"],
   "eyebrow-tattoo": ["드보라 성형외과"], "renuvion-general-skin": ["리뉴비온", "신사 더힐"],
   "inmode": ["시간보장", "뷰티앤영"], "ulthera-thermage-output": ["강한 출력", "뷰앤플 의원"],
-  "body-care": ["모드니", "바디웰", "터한의원"], "massage": ["레비나스", "드네의원", "어메이징빅토리아", "금단비가", "약손명가", "위뷰티"],
+  "body-care": ["모드니", "바디웰", "터한의원"], "face-custom": ["서울탑초이스의원", "덴서티"], "lip-filler": ["르디테의원", "레스틸렌 키스"],
+  "nasolabial": ["진성형외과"], "orthodontics": ["리마치과"], "global-skin": ["데이뷰의원", "세라미크의원", "이종진", "70%"],
+  "skin-doctors-top": ["도미옥", "나의계절의원", "김근영", "비엘성형외과", "조한결"], "massage": ["레비나스", "드네의원", "어메이징빅토리아", "금단비가", "약손명가", "위뷰티"],
 };
 for (const [id, keywords] of Object.entries(expected)) {
   const item = items.find((row) => row.id === id);
@@ -40,7 +42,12 @@ assert.equal(items.find((row) => row.id === "breast").providers.length, 10);
 assert.equal(items.filter((row) => row.status === "withheld").length, 1);
 assert.ok(items.filter((row) => ["insufficient", "withheld"].includes(row.status)).every((row) => row.providers.length === 0));
 assert.equal(items.find((row) => row.id === "acne-hair-removal").providers[0].clinic, null);
-assert.equal(items.find((row) => row.id === "nose").providers.length, 3);
+assert.equal(items.find((row) => row.id === "nose").providers.length, 4);
+assert.equal(items.filter(recommendations.hasFirsthand).length, 6);
+assert.equal(items.flatMap((row) => row.providers).filter((p) => p.experience).length, 7);
+const privateWords = ["남편", "시부모", "막내", "아이돌", "1억", "지인 친척"];
+for (const word of privateWords) assert.ok(!JSON.stringify(items).includes(word), "사적인 표현 제외: " + word);
+assert.ok(!items.find((row) => row.id === "skin-doctors-top").providers.some((p) => ["창피부과", "드네의원"].includes(p.clinic)), "겹치는 병원 제외");
 assert.equal(recommendations.getClinicRecommendations(" 김창식 ").length, 3);
 assert.equal(recommendations.getClinicRecommendations("써마지").length, 2);
 assert.equal(recommendations.getClinicRecommendations("김창식 흉터").length, 1);
@@ -114,5 +121,5 @@ assert.ok(guide.formatBreastGuideText().includes("진단이나 병원·제품 �
 const partner = require(path.join(root, "lib/파트너.ts"));
 assert.ok(partner.drAideePartner.disclosure.includes("운영진") && partner.drAideePartner.disclosure.includes("광고"), "운영진 브랜드의 광고임을 밝혀야 함");
 assert.ok(partner.partnerShopHref("test").startsWith("https://doctoraidee.com/"));
-console.log("서울 25개 분야·가슴성형 가이드·파트너 표기 원문·검색·정보상태, 인증권한·외부전송 차단 검증 통과");
+console.log("경험 추천 31개 분야·가슴성형 가이드·파트너 표기 원문·검색·정보상태, 인증권한·외부전송 차단 검증 통과");
 console.log("추천 105개 조건 검증 통과: 결과 " + successCount + "개, 자료 부족 " + noResultCount + "개");

@@ -10,6 +10,7 @@ import {
   clinicRecommendations,
   clinicStatusLabels,
   getClinicRecommendations,
+  hasFirsthand,
   type ClinicCategory,
   type ClinicRecommendation,
   type ClinicStatus,
@@ -63,13 +64,14 @@ export default function ClinicRecommendationsList() {
   const rawStatus = params.get("status") ?? "all";
   const status: ClinicStatus | "all" = rawStatus in clinicStatusLabels ? rawStatus as ClinicStatus : "all";
   const savedOnly = params.get("saved") === "1";
+  const firsthandOnly = params.get("firsthand") === "1";
   const focusedId = params.get("item");
   const serializedSaved = useSyncExternalStore(subscribeSaved, savedSnapshot, () => "[]");
   const savedIds = useMemo(() => readSavedIds(serializedSaved), [serializedSaved]);
   const [message, setMessage] = useState("");
   const [shareFallback, setShareFallback] = useState("");
   const filtered = getClinicRecommendations(query, category, status).filter((item) =>
-    (!savedOnly || savedIds.includes(item.id)) && (!focusedId || item.id === focusedId),
+    (!savedOnly || savedIds.includes(item.id)) && (!firsthandOnly || hasFirsthand(item)) && (!focusedId || item.id === focusedId),
   );
 
   function updateFilters(values: Record<string, string | null>) {
@@ -106,6 +108,7 @@ export default function ClinicRecommendationsList() {
       if (query) url.searchParams.set("q", query);
       if (category !== "all") url.searchParams.set("category", category);
       if (status !== "all") url.searchParams.set("status", status);
+      if (firsthandOnly) url.searchParams.set("firsthand", "1");
     }
     const title = item ? `탱글 서울 경험 추천 · ${item.title}` : "탱글 서울 경험 추천";
     try {
@@ -143,15 +146,17 @@ export default function ClinicRecommendationsList() {
             <h1 id="clinic-title" className="text-[2.4rem] font-semibold !leading-[1.18] text-[#243f33] sm:text-6xl">어디서, 누구에게.<br /><span className="text-[#75947a]">경험에서 찾는 단서.</span></h1>
             <p className="mt-6 max-w-xl text-[15px] leading-7 text-[#637066] sm:text-base">지인에게 공유하던 서울 시술별 병원·의료진 메모.<br className="hidden sm:block" /> 시술명, 원장 이름, 기억 속 병원까지 한곳에서 찾아보세요.</p>
             <div className="mt-6 flex flex-wrap gap-2 text-xs font-medium text-[#53665b]">
-              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">서울 한정</span>
-              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">25개 시술·관리 항목</span>
+              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">서울 중심</span>
+              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">{clinicRecommendations.length}개 시술·관리 항목</span>
+              <span className="rounded-full border border-[#e8c9a6] bg-[#fff6ec] px-3 py-2 text-[#8a5a2b]">운영진 직접 경험 {clinicRecommendations.filter(hasFirsthand).length}개</span>
               <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">원문 포함</span>
             </div>
           </div>
           <aside className="rounded-[28px] border border-[#dce5d4] bg-[#f2f5e9] p-6 sm:p-7" aria-label="추천 정보의 출처와 범위">
             <p className="text-xs font-semibold tracking-[0.12em] text-[#69805c]">이 목록을 읽는 방법</p>
             <h2 className="mt-3 text-xl font-semibold !leading-snug text-[#364c35]">경험은 참고하고,<br />현재 정보는 확인해 주세요.</h2>
-            <p className="mt-3 text-sm leading-6 text-[#677261]">{clinicRecommendationMeta.scope_note}</p>
+            <p className="mt-3 text-sm leading-6 text-[#677261]">{clinicRecommendationMeta.firsthand_note}</p>
+            <p className="mt-2 text-sm leading-6 text-[#677261]">{clinicRecommendationMeta.scope_note}</p>
             <details className="mt-4 border-t border-[#d9e1cf] pt-4 text-sm text-[#56654e]">
               <summary className="cursor-pointer font-semibold">출처와 확인 범위 보기</summary>
               <div className="mt-3 space-y-3 text-[13px] leading-6">
@@ -191,8 +196,9 @@ export default function ClinicRecommendationsList() {
               <option value="all">모든 상태</option>
               {Object.entries(clinicStatusLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
             </select>
+            <button type="button" aria-pressed={firsthandOnly} onClick={() => updateFilters({ firsthand: firsthandOnly ? null : "1" })} className={`rounded-full border px-3 py-2 text-sm ${firsthandOnly ? "border-[#c98f55] bg-[#fff1e2] text-[#7a4a1c]" : "border-[#e0e6db] text-[#647160]"}`}>운영진 직접 경험만</button>
             <button type="button" aria-pressed={savedOnly} onClick={() => updateFilters({ saved: savedOnly ? null : "1" })} className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm ${savedOnly ? "border-[#78987a] bg-[#eff5e8] text-[#315640]" : "border-[#e0e6db] text-[#647160]"}`}><BookmarkIcon filled={savedOnly} /> 저장한 항목 <span>{savedIds.length}</span></button>
-            {(query || category !== "all" || status !== "all" || savedOnly || focusedId) && <button type="button" onClick={() => router.replace(pathname, { scroll: false })} className="ml-auto rounded-lg px-3 py-2 text-xs font-semibold text-[#6c7968] underline underline-offset-4">필터 초기화</button>}
+            {(query || category !== "all" || status !== "all" || savedOnly || firsthandOnly || focusedId) && <button type="button" onClick={() => router.replace(pathname, { scroll: false })} className="ml-auto rounded-lg px-3 py-2 text-xs font-semibold text-[#6c7968] underline underline-offset-4">필터 초기화</button>}
           </div>
         </div>
 
@@ -207,7 +213,7 @@ export default function ClinicRecommendationsList() {
           <div className="rounded-[28px] border border-dashed border-[#cfdcc9] bg-white/60 px-6 py-16 text-center">
             <h3 className="text-xl font-semibold !leading-snug text-[#42573f]">조건에 맞는 메모가 없습니다.</h3>
             <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#71806b]">{savedOnly ? "관심 있는 항목의 저장 버튼을 눌러 나만의 목록을 만들어 보세요." : "시술명이나 이름을 짧게 입력하거나 필터를 초기화해 보세요. 목록에 없는 정보를 임의로 추천하지 않습니다."}</p>
-            <button type="button" onClick={() => router.replace(pathname, { scroll: false })} className="mt-6 rounded-full bg-[#315640] px-6 py-3 text-sm font-semibold text-white">전체 25개 항목 보기</button>
+            <button type="button" onClick={() => router.replace(pathname, { scroll: false })} className="mt-6 rounded-full bg-[#315640] px-6 py-3 text-sm font-semibold text-white">전체 {clinicRecommendations.length}개 항목 보기</button>
           </div>
         ) : (
           <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -222,12 +228,13 @@ export default function ClinicRecommendationsList() {
                   <h3 id={`title-${item.id}`} className="mt-4 text-xl font-semibold !leading-snug text-[#31492e]">{item.title}</h3>
                   {item.guide_href && <Link href={item.guide_href} className="mt-3 inline-block text-sm font-semibold text-[#315640] underline underline-offset-4">자세히 보기 →</Link>}
                   <div className="mt-5 space-y-4">
-                    {item.providers.map((provider, index) => <div key={`${provider.clinic}-${index}`} className={index ? "border-t border-[#eef1e9] pt-4" : ""}>
+                    {(firsthandOnly ? item.providers.filter((provider) => provider.experience) : item.providers).map((provider, index) => <div key={`${provider.clinic}-${index}`} className={index ? "border-t border-[#eef1e9] pt-4" : ""}>
                       <p className="text-[15px] font-semibold text-[#3f5138]">{provider.clinic ?? "병원명 미확인"}</p>
                       <p className="mt-1 text-sm text-[#65725c]">{provider.doctors.length ? provider.doctors.map((name) => `${name} 님`).join(" · ") : "담당자 이름 미기재"}</p>
                       {provider.location_hint && <p className="mt-2 text-xs leading-5 text-[#829078]">지역 단서: {provider.location_hint}</p>}
+                      {provider.experience && <div className="mt-3 rounded-xl border border-[#f0dcc4] bg-[#fff8ef] px-3 py-3"><p className="text-[11px] font-semibold tracking-[0.08em] text-[#9a6430]">운영진 직접 경험</p><p className="mt-1 text-[13px] leading-6 text-[#5d4630]">{provider.experience}</p></div>}
                       {provider.note && <p className="mt-2 text-xs leading-5 text-[#829078]">{provider.note}</p>}
-                      {provider.clinic && <a href={`https://map.naver.com/p/search/${encodeURIComponent(`서울 ${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block rounded-md py-1 text-xs font-medium text-[#507045] underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 지도에서 이름 검색, 새 창`}>지도에서 이름 검색 ↗</a>}
+                      {provider.clinic && <a href={`https://map.naver.com/p/search/${encodeURIComponent(`${/대구|구리|경기|부산/.test(provider.location_hint ?? "") ? "" : "서울 "}${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block rounded-md py-1 text-xs font-medium text-[#507045] underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 지도에서 이름 검색, 새 창`}>지도에서 이름 검색 ↗</a>}
                     </div>)}
                     {item.note && <p className={`rounded-xl px-3 py-3 text-xs leading-6 ${item.providers.length ? "bg-[#f7f9f3] text-[#7c896f]" : "bg-[#f4f5f1] text-[#707b68]"}`}>{item.note}</p>}
                   </div>
