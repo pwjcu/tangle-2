@@ -34,6 +34,7 @@ export default function RootLayout({
               <nav aria-label="서비스 바로가기" className="flex flex-wrap gap-x-5 gap-y-3">
                 <Link href="/clinics?category=skin">피부</Link>
                 <Link href="/clinics?category=surgery">성형</Link>
+                <Link href="/global">Global patients · 외국인 안내</Link>
                 <Link href="/prices">시술 가격표</Link>
                 <Link href="/recommend">조건별 추천</Link>
                 <Link href="/my">내 요청</Link>

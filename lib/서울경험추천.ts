@@ -9,6 +9,8 @@ export type ClinicProvider = {
   note: string | null;
   /** 탱글 운영진이 직접 수술·시술을 받은 경험 요약 */
   experience?: string;
+  /** 탱글 협업 병원 id (lib/협업병원.ts) */
+  partner_id?: string;
 };
 export type ClinicRecommendation = {
   id: string;

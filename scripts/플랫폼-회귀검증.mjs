@@ -29,7 +29,7 @@ const expected = {
   "eyebrow-tattoo": ["드보라 성형외과"], "renuvion-general-skin": ["리뉴비온", "신사 더힐"],
   "inmode": ["시간보장", "뷰티앤영"], "ulthera-thermage-output": ["강한 출력", "뷰앤플 의원"],
   "body-care": ["모드니", "바디웰", "터한의원"], "face-custom": ["서울탑초이스의원", "덴서티"], "lip-filler": ["르디테의원", "레스틸렌 키스"],
-  "nasolabial": ["진성형외과"], "orthodontics": ["리마치과"], "global-skin": ["데이뷰의원", "세라미크의원", "이종진", "70%"],
+  "nasolabial": ["진성형외과"], "orthodontics": ["리마치과"], "global-skin": ["데이뷰의원 강남점", "데이뷰의원 명동", "세라미크의원", "이종진", "70%", "daybeau-gangnam"],
   "skin-doctors-top": ["도미옥", "나의계절의원", "김근영", "비엘성형외과", "조한결"], "massage": ["레비나스", "드네의원", "어메이징빅토리아", "금단비가", "약손명가", "위뷰티"],
 };
 for (const [id, keywords] of Object.entries(expected)) {
@@ -118,6 +118,23 @@ assert.deepEqual(guide.breastImplants.map((item) => item.id), ["mentor-smooth", 
 assert.ok(guide.breastImplants.every((item) => (item.facts ?? []).every((fact) => fact.url.startsWith("https://"))));
 assert.ok(JSON.stringify(guide.breastImplants).includes("SmoothSilk"), "모티바는 텍스쳐가 아닌 매끈한 표면");
 assert.ok(guide.formatBreastGuideText().includes("진단이나 병원·제품 추천이 아닙니다"));
+const partners = require(path.join(root, "lib/협업병원.ts"));
+const languages = ["ko", "en", "zh", "ja", "th"];
+const filled = (text) => languages.every((lang) => typeof text?.[lang] === "string" && text[lang].trim().length > 0);
+for (const clinic of partners.partnerClinics) {
+  assert.ok(filled(clinic.name) && filled(clinic.area) && filled(clinic.highlights), clinic.id + " 5개 언어");
+  assert.ok(clinic.links.length > 0 && clinic.links.every((link) => /^(https:\/\/|tel:\+82)/.test(link.url)), clinic.id + " 링크");
+  assert.ok(items.some((row) => row.providers.some((p) => p.partner_id === clinic.id)), clinic.id + " 경험 추천과 연결");
+}
+for (const row of items) for (const p of row.providers) if (p.partner_id) assert.ok(partners.partnerClinicById(p.partner_id), "없는 협업 병원 id: " + p.partner_id);
+const guideGlobal = require(path.join(root, "lib/글로벌가이드.ts"));
+for (const section of guideGlobal.globalGuideSections) for (const tip of section.tips) assert.ok(filled(tip.text), section.id + " 번역 누락: " + tip.text.ko);
+for (const phrase of guideGlobal.staffPhrases) assert.ok(filled(phrase.text), "직원용 문장 번역 누락: " + phrase.id);
+for (const plan of ["skin", "surgery"]) for (const stay of ["short", "long"]) for (const section of guideGlobal.globalGuideSections) assert.ok(guideGlobal.tipsFor(section, plan, stay).length >= 3, section.id + " " + plan + " " + stay);
+assert.ok(guideGlobal.tipsFor(guideGlobal.globalGuideSections[0], "surgery", "short").some((tip) => tip.text.en.includes("insurance")));
+assert.ok(!guideGlobal.tipsFor(guideGlobal.globalGuideSections[0], "skin", "short").some((tip) => tip.text.en.includes("insurance")));
+const i18n = require(path.join(root, "lib/i18n.ts"));
+for (const lang of languages) assert.ok(i18n.translations[lang]["nav.global"], "nav.global " + lang);
 const partner = require(path.join(root, "lib/파트너.ts"));
 assert.ok(partner.drAideePartner.disclosure.includes("운영진") && partner.drAideePartner.disclosure.includes("광고"), "운영진 브랜드의 광고임을 밝혀야 함");
 assert.ok(partner.partnerShopHref("test").startsWith("https://doctoraidee.com/"));

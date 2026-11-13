@@ -7,6 +7,7 @@ import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import type { SupportedLanguage } from "../lib/i18n";
 import { displayCategoryName, treatmentCategories } from "../lib/siteContent";
 import { clinicRecommendations } from "../lib/서울경험추천";
+import { globalGuideCopy } from "../lib/글로벌가이드";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import { useLanguage } from "./components/LanguageProvider";
 
@@ -379,6 +380,7 @@ export default function Home() {
 
             <nav aria-label="주 메뉴" className="flex w-full flex-wrap items-center justify-center gap-1 sm:w-auto sm:justify-end">
               {language === "ko" ? <><Link href="/clinics?category=skin" className="ghost-link bg-[#e4f2ed]">피부</Link><Link href="/clinics?category=surgery" className="ghost-link bg-[#e4f2ed]">성형</Link></> : <Link href="/clinics" className="ghost-link bg-[#e4f2ed]">Seoul guide</Link>}
+              <Link href="/global" className={language === "ko" ? "ghost-link" : "ghost-link bg-[#fff1d6] font-semibold"}>{t("nav.global")}</Link>
               <Link href="/prices" className="ghost-link">
                 {t("nav.prices")}
               </Link>
@@ -474,7 +476,7 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-            ) : <div className="rounded-[28px] bg-[#183e34] p-8 text-white"><p className="text-xs tracking-widest text-[#c5e2d2]">SEOUL EXPERIENCE NOTES</p><h2 className="mt-8 text-4xl font-semibold leading-tight">Explore 25 treatment<br />and care topics.</h2><p className="mt-6 text-sm leading-7 text-[#d4e4dc]">Personal experience notes with original Korean text, reference prices, and information to confirm before consultation.</p><Link href="/clinics" className="mt-8 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#183e34]">Explore Seoul notes ↗</Link></div>}
+            ) : <div className="rounded-[28px] bg-[#183e34] p-8 text-white"><p className="text-xs tracking-widest text-[#c5e2d2]">GLOBAL PATIENTS</p><h2 className="mt-8 whitespace-pre-line text-4xl font-semibold leading-tight">{globalGuideCopy.title[language]}</h2><p className="mt-6 text-sm leading-7 text-[#d4e4dc]">{globalGuideCopy.intro[language]}</p><Link href="/global" className="mt-8 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#183e34]">{t("nav.global")} ↗</Link></div>}
           </div>
         </section>
 

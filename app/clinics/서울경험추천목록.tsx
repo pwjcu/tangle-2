@@ -15,6 +15,7 @@ import {
   type ClinicRecommendation,
   type ClinicStatus,
 } from "@/lib/서울경험추천";
+import { partnerClinicById, partnerLinkLabels } from "@/lib/협업병원";
 
 const SAVED_KEY = "tangle:clinic-saved:v1";
 const SAVED_EVENT = "tangle:clinic-saved-change";
@@ -133,6 +134,7 @@ export default function ClinicRecommendationsList() {
           <Link href="/" className="text-2xl font-semibold tracking-[-0.06em] text-[#244e3e]" aria-label="탱글 홈">tangle<span className="text-[#8caa80]">.</span></Link>
           <nav aria-label="주요 메뉴" className="flex flex-wrap items-center gap-1 text-sm">
             {clinicGroups.map((group) => <Link key={group.id} href={`/clinics?category=${group.id}`} aria-current={category === group.id ? "page" : undefined} className={category === group.id ? "rounded-full bg-[#edf4ec] px-4 py-2 font-semibold text-[#294f3e]" : "ghost-link"}>{group.label}</Link>)}
+            <Link href="/global" className="ghost-link">외국인 안내</Link>
             <Link href="/prices" className="ghost-link">가격 참고표</Link>
             <Link href="/recommend" className="ghost-link">시술 탐색</Link>
           </nav>
@@ -229,11 +231,12 @@ export default function ClinicRecommendationsList() {
                   {item.guide_href && <Link href={item.guide_href} className="mt-3 inline-block text-sm font-semibold text-[#315640] underline underline-offset-4">자세히 보기 →</Link>}
                   <div className="mt-5 space-y-4">
                     {(firsthandOnly ? item.providers.filter((provider) => provider.experience) : item.providers).map((provider, index) => <div key={`${provider.clinic}-${index}`} className={index ? "border-t border-[#eef1e9] pt-4" : ""}>
-                      <p className="text-[15px] font-semibold text-[#3f5138]">{provider.clinic ?? "병원명 미확인"}</p>
+                      <p className="flex flex-wrap items-center gap-2 text-[15px] font-semibold text-[#3f5138]">{provider.clinic ?? "병원명 미확인"}{provider.partner_id && <span className="rounded-full bg-[#1f3d33] px-2 py-0.5 text-[10px] font-semibold text-white">탱글 협업</span>}</p>
                       <p className="mt-1 text-sm text-[#65725c]">{provider.doctors.length ? provider.doctors.map((name) => `${name} 님`).join(" · ") : "담당자 이름 미기재"}</p>
                       {provider.location_hint && <p className="mt-2 text-xs leading-5 text-[#829078]">지역 단서: {provider.location_hint}</p>}
                       {provider.experience && <div className="mt-3 rounded-xl border border-[#f0dcc4] bg-[#fff8ef] px-3 py-3"><p className="text-[11px] font-semibold tracking-[0.08em] text-[#9a6430]">운영진 직접 경험</p><p className="mt-1 text-[13px] leading-6 text-[#5d4630]">{provider.experience}</p></div>}
                       {provider.note && <p className="mt-2 text-xs leading-5 text-[#829078]">{provider.note}</p>}
+                      {partnerClinicById(provider.partner_id) && <div className="mt-3 flex flex-wrap gap-1.5">{partnerClinicById(provider.partner_id)!.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className="rounded-full border border-[#cfe0d6] bg-white px-3 py-1.5 text-xs font-semibold text-[#2f5544] hover:bg-[#eef6f1]">{partnerLinkLabels[link.kind].ko}{link.note ? ` (${link.note.ko})` : ""} ↗</a>)}</div>}
                       {provider.clinic && <a href={`https://map.naver.com/p/search/${encodeURIComponent(`${/대구|구리|경기|부산/.test(provider.location_hint ?? "") ? "" : "서울 "}${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block rounded-md py-1 text-xs font-medium text-[#507045] underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 지도에서 이름 검색, 새 창`}>지도에서 이름 검색 ↗</a>}
                     </div>)}
                     {item.note && <p className={`rounded-xl px-3 py-3 text-xs leading-6 ${item.providers.length ? "bg-[#f7f9f3] text-[#7c896f]" : "bg-[#f4f5f1] text-[#707b68]"}`}>{item.note}</p>}
