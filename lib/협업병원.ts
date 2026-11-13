@@ -87,6 +87,25 @@ export const partnerClinics: PartnerClinic[] = [
       { kind: "website", url: "https://gangnam.ceramiqueclinic.com/" },
     ],
   },
+  {
+    id: "ceramique-myeongdong",
+    name: { ko: "세라미크 글로벌의원 명동", en: "Ceramique Global Clinic Myeongdong", zh: "Ceramique Global 皮肤科 明洞店", ja: "セラミクグローバルクリニック 明洞店", th: "Ceramique Global Clinic สาขาเมียงดง" },
+    area: { ko: "명동 · 명동8길 27 엠플라자 4층", en: "Myeongdong · 4F M Plaza, 27 Myeongdong 8-gil", zh: "明洞 · 明洞8街 27 M Plaza 4楼", ja: "明洞 · 明洞8キル27 Mプラザ4階", th: "เมียงดง · ชั้น 4 M Plaza, 27 Myeongdong 8-gil" },
+    doctor: { ko: "대표원장 우동진", en: "Head doctor: 우동진 (Woo)", zh: "院长：우동진", ja: "院長：우동진", th: "แพทย์หัวหน้า: 우동진" },
+    highlights: {
+      ko: "명동 관광 동선에 있는 세라미크 지점. 보톡스·필러·리프팅·레이저·스킨부스터·제모·수액 진료.",
+      en: "Ceramique's branch in the Myeongdong shopping area. Botox, fillers, lifting, laser, skin boosters, hair removal and IV therapy.",
+      zh: "Ceramique 位于明洞购物区的分店。肉毒、填充、提升、激光、皮肤水光、脱毛和点滴。",
+      ja: "明洞の観光エリアにあるセラミクの分院。ボトックス・フィラー・リフト・レーザー・スキンブースター・脱毛・点滴。",
+      th: "สาขาของ Ceramique ในย่านช้อปปิ้งเมียงดง โบท็อกซ์ ฟิลเลอร์ ยกกระชับ เลเซอร์ สกินบูสเตอร์ กำจัดขน และดริปวิตามิน",
+    },
+    links: [
+      { kind: "booking", url: "https://myeongdong.ceramiqueclinic.com/reservation" },
+      { kind: "price", url: "https://myeongdong.ceramiqueclinic.com/products/pricing" },
+      { kind: "phone", url: "tel:+82269532264" },
+      { kind: "website", url: "https://myeongdong.ceramiqueclinic.com/" },
+    ],
+  },
 ];
 
 export const partnerClinicById = (id: string | undefined) => partnerClinics.find((clinic) => clinic.id === id);

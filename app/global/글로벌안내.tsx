@@ -127,7 +127,7 @@ export default function GlobalGuide() {
         <section aria-labelledby="partners-title">
           <h2 id="partners-title" className="text-2xl font-semibold text-[#2f4a3a]">{L(copy.partnersTitle)}</h2>
           <p className="mt-2 text-sm text-[#6b7867]">{L(copy.partnersNote)}</p>
-          <div className="mt-5 grid gap-4 lg:grid-cols-3">
+          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {partnerClinics.map((clinic) => (
               <article key={clinic.id} className="flex flex-col rounded-[24px] border border-[#dde6da] bg-white p-5 sm:p-6">
                 <span className="w-fit rounded-full bg-[#1f3d33] px-2.5 py-1 text-[10px] font-semibold text-white">{L(copy.partnerBadge)}</span>

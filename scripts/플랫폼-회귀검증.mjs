@@ -29,7 +29,7 @@ const expected = {
   "eyebrow-tattoo": ["드보라 성형외과"], "renuvion-general-skin": ["리뉴비온", "신사 더힐"],
   "inmode": ["시간보장", "뷰티앤영"], "ulthera-thermage-output": ["강한 출력", "뷰앤플 의원"],
   "body-care": ["모드니", "바디웰", "터한의원"], "face-custom": ["서울탑초이스의원", "덴서티"], "lip-filler": ["르디테의원", "레스틸렌 키스"],
-  "nasolabial": ["진성형외과"], "orthodontics": ["리마치과"], "global-skin": ["데이뷰의원 강남점", "데이뷰의원 명동", "세라미크의원", "이종진", "70%", "daybeau-gangnam"],
+  "nasolabial": ["진성형외과"], "orthodontics": ["리마치과"], "global-skin": ["데이뷰의원 강남점", "데이뷰의원 명동", "세라미크의원", "이종진", "70%", "daybeau-gangnam", "ceramique-myeongdong", "우동진"],
   "skin-doctors-top": ["도미옥", "나의계절의원", "김근영", "비엘성형외과", "조한결"], "massage": ["레비나스", "드네의원", "어메이징빅토리아", "금단비가", "약손명가", "위뷰티"],
 };
 for (const [id, keywords] of Object.entries(expected)) {

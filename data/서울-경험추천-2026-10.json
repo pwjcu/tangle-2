@@ -191,8 +191,8 @@
     {
       "id": "global-skin", "category": "skin", "title": "외국인 환자 많은 피부과",
       "treatments": ["외국인 피부과", "제모", "리프팅", "안티에이징"], "aliases": ["글로벌", "외국인", "foreign", "global", "데이뷰", "세라미크"], "status": "experience",
-      "providers": [{"clinic": "데이뷰의원 강남점", "doctors": ["임정욱"], "location_hint": "신논현역 (강남대로 494)", "note": "대표 시술: 리프팅·보톡스·필러·스킨부스터·레이저 제모(젠틀맥스 프로플러스). 원장 이름은 공식 사이트 기준입니다.", "partner_id": "daybeau-gangnam"}, {"clinic": "데이뷰의원 명동 더프리미엄점", "doctors": [], "location_hint": "명동 (남대문로 90 세미콜론 명동 6층)", "note": "왓츠앱·라인·카카오톡으로 외국어 상담. 원장 이름은 확인하지 못했습니다.", "partner_id": "daybeau-myeongdong"}, {"clinic": "세라미크의원 강남점", "doctors": ["이종진"], "location_hint": "강남역 (봉은사로2길 29)", "note": "대표원장 이종진, 미용해부학 박사. 해부학 기반 리프팅·안티에이징과 레이저 제모.", "partner_id": "ceramique-gangnam"}],
-      "note": "탱글 협업 병원입니다. 운영진 전언: 외국인 환자 비중이 약 70%로 높고, 외국인·국내 환자 모두 만족도가 높은 편. 비중 수치는 병원 공식 자료로 확인하지 않았습니다. 외국인 환자용 안내는 /global에 있습니다.", "source_text": "외국인 환자 비중 약 70%, 글로벌·국내 환자 만족도 높음 — 데이뷰의원(강남·명동), 세라미크의원 (탱글 협업, 링크·원장·대표 시술은 공식 사이트로 보충)"
+      "providers": [{"clinic": "데이뷰의원 강남점", "doctors": ["임정욱"], "location_hint": "신논현역 (강남대로 494)", "note": "대표 시술: 리프팅·보톡스·필러·스킨부스터·레이저 제모(젠틀맥스 프로플러스). 원장 이름은 공식 사이트 기준입니다.", "partner_id": "daybeau-gangnam"}, {"clinic": "데이뷰의원 명동 더프리미엄점", "doctors": [], "location_hint": "명동 (남대문로 90 세미콜론 명동 6층)", "note": "왓츠앱·라인·카카오톡으로 외국어 상담. 원장 이름은 확인하지 못했습니다.", "partner_id": "daybeau-myeongdong"}, {"clinic": "세라미크의원 강남점", "doctors": ["이종진"], "location_hint": "강남역 (봉은사로2길 29)", "note": "대표원장 이종진, 미용해부학 박사. 해부학 기반 리프팅·안티에이징과 레이저 제모.", "partner_id": "ceramique-gangnam"}, {"clinic": "세라미크 글로벌의원 명동", "doctors": ["우동진"], "location_hint": "명동 (명동8길 27 엠플라자 4층)", "note": "세라미크 명동 지점. 보톡스·필러·리프팅·레이저·스킨부스터·제모·수액. 원장 이름은 공식 사이트 기준입니다.", "partner_id": "ceramique-myeongdong"}],
+      "note": "탱글 협업 병원입니다. 운영진 전언: 외국인 환자 비중이 약 70%로 높고, 외국인·국내 환자 모두 만족도가 높은 편. 비중 수치는 병원 공식 자료로 확인하지 않았습니다. 외국인 환자용 안내는 /global에 있습니다.", "source_text": "외국인 환자 비중 약 70%, 글로벌·국내 환자 만족도 높음 — 데이뷰의원(강남·명동), 세라미크의원(강남·명동) (탱글 협업, 링크·원장·대표 시술은 공식 사이트로 보충)"
     },
     {
       "id": "skin-doctors-top", "category": "skin", "title": "오래 진료받은 피부과 원장님",
