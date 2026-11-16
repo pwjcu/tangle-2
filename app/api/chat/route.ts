@@ -45,7 +45,7 @@ function localReply(message: string, language: SupportedLanguage, treatments: Co
     return `${localIntro[language]}\n\n${matched.map((item) => `${item.name}\n${item.description}\n등록 회복 정보: ${item.recovery || "미기재"}\n등록 주의사항: ${item.side_effects || "미기재"}`).join("\n\n")}\n\n시술 적합성과 개인별 회복은 진료에서 확인해주세요. 가격은 규격별 가격표(/prices)를 참고하세요.`;
   }
   const guidance: Record<SupportedLanguage, string> = {
-    ko: "시술명과 궁금한 내용을 함께 적어주세요. 예: ‘리쥬란 가격’, ‘프로파운드 회복’, ‘창피부과 경험추천’. 서울 병원·원장 경험담은 /clinics, 규격별 가격은 /prices에서 볼 수 있습니다. 기록에 없는 병원·의사나 효능은 추측하지 않습니다.",
+    ko: "시술명과 궁금한 내용을 함께 적어주세요. 예: ‘리쥬란 가격’, ‘프로파운드 회복’, ‘창피부과 경험추천’. 추천 병원·원장 경험담은 /clinics, 규격별 가격은 /prices에서 볼 수 있습니다. 기록에 없는 병원·의사나 효능은 추측하지 않습니다.",
     en: "Please include a treatment or clinic name from the catalog, such as 리쥬란. See /clinics for Seoul experience notes and /prices for reference prices. We do not invent missing facts.",
     zh: "请填写目录中的项目或医院名称，例如 리쥬란。首尔经验记录见 /clinics，规格价格见 /prices。未记录的信息不会推测。",
     ja: "リストにある施術名や医院名（例: 리쥬란）を入力してください。ソウルの体験記録は /clinics、規格別価格は /prices で確認できます。未記載の情報は推測しません。",

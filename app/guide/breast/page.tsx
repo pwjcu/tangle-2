@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SiteHeader from "../../components/사이트헤더";
 import {
   breastAdvice,
   breastChecklist,
@@ -32,16 +33,7 @@ export default function BreastGuidePage() {
 
   return (
     <main className="min-h-screen pb-20">
-      <header className="border-b border-[#dce8e2] bg-white/90">
-        <div className="shell flex flex-wrap items-center justify-between gap-3 py-5">
-          <Link href="/" className="text-2xl font-semibold tracking-[-0.06em] text-[#244e3e]" aria-label="탱글 홈">tangle<span className="text-[#8caa80]">.</span></Link>
-          <nav aria-label="주요 메뉴" className="flex flex-wrap items-center gap-1 text-sm">
-            <Link href="/clinics?category=skin" className="ghost-link">피부</Link>
-            <Link href="/clinics?category=surgery" className="rounded-full bg-[#edf4ec] px-4 py-2 font-semibold text-[#294f3e]">성형</Link>
-            <Link href="/prices" className="ghost-link">가격 참고표</Link>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <section className="shell pb-10 pt-10 sm:pt-16" aria-labelledby="guide-title">
         <p className="mb-5 flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-[#4a705d]"><span className="h-2 w-2 rounded-full bg-[#6b9277]" /> <Link href="/clinics?category=surgery" className="underline underline-offset-4">성형</Link> · 가슴</p>
@@ -152,7 +144,7 @@ export default function BreastGuidePage() {
           <ul className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
             {consulted.providers.map((provider) => <li key={provider.clinic} className="rounded-2xl border border-[#e3e9df] bg-white px-4 py-3"><p className="text-sm font-semibold text-[#3f5138]">{provider.clinic}</p><p className="mt-1 text-xs text-[#6b7867]">{provider.doctors.length ? `${provider.doctors.join(" · ")} 원장` : provider.note}</p></li>)}
           </ul>
-          <Link href="/clinics?item=breast" className="mt-4 inline-block text-sm font-semibold text-[#4b6640] underline underline-offset-4">서울 경험 추천에서 보기 ↗</Link>
+          <Link href="/clinics?item=breast" className="mt-4 inline-block text-sm font-semibold text-[#4b6640] underline underline-offset-4">추천 병원에서 보기 ↗</Link>
         </section>}
 
         <section aria-labelledby="sources-heading" className="border-t border-[#dce5d4] pt-8 text-xs leading-6 text-[#6f7b68]">

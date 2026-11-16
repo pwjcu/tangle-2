@@ -68,7 +68,7 @@ export default function ChatBot() {
         <button type="button" aria-label={t("chat.close")} onClick={() => { setIsOpen(false); toggleRef.current?.focus(); }} className="h-9 w-9 rounded-full hover:bg-white/10">✕</button>
       </div>
       <div ref={scrollRef} role="log" aria-live="polite" aria-relevant="additions" className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4">
-        <div className="rounded-2xl bg-[#f0f7f3] p-4 text-sm leading-7">{ko ? "시술명이나 병원·원장 이름을 입력해 보세요. 등록된 서울 경험 추천과 참고 가격에서 찾아드려요. 실시간 검색·의료 진단은 제공하지 않습니다." : "Search registered Seoul experience notes and reference prices by treatment, clinic, or doctor. This guide does not provide live search or medical diagnosis."}</div>
+        <div className="rounded-2xl bg-[#f0f7f3] p-4 text-sm leading-7">{ko ? "시술명이나 병원·원장 이름을 입력해 보세요. 등록된 추천 병원과 참고 가격에서 찾아드려요. 실시간 검색·의료 진단은 제공하지 않습니다." : "Search registered Seoul experience notes and reference prices by treatment, clinic, or doctor. This guide does not provide live search or medical diagnosis."}</div>
         {messages.length === 0 && <div className="flex flex-wrap gap-2">{["리쥬란", "써마지", "여드름 흉터", "채선경"].map((query) => <button key={query} onClick={() => void send(query)} disabled={loading} className="rounded-full border px-3 py-2 text-xs hover:bg-[#f0f7f3]">{query}</button>)}</div>}
         {messages.map((message, index) => <div key={index} className={message.role === "user" ? "flex justify-end" : "flex justify-start"}><p className={"max-w-[94%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-7 " + (message.role === "user" ? "bg-[#183e34] text-white" : "border border-[#dce9e7] bg-white")}>{message.text}</p></div>)}
         {loading && <p role="status" className="text-xs text-stone-500">{t("chat.loading")}</p>}

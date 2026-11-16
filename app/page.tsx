@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import SiteHeader from "./components/사이트헤더";
 import TangleXDrAidee from "./components/탱글x닥터에이디";
 import { useEffect, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import type { SupportedLanguage } from "../lib/i18n";
 import { displayCategoryName, treatmentCategories } from "../lib/siteContent";
-import { clinicRecommendations } from "../lib/서울경험추천";
+import { clinicCategoryLabels, clinicGroups, clinicRecommendations, hasFirsthand } from "../lib/서울경험추천";
 import { globalGuideCopy } from "../lib/글로벌가이드";
-import LanguageSwitcher from "./components/LanguageSwitcher";
 import { useLanguage } from "./components/LanguageProvider";
 
 const homeContent: Record<
@@ -39,16 +40,16 @@ const homeContent: Record<
 > = {
   ko: {
     brand: "탱글 tangle",
-    heroEyebrow: "서울에서 시작하는 뷰티 가이드",
-    heroTitle: ["나를 위한 선택,", "조금 더 알고", "시작하세요."],
+    heroEyebrow: "광고 없는 병원 추천",
+    heroTitle: ["병원 가기 전,", "탱글에서 먼저", "확인하세요."],
     heroBody:
-      "병원·원장 경험 추천과 시술 가격을 상담 전에 무료로 확인하세요.",
-    primaryCta: "서울 경험 추천 보기",
+      "직접 받아 본 경험으로 거른 추천 병원과 시술 가격. 광고·가짜 후기는 뺐습니다.",
+    primaryCta: "추천 병원 보기",
     secondaryCta: "시술 가격 비교하기",
     helper: "",
     imageAlt: "카메라로 얼굴을 업로드하고 고민 부위를 표시한 뒤 병원에게만 공개하는 탱글 기능 안내",
     metrics: [
-      { label: "경험 노트", value: `${clinicRecommendations.length}개 분야`, body: "운영진이 직접 받은 수술·시술과 공유받은 병원·원장" },
+      { label: "추천 병원", value: `${clinicRecommendations.length}개 분야`, body: "광고 없이, 직접 받아 본 경험으로 고른 피부·성형·치과" },
       { label: "조건을 맞춘 가격 비교", value: "78개 규격", body: "샷수, 용량, 회차, 패키지를 구분한 참고가" },
       { label: "나에게 맞는 후보 탐색", value: "5개 질문", body: "고민·예산·나이대·목표·회복 기간으로 정리" },
     ],
@@ -314,7 +315,6 @@ const categoryCopy: Record<SupportedLanguage, Record<string, { name: string; exa
   },
 };
 
-const kakaoChannelUrl = process.env.NEXT_PUBLIC_KAKAO_CHANNEL_URL || "";
 
 export default function Home() {
   const { language, t } = useLanguage();
@@ -364,255 +364,177 @@ export default function Home() {
     await supabase.auth.signOut();
   };
 
+  const firsthand = clinicRecommendations.filter(hasFirsthand).slice(0, 6);
+  const groupImages: Record<string, string> = { skin: "/images/cat-skin.webp", surgery: "/images/cat-surgery.webp", dental: "/images/cat-dental.webp" };
+  const groupChips: Record<string, string[]> = {
+    skin: ["리쥬란", "입술필러", "써마지", "여드름 흉터"],
+    surgery: ["눈", "코재수술", "가슴", "모발이식"],
+    dental: ["임플란트", "치아미백", "치아교정"],
+  };
+  const ko = language === "ko";
+  const loginButton = userEmail ? (
+    <>
+      <Link href="/my" className="ghost-link hidden sm:inline-flex">{t("nav.my")}</Link>
+      <button onClick={handleLogout} className="rounded-full border border-[var(--color-silver-mist)] bg-white px-3 py-1.5 text-[12px] font-semibold">{t("nav.logout")}</button>
+    </>
+  ) : (
+    <button onClick={handleKakaoLogin} className="rounded-full bg-[var(--brand)] px-4 py-2 text-[12px] font-semibold text-white hover:opacity-90 sm:text-[13px]">{ko ? "로그인" : t("nav.login")}</button>
+  );
+
   return (
     <div className="pb-12">
-      <header className="sticky top-2 z-30 sm:top-4">
-        <div className="shell">
-          <div className="flex min-h-[56px] flex-wrap items-center justify-between gap-2 rounded-[30px] border border-[rgba(32,34,31,0.07)] bg-white/50 px-3 py-3 shadow-[0_18px_60px_rgba(32,34,31,0.07)] backdrop-blur-2xl sm:min-h-[64px] sm:rounded-full sm:bg-white/68 sm:px-4 sm:py-2">
-            <Link href="/" className="flex items-center gap-2 rounded-full px-1.5 py-1.5 sm:gap-3 sm:px-2 sm:py-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-sky-violet)] text-[12px] font-semibold text-[var(--color-carbon)] sm:h-9 sm:w-9 sm:text-[13px]">
-                T
-              </span>
-              <span className="text-[15px] font-semibold tracking-[-0.055em] sm:text-[20px]" data-display="true">
-                {content.brand}
-              </span>
-            </Link>
+      <SiteHeader right={loginButton} />
 
-            <nav aria-label="주 메뉴" className="flex w-full flex-wrap items-center justify-center gap-1 sm:w-auto sm:justify-end">
-              {language === "ko" ? <><Link href="/clinics?category=skin" className="ghost-link bg-[#e4f2ed]">피부</Link><Link href="/clinics?category=surgery" className="ghost-link bg-[#e4f2ed]">성형</Link></> : <Link href="/clinics" className="ghost-link bg-[#e4f2ed]">Seoul guide</Link>}
-              <Link href="/global" className={language === "ko" ? "ghost-link" : "ghost-link bg-[#fff1d6] font-semibold"}>{t("nav.global")}</Link>
-              <Link href="/prices" className="ghost-link">
-                {t("nav.prices")}
-              </Link>
-              <Link href="/recommend" className="ghost-link">
-                {t("nav.recommend")}
-              </Link>
-              <Link href="/request" className="ghost-link">
-                {t("nav.request")}
-              </Link>
-              <Link href="/booking" className="ghost-link">
-                <span className="hidden sm:inline">{t("nav.booking")}</span>
-                <span className="sm:hidden">{t("nav.booking")}</span>
-              </Link>
-              <Link href="/hospital" className="ghost-link">
-                {t("nav.hospital")}
-              </Link>
-              {kakaoChannelUrl ? (
-                <a href={kakaoChannelUrl} target="_blank" rel="noreferrer" className="ghost-link">
-                  {t("nav.kakao")}
-                </a>
-              ) : null}
-              <LanguageSwitcher />
-              {userEmail ? (
-                <>
-                  <Link href="/my" className="ghost-link">
-                    {t("nav.my")}
-                  </Link>
-                  <button onClick={handleLogout} className="action-secondary !px-3 !py-2 !text-[12px] sm:!px-4 sm:!text-[14px]">
-                    {t("nav.logout")}
-                  </button>
-                </>
-              ) : (
-                <button onClick={handleKakaoLogin} className="action-primary !px-4 !py-2 !text-[12px] sm:!px-5 sm:!py-2.5 sm:!text-[14px]">
-                  {t("nav.login")}
-                </button>
-              )}
-            </nav>
-          </div>
-        </div>
-      </header>
+      <main>
+        {authNotice && <p role="status" className="shell mt-4 rounded-2xl bg-white p-4 text-sm">{authNotice}</p>}
 
-      <main className="shell pt-5 sm:pt-10">
-        {authNotice && <p role="status" className="mb-4 rounded-2xl bg-white p-4 text-sm">{authNotice}</p>}
-        <section className="overflow-hidden rounded-[34px] border border-[rgba(32,34,31,0.06)] bg-white/82 px-4 py-5 shadow-[0_30px_100px_rgba(32,34,31,0.08)] backdrop-blur-xl sm:rounded-[44px] sm:px-7 sm:py-7 lg:px-8 lg:py-8">
-          <div className="grid items-center gap-6 lg:grid-cols-[0.76fr_1.24fr]">
-            <div className="max-w-[640px]">
-              <p className="eyebrow">{content.heroEyebrow}</p>
-              <h1
-                className="type-title balance mt-5 !text-[2.45rem] sm:!text-[3.35rem] lg:!text-[3.55rem] xl:!text-[3.85rem]"
-                data-display="true"
-              >
-                {content.heroTitle.map((line) => (
-                  <span key={line}>
-                    {line}
-                    <br />
-                  </span>
-                ))}
-              </h1>
-              <p className="mt-5 max-w-[600px] text-[14px] leading-7 text-[var(--color-muted)] sm:text-[15px] lg:text-[16px]">
-                {content.heroBody}
-              </p>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Link href={language === "ko" ? "/clinics" : "/recommend"} className="action-primary">
-                  {content.primaryCta}
-                </Link>
-                <Link href={language === "ko" ? "/prices" : "/request"} className="action-secondary">
-                  {content.secondaryCta}
-                </Link>
-              </div>
-              {content.helper && (
-                <p className="mt-4 text-[12px] font-semibold text-[var(--color-muted)] sm:text-[13px]">
-                  {content.helper}
-                </p>
-              )}
-            </div>
-
-            {language === "ko" ? (
-              <div className="relative overflow-hidden rounded-[28px] bg-[#183e34] p-6 text-white sm:p-9">
-                <div className="flex items-center justify-between text-xs tracking-widest text-[#c5e2d2]"><span>경험 추천</span><span>{clinicRecommendations.length}개 분야</span></div>
-                <h2 className="mt-6 text-2xl font-semibold leading-snug sm:text-3xl">무엇을 찾으세요?</h2>
-                <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                  {[
-                    { id: "skin", name: "피부", items: ["리쥬란", "입술필러", "써마지", "실리프팅", "여드름 흉터", "외국인"] },
-                    { id: "surgery", name: "성형", items: ["눈", "코재수술", "윤곽", "가슴", "거상", "모발이식"] },
-                  ].map((group) => (
-                    <div key={group.id} className="rounded-3xl border border-white/20 bg-white/[0.06] p-5">
-                      <Link href={`/clinics?category=${group.id}`} className="flex items-center justify-between text-3xl font-semibold hover:opacity-80">{group.name}<span aria-hidden="true" className="text-xl">→</span></Link>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {group.items.map((label) => <Link key={label} href={`/clinics?category=${group.id}&q=${encodeURIComponent(label)}`} className="rounded-full border border-white/25 px-3 py-1.5 text-xs hover:bg-white/[0.14]">{label}</Link>)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : <div className="rounded-[28px] bg-[#183e34] p-8 text-white"><p className="text-xs tracking-widest text-[#c5e2d2]">GLOBAL PATIENTS</p><h2 className="mt-8 whitespace-pre-line text-4xl font-semibold leading-tight">{globalGuideCopy.title[language]}</h2><p className="mt-6 text-sm leading-7 text-[#d4e4dc]">{globalGuideCopy.intro[language]}</p><Link href="/global" className="mt-8 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#183e34]">{t("nav.global")} ↗</Link></div>}
-          </div>
-        </section>
-
-        <section className="mt-5 grid gap-5 lg:grid-cols-3">
-          {content.metrics.map((metric) => (
-            <article key={metric.label} className="rounded-[32px] border border-[rgba(32,34,31,0.06)] bg-white/72 p-6 shadow-[0_18px_55px_rgba(32,34,31,0.05)] backdrop-blur-xl">
-              <p className="text-[13px] font-semibold text-[var(--color-muted)]">{metric.label}</p>
-              <p className="mt-5 text-[3rem] font-semibold leading-none tracking-[-0.06em]" data-display="true">
-                {metric.value}
-              </p>
-              <p className="mt-4 text-[14px] leading-6 text-[var(--color-muted)]">{metric.body}</p>
-            </article>
-          ))}
-        </section>
-
-        {language !== "ko" && <>
-        <section className="mt-16">
-          <div className="mx-auto max-w-[820px] text-center">
-            <p className="eyebrow">{content.decisionEyebrow}</p>
-            <h2 className="type-section mt-6" data-display="true">
-              {content.decisionTitle}
-            </h2>
-            <p className="mx-auto mt-5 max-w-[640px] text-[16px] leading-8 text-[var(--color-muted)]">
-              {content.decisionBody}
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {content.steps.map((step) => (
-              <article key={step.label} className="rounded-[30px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-5 shadow-[0_18px_55px_rgba(32,34,31,0.05)] backdrop-blur-xl sm:p-6">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-genius-yellow)] text-[13px] font-semibold">
-                  {step.label}
-                </span>
-                <h3 className="mt-8 text-[1.35rem] font-semibold leading-tight tracking-[-0.05em] sm:text-[1.45rem]" data-display="true">
-                  {step.title}
-                </h3>
-                <p className="mt-4 text-[14px] leading-7 text-[var(--color-muted)]">{step.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-16 grid gap-5 lg:grid-cols-3">
-          {content.audiences.map((card) => (
-            <Link
-              key={card.title}
-              href={card.href}
-              className={`group min-h-[260px] rounded-[34px] p-5 hover:-translate-y-1 sm:min-h-[300px] sm:rounded-[40px] sm:p-6 ${
-                card.tone === "yellow"
-                  ? "border border-[rgba(32,34,31,0.06)] bg-[linear-gradient(135deg,#eee87f_0%,#dce6a0_48%,#dff8ee_100%)] shadow-[0_22px_70px_rgba(204,207,91,0.18)]"
-                  : card.tone === "violet"
-                    ? "border border-[rgba(32,34,31,0.06)] bg-[linear-gradient(135deg,#a49bff_0%,#d1ccff_54%,#eef7ff_100%)] shadow-[0_22px_70px_rgba(164,155,255,0.18)]"
-                    : "border border-[rgba(32,34,31,0.06)] bg-white/72 shadow-[0_22px_70px_rgba(32,34,31,0.06)] backdrop-blur-xl"
-              }`}
-            >
-              <h3 className="text-[1.65rem] font-semibold leading-[1.05] tracking-[-0.06em] sm:text-[1.82rem] xl:text-[1.95rem]" data-display="true">
-                {card.title}
-              </h3>
-              <p className="mt-5 text-[14px] leading-7 text-[rgba(23,21,14,0.72)] sm:text-[15px]">{card.body}</p>
-              <p className="mt-8 inline-flex rounded-full bg-white px-5 py-3 text-[13px] font-semibold">
-                {card.cta}
-              </p>
-            </Link>
-          ))}
-        </section>
-        </>}
-
-        <section className="mt-16 rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-6 shadow-[0_30px_100px_rgba(32,34,31,0.07)] backdrop-blur-xl sm:p-8 lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <div>
-              <p className="eyebrow">{content.categoryEyebrow}</p>
-              <h2 className="type-section mt-6" data-display="true">
-                {content.categoryTitle.map((line) => (
-                  <span key={line}>
-                    {line}
-                    <br />
-                  </span>
-                ))}
-              </h2>
-            </div>
-            <p className="max-w-[620px] text-[15px] leading-8 text-[var(--color-muted)] lg:ml-auto">
-              {content.categoryBody}
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {treatmentCategories.map((category) => (
-              <Link
-                key={category.name}
-                href={`/category/${encodeURIComponent(category.name)}`}
-                className="rounded-[28px] border border-[rgba(32,34,31,0.06)] bg-[var(--color-porcelain-gray)] p-5 shadow-[0_16px_45px_rgba(32,34,31,0.04)] hover:-translate-y-0.5 hover:bg-white"
-              >
-                <p className="text-[1.25rem] font-semibold tracking-[-0.04em]">
-                  {localizedCategory[displayCategoryName(category.name)]?.name ?? localizedCategory[category.name]?.name ?? displayCategoryName(category.name)}
-                </p>
-                <p className="mt-5 line-clamp-3 text-[14px] leading-6 opacity-75">
-                  {localizedCategory[displayCategoryName(category.name)]?.examples ?? localizedCategory[category.name]?.examples ?? category.examples}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {language !== "ko" && <section className="mt-16 overflow-hidden rounded-[44px] border border-[rgba(32,34,31,0.06)] bg-white/82 shadow-[0_30px_100px_rgba(32,34,31,0.07)] backdrop-blur-xl">
-          <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="p-6 sm:p-8 lg:p-10">
-              <p className="eyebrow">{content.clinicEyebrow}</p>
-              <h2 className="type-section mt-6" data-display="true">
-                {content.clinicTitle.map((line) => (
-                  <span key={line}>
-                    {line}
-                    <br />
-                  </span>
-                ))}
-              </h2>
-              <p className="mt-6 max-w-[720px] text-[16px] leading-8 text-[var(--color-muted)]">
-                {content.clinicBody}
-              </p>
-            </div>
-
-            <div className="grid gap-3 bg-[linear-gradient(135deg,#f4fbf9_0%,#edf8f5_55%,#f7f5ff_100%)] p-4 sm:grid-cols-3 lg:grid-cols-1">
-              {content.clinicBenefits.map((benefit, index) => (
-                <article key={benefit} className="rounded-[28px] border border-[rgba(32,34,31,0.06)] bg-white/78 p-5 shadow-[0_16px_45px_rgba(32,34,31,0.04)] backdrop-blur-xl">
-                  <p className="text-[12px] font-semibold text-[var(--color-muted-light)]">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <p className="mt-7 text-[1.05rem] font-semibold leading-snug tracking-[-0.05em] sm:text-[1.15rem] lg:text-[1.25rem]" data-display="true">
-                    {benefit}
-                  </p>
-                </article>
+        <section className="shell grid items-center gap-10 pb-16 pt-10 sm:pt-14 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:pb-24 lg:pt-20">
+          <div>
+            <p className="eyebrow"><span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />{content.heroEyebrow}</p>
+            <h1 className="type-title balance mt-5" data-display="true">
+              {content.heroTitle.map((line, index) => (
+                <span key={line} className={index === content.heroTitle.length - 1 ? "block text-[var(--brand)]" : "block"}>{line}</span>
               ))}
+            </h1>
+            <p className="mt-6 max-w-[520px] text-[16px] leading-8 text-[var(--color-muted)] sm:text-[17px]">{content.heroBody}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href={ko ? "/clinics" : "/global"} className="action-primary">{ko ? content.primaryCta : t("nav.global")}</Link>
+              <Link href="/prices" className="action-secondary">{ko ? content.secondaryCta : t("nav.prices")}</Link>
+            </div>
+            {ko && (
+              <ul className="mt-8 grid max-w-[520px] grid-cols-3 gap-3 border-t border-[var(--color-silver-mist)] pt-6 text-[13px] leading-5 text-[var(--color-muted)]">
+                <li><strong className="block text-[15px] text-[var(--color-carbon)]">광고 0원</strong>광고비로 순위를 정하지 않아요</li>
+                <li><strong className="block text-[15px] text-[var(--color-carbon)]">직접 경험</strong>받아 본 사람의 이야기만</li>
+                <li><strong className="block text-[15px] text-[var(--color-carbon)]">가짜 후기 제외</strong>체험단·광고성 후기는 걸러요</li>
+              </ul>
+            )}
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[560px]">
+            <div className="overflow-hidden rounded-[28px] bg-[var(--sand)]">
+              <Image src="/images/hero-main.webp" alt="" width={900} height={1080} priority sizes="(min-width: 1024px) 560px, 100vw" className="aspect-[5/6] h-auto w-full object-cover" />
+            </div>
+            <div className="absolute -left-4 bottom-8 hidden w-[38%] overflow-hidden rounded-[22px] border-4 border-[var(--cream)] sm:block lg:-left-10">
+              <Image src="/images/hero-face.webp" alt="" width={600} height={600} sizes="220px" className="aspect-square h-auto w-full object-cover" />
+            </div>
+            {ko && (
+              <div className="absolute -right-2 top-6 rounded-2xl bg-white px-4 py-3 shadow-[0_12px_30px_rgba(23,58,49,0.12)] sm:-right-6">
+                <p className="text-[11px] font-semibold text-[var(--accent)]">운영진이 직접 받은 곳</p>
+                <p className="mt-0.5 text-[15px] font-bold text-[var(--color-carbon)]">{clinicRecommendations.flatMap((item) => item.providers).filter((p) => p.experience).length}곳</p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {ko && (
+          <section className="shell pb-16 lg:pb-24" aria-labelledby="find-title">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="eyebrow">추천 병원</p>
+                <h2 id="find-title" className="type-section mt-3">무엇을 찾으세요?</h2>
+              </div>
+              <Link href="/clinics" className="text-[14px] font-semibold text-[var(--brand)] underline-offset-4 hover:underline">전체 보기 →</Link>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-3 sm:gap-5">
+              {clinicGroups.map((group) => {
+                const count = clinicRecommendations.filter((item) => group.categories.includes(item.category)).length;
+                return (
+                  <article key={group.id} className="group overflow-hidden rounded-[24px] border border-[var(--color-silver-mist)] bg-white">
+                    <Link href={`/clinics?category=${group.id}`} className="relative block overflow-hidden">
+                      <Image src={groupImages[group.id]} alt="" width={720} height={900} sizes="(min-width: 640px) 33vw, 100vw" className="aspect-[4/3] h-auto w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[4/5]" />
+                      <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-5 pb-4 pt-16 text-white">
+                        <span className="flex items-baseline justify-between"><span className="text-[26px] font-bold">{group.label}</span><span className="text-[13px] opacity-90">{count}개 분야 →</span></span>
+                      </span>
+                    </Link>
+                    <div className="flex flex-wrap gap-1.5 p-4">
+                      {groupChips[group.id].map((chip) => <Link key={chip} href={`/clinics?category=${group.id}&q=${encodeURIComponent(chip)}`} className="rounded-full bg-[var(--cream)] px-3 py-1.5 text-[13px] text-[var(--color-carbon)] hover:bg-[var(--sand)]">{chip}</Link>)}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {ko && (
+          <section className="bg-white py-16 lg:py-24" aria-labelledby="how-title">
+            <div className="shell grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+              <div className="overflow-hidden rounded-[28px]">
+                <Image src="/images/story.webp" alt="" width={900} height={1080} sizes="(min-width: 1024px) 480px, 100vw" className="aspect-[4/3] h-auto w-full object-cover lg:aspect-[5/6]" />
+              </div>
+              <div>
+                <p className="eyebrow">탱글이 고르는 방법</p>
+                <h2 id="how-title" className="type-section mt-3">후기가 아니라,<br />다녀온 사람의 기억으로.</h2>
+                <ol className="mt-8 space-y-6">
+                  {[
+                    ["01", "광고비를 받지 않아요", "병원이 돈을 내고 올라오는 자리가 없어요. 순위도 매기지 않아요."],
+                    ["02", "직접 받아 본 경험만", "운영진과 오래 다닌 사람들이 실제로 수술·시술을 받은 곳만 담았어요."],
+                    ["03", "가짜 후기는 걸러요", "체험단·이벤트 후기, 확인할 수 없는 이야기는 넣지 않아요."],
+                  ].map(([no, title, body]) => (
+                    <li key={no} className="flex gap-5">
+                      <span className="text-[14px] font-bold text-[var(--accent)]">{no}</span>
+                      <div><p className="text-[18px] font-bold text-[var(--color-carbon)]">{title}</p><p className="mt-1 text-[15px] leading-7 text-[var(--color-muted)]">{body}</p></div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {ko && firsthand.length > 0 && (
+          <section className="shell py-16 lg:py-24" aria-labelledby="firsthand-title">
+            <p className="eyebrow">운영진 직접 경험</p>
+            <h2 id="firsthand-title" className="type-section mt-3">직접 받아 보고 고른 곳</h2>
+            <div className="snap-strip mt-8 lg:grid lg:grid-cols-3 lg:overflow-visible">
+              {firsthand.map((item) => {
+                const provider = item.providers.find((p) => p.experience)!;
+                return (
+                  <Link key={item.id} href={`/clinics?item=${item.id}`} className="snap-card flex flex-col rounded-[22px] border border-[var(--color-silver-mist)] bg-white p-6 hover:border-[var(--brand)] lg:w-auto lg:max-w-none">
+                    <span className="text-[12px] font-semibold text-[var(--accent)]">{clinicCategoryLabels[item.category]} · {item.title}</span>
+                    <span className="mt-3 text-[19px] font-bold text-[var(--color-carbon)]">{provider.clinic}{provider.region ? ` (${provider.region})` : ""}</span>
+                    <span className="mt-3 line-clamp-3 text-[14px] leading-6 text-[var(--color-muted)]">{provider.experience}</span>
+                    <span className="mt-auto pt-5 text-[13px] font-semibold text-[var(--brand)]">자세히 보기 →</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        <section className={ko ? "bg-[var(--brand)] py-16 text-white lg:py-20" : "shell pb-16"} aria-labelledby="global-title">
+          <div className={ko ? "shell grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]" : "grid items-center gap-10 overflow-hidden rounded-[28px] bg-[var(--brand)] p-6 text-white sm:p-10 lg:grid-cols-[1.1fr_0.9fr]"}>
+            <div>
+              <p className="text-[13px] font-semibold tracking-[0.06em] text-[#f3b3a6]">GLOBAL PATIENTS</p>
+              <h2 id="global-title" className="mt-3 whitespace-pre-line text-[1.9rem] font-bold leading-tight sm:text-[2.4rem]">{globalGuideCopy.title[language]}</h2>
+              <p className="mt-5 max-w-[520px] text-[15px] leading-7 text-white/80">{globalGuideCopy.intro[language]}</p>
+              <Link href="/global" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-[15px] font-semibold text-[var(--brand)] hover:opacity-90">{t("nav.global")} →</Link>
+            </div>
+            <div className="overflow-hidden rounded-[24px]">
+              <Image src="/images/global.webp" alt="" width={1000} height={750} sizes="(min-width: 1024px) 480px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
             </div>
           </div>
-        </section>}
+        </section>
 
-        <div className="mt-16">
+        <section className="shell py-16 lg:py-24" aria-labelledby="price-title">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="eyebrow">{content.categoryEyebrow === "category index" ? (ko ? "시술 가격" : "Price index") : content.categoryEyebrow}</p>
+              <h2 id="price-title" className="type-section mt-3">{ko ? "상담 전에, 가격부터." : content.categoryTitle.join(" ")}</h2>
+            </div>
+            <Link href="/prices" className="action-secondary !py-3">{content.secondaryCta}</Link>
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {treatmentCategories.map((category) => (
+              <Link key={category.name} href={`/category/${encodeURIComponent(category.name)}`} className="rounded-[18px] border border-[var(--color-silver-mist)] bg-white p-5 hover:border-[var(--brand)]">
+                <p className="text-[17px] font-bold">{localizedCategory[displayCategoryName(category.name)]?.name ?? localizedCategory[category.name]?.name ?? displayCategoryName(category.name)}</p>
+                <p className="mt-2 line-clamp-2 text-[13px] leading-5 text-[var(--color-muted)]">{localizedCategory[displayCategoryName(category.name)]?.examples ?? localizedCategory[category.name]?.examples ?? category.examples}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <div className="shell">
           <TangleXDrAidee placement="home" />
         </div>
       </main>

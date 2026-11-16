@@ -571,7 +571,7 @@ export default function RecommendPage() {
           <Link href="/" className="ghost-link">
             Tangle
           </Link>
-          <Link href="/clinics" className="ghost-link">{language === "ko" ? "서울 경험 추천" : "Seoul guide"}</Link>
+          <Link href="/clinics" className="ghost-link">{language === "ko" ? "추천 병원" : "Recommended clinics"}</Link>
           <button onClick={handleRestart} className="ghost-link">
             {ui.restart}
           </button>
@@ -727,7 +727,7 @@ export default function RecommendPage() {
                           <span className="font-semibold">{copy.resultLabels.caution}</span> {item.sideEffects}
                         </p>
                       </div>
-                      <Link href={`/clinics?q=${encodeURIComponent(item.name)}`} className="mt-5 inline-block text-sm font-semibold underline underline-offset-4">{language === "ko" ? "관련 서울 경험 추천 살펴보기" : "Explore Seoul experience notes"} →</Link>
+                      <Link href={`/clinics?q=${encodeURIComponent(item.name)}`} className="mt-5 inline-block text-sm font-semibold underline underline-offset-4">{language === "ko" ? "관련 추천 병원 살펴보기" : "Explore Seoul experience notes"} →</Link>
                     </article>
                   ))}
                 </div>

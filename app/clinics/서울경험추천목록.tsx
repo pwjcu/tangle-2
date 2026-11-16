@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import SiteHeader from "../components/사이트헤더";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -18,6 +20,7 @@ import {
 import { partnerClinicById, partnerLinkLabels } from "@/lib/협업병원";
 
 const SAVED_KEY = "tangle:clinic-saved:v1";
+const groupImages: Record<string, string> = { skin: "/images/cat-skin.webp", surgery: "/images/cat-surgery.webp", dental: "/images/cat-dental.webp" };
 const SAVED_EVENT = "tangle:clinic-saved-change";
 let memorySaved = "[]";
 let useMemoryStorage = false;
@@ -50,6 +53,12 @@ const statusStyles: Record<ClinicStatus, string> = {
   insufficient: "border-slate-200 bg-slate-50 text-slate-600",
   withheld: "border-[#e1d9ed] bg-[#f5f1fa] text-[#685682]",
 };
+
+function formatPhone(tel: string) {
+  const n = tel.replace("tel:+82", "0").replace(/\D/g, "");
+  if (n.startsWith("02")) return n.replace(/^(02)(\d{3,4})(\d{4})$/, "$1-$2-$3");
+  return n.replace(/^(\d{3})(\d{3,4})(\d{4})$/, "$1-$2-$3");
+}
 
 function BookmarkIcon({ filled = false }: { filled?: boolean }) {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4-6 4V4Z" /></svg>;
@@ -111,7 +120,7 @@ export default function ClinicRecommendationsList() {
       if (status !== "all") url.searchParams.set("status", status);
       if (firsthandOnly) url.searchParams.set("firsthand", "1");
     }
-    const title = item ? `탱글 서울 경험 추천 · ${item.title}` : "탱글 서울 경험 추천";
+    const title = item ? `탱글 추천 병원 · ${item.title}` : "탱글 추천 병원";
     try {
       if (navigator.share) {
         await navigator.share({ title, text: "개인 경험 참고 목록 · 병원명·소속·운영 여부 외부 검증 전", url: url.href });
@@ -129,32 +138,22 @@ export default function ClinicRecommendationsList() {
 
   return (
     <main className="min-h-screen pb-28">
-      <header className="border-b border-[#dce8e2] bg-white/90">
-        <div className="shell flex flex-wrap items-center justify-between gap-3 py-5">
-          <Link href="/" className="text-2xl font-semibold tracking-[-0.06em] text-[#244e3e]" aria-label="탱글 홈">tangle<span className="text-[#8caa80]">.</span></Link>
-          <nav aria-label="주요 메뉴" className="flex flex-wrap items-center gap-1 text-sm">
-            {clinicGroups.map((group) => <Link key={group.id} href={`/clinics?category=${group.id}`} aria-current={category === group.id ? "page" : undefined} className={category === group.id ? "rounded-full bg-[#edf4ec] px-4 py-2 font-semibold text-[#294f3e]" : "ghost-link"}>{group.label}</Link>)}
-            <Link href="/global" className="ghost-link">외국인 안내</Link>
-            <Link href="/prices" className="ghost-link">가격 참고표</Link>
-            <Link href="/recommend" className="ghost-link">시술 탐색</Link>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <section className="shell pb-10 pt-10 sm:pb-14 sm:pt-16" aria-labelledby="clinic-title">
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-end">
           <div>
-            <p className="mb-5 flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-[#4a705d]"><span className="h-2 w-2 rounded-full bg-[#6b9277]" /> SEOUL · EXPERIENCE NOTES</p>
-            <h1 id="clinic-title" className="text-[2.4rem] font-semibold !leading-[1.18] text-[#243f33] sm:text-6xl">어디서, 누구에게.<br /><span className="text-[#75947a]">경험에서 찾는 단서.</span></h1>
-            <p className="mt-6 max-w-xl text-[15px] leading-7 text-[#637066] sm:text-base">지인에게 공유하던 서울 시술별 병원·의료진 메모.<br className="hidden sm:block" /> 시술명, 원장 이름, 기억 속 병원까지 한곳에서 찾아보세요.</p>
+            <p className="eyebrow mb-5"><span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />검증된 추천 병원</p>
+            <h1 id="clinic-title" className="type-title">추천 병원.<br /><span className="text-[var(--brand)]">광고 없이, 경험으로만.</span></h1>
+            <p className="mt-6 max-w-xl text-[15px] leading-7 text-[#637066] sm:text-base">{clinicRecommendationMeta.trust_note}</p>
             <div className="mt-6 flex flex-wrap gap-2 text-xs font-medium text-[#53665b]">
-              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">서울 중심</span>
+              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">광고 아님</span>
+              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">가짜 후기 제외</span>
               <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">{clinicRecommendations.length}개 시술·관리 항목</span>
               <span className="rounded-full border border-[#e8c9a6] bg-[#fff6ec] px-3 py-2 text-[#8a5a2b]">운영진 직접 경험 {clinicRecommendations.filter(hasFirsthand).length}개</span>
-              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">원문 포함</span>
-            </div>
+                          </div>
           </div>
-          <aside className="rounded-[28px] border border-[#dce5d4] bg-[#f2f5e9] p-6 sm:p-7" aria-label="추천 정보의 출처와 범위">
+          <aside className="rounded-[24px] border border-[var(--color-silver-mist)] bg-white p-6 sm:p-7" aria-label="추천 정보의 출처와 범위">
             <p className="text-xs font-semibold tracking-[0.12em] text-[#69805c]">이 목록을 읽는 방법</p>
             <h2 className="mt-3 text-xl font-semibold !leading-snug text-[#364c35]">경험은 참고하고,<br />현재 정보는 확인해 주세요.</h2>
             <p className="mt-3 text-sm leading-6 text-[#677261]">{clinicRecommendationMeta.firsthand_note}</p>
@@ -172,25 +171,31 @@ export default function ClinicRecommendationsList() {
       </section>
 
       <section className="shell" aria-labelledby="search-heading">
-        <div className="mb-4 grid grid-cols-2 gap-3 sm:gap-4" role="group" aria-label="피부·성형 선택">
+        <div className="mb-4 grid grid-cols-3 gap-2 sm:gap-4" role="group" aria-label="피부·성형·치과 선택">
           {clinicGroups.map((group) => {
             const active = category === group.id;
             const count = clinicRecommendations.filter((item) => group.categories.includes(item.category)).length;
-            return <button key={group.id} type="button" aria-pressed={active} onClick={() => updateFilters({ category: active ? "all" : group.id })} className={`rounded-[24px] border p-5 text-left sm:rounded-[28px] sm:p-7 ${active ? "border-[#315640] bg-[#315640] text-white" : "border-[#dce8df] bg-white text-[#304a3a] hover:bg-[#f3f6ee]"}`}>
-              <span className="flex items-baseline justify-between gap-2"><span className="text-2xl font-semibold sm:text-4xl">{group.label}</span><span className="text-sm opacity-70">{count}개</span></span>
-              <span className="mt-2 block text-xs leading-5 opacity-75 sm:text-sm">{group.detail}</span>
+            return <button key={group.id} type="button" aria-pressed={active} onClick={() => updateFilters({ category: active ? "all" : group.id })} className={`group overflow-hidden rounded-[20px] border text-left sm:rounded-[24px] ${active ? "border-[var(--brand)] ring-2 ring-[var(--brand)]" : "border-[var(--color-silver-mist)] hover:border-[var(--brand)]"} bg-white`}>
+              <span className="relative block overflow-hidden">
+                <Image src={groupImages[group.id]} alt="" width={720} height={900} sizes="33vw" className="aspect-[4/3] h-auto w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[16/9]" />
+                {active && <span className="absolute right-2 top-2 rounded-full bg-[var(--brand)] px-2 py-0.5 text-[10px] font-semibold text-white">선택됨</span>}
+              </span>
+              <span className="block p-3 sm:p-5">
+                <span className="flex items-baseline justify-between gap-2"><span className="text-lg font-bold text-[var(--color-carbon)] sm:text-2xl">{group.label}</span><span className="text-xs text-[var(--color-muted)] sm:text-sm">{count}개</span></span>
+                <span className="mt-1 hidden text-sm leading-5 text-[var(--color-muted)] sm:block">{group.detail}</span>
+              </span>
             </button>;
           })}
         </div>
-        <div className="rounded-[28px] border border-[#dce8df] bg-white p-5 shadow-[0_12px_40px_rgba(35,68,49,0.04)] sm:p-6">
+        <div className="rounded-[24px] border border-[var(--color-silver-mist)] bg-white p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 id="search-heading" className="text-lg font-semibold !leading-snug text-[#304a3a]">찾고 싶은 시술이나 이름이 있나요?</h2>
             <button type="button" onClick={() => void share()} className="rounded-full border border-[#dce5da] px-4 py-2 text-xs font-semibold text-[#48654f] hover:bg-[#f4f7ef]">검색 결과 공유 ↗</button>
           </div>
           <form className="mt-4 flex gap-2" onSubmit={(event) => { event.preventDefault(); const data = new FormData(event.currentTarget); updateFilters({ q: String(data.get("q") ?? "").trim() }); }}>
             <label htmlFor="clinic-search" className="sr-only">시술, 병원, 원장 이름 검색</label>
-            <input key={query} id="clinic-search" name="q" type="search" defaultValue={query} maxLength={100} placeholder="예: 리쥬란, 김창식, 창피부과" className="min-w-0 flex-1 rounded-2xl border border-[#dce5da] bg-[#fafcf8] px-4 py-3 text-sm outline-none focus:border-[#719579] focus:ring-2 focus:ring-[#dce9d9]" />
-            <button className="rounded-2xl bg-[#315640] px-5 py-3 text-sm font-semibold text-white hover:bg-[#244530]" type="submit">검색</button>
+            <input key={query} id="clinic-search" name="q" type="search" defaultValue={query} maxLength={100} placeholder="예: 리쥬란, 김창식, 창피부과" className="min-w-0 flex-1 rounded-2xl border border-[#dce5da] bg-[var(--cream)] px-4 py-3 text-sm outline-none focus:border-[#719579] focus:ring-2 focus:ring-[#dce9d9]" />
+            <button className="rounded-2xl bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-white hover:bg-[#0f2b24]" type="submit">검색</button>
           </form>
           <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-[#edf0e9] pt-4">
             <label htmlFor="clinic-status" className="text-xs font-medium text-[#6c7968]">정보 상태</label>
@@ -199,7 +204,7 @@ export default function ClinicRecommendationsList() {
               {Object.entries(clinicStatusLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
             </select>
             <button type="button" aria-pressed={firsthandOnly} onClick={() => updateFilters({ firsthand: firsthandOnly ? null : "1" })} className={`rounded-full border px-3 py-2 text-sm ${firsthandOnly ? "border-[#c98f55] bg-[#fff1e2] text-[#7a4a1c]" : "border-[#e0e6db] text-[#647160]"}`}>운영진 직접 경험만</button>
-            <button type="button" aria-pressed={savedOnly} onClick={() => updateFilters({ saved: savedOnly ? null : "1" })} className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm ${savedOnly ? "border-[#78987a] bg-[#eff5e8] text-[#315640]" : "border-[#e0e6db] text-[#647160]"}`}><BookmarkIcon filled={savedOnly} /> 저장한 항목 <span>{savedIds.length}</span></button>
+            <button type="button" aria-pressed={savedOnly} onClick={() => updateFilters({ saved: savedOnly ? null : "1" })} className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm ${savedOnly ? "border-[#78987a] bg-[#eff5e8] text-[var(--brand)]" : "border-[#e0e6db] text-[#647160]"}`}><BookmarkIcon filled={savedOnly} /> 저장한 항목 <span>{savedIds.length}</span></button>
             {(query || category !== "all" || status !== "all" || savedOnly || firsthandOnly || focusedId) && <button type="button" onClick={() => router.replace(pathname, { scroll: false })} className="ml-auto rounded-lg px-3 py-2 text-xs font-semibold text-[#6c7968] underline underline-offset-4">필터 초기화</button>}
           </div>
         </div>
@@ -215,29 +220,30 @@ export default function ClinicRecommendationsList() {
           <div className="rounded-[28px] border border-dashed border-[#cfdcc9] bg-white/60 px-6 py-16 text-center">
             <h3 className="text-xl font-semibold !leading-snug text-[#42573f]">조건에 맞는 메모가 없습니다.</h3>
             <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#71806b]">{savedOnly ? "관심 있는 항목의 저장 버튼을 눌러 나만의 목록을 만들어 보세요." : "시술명이나 이름을 짧게 입력하거나 필터를 초기화해 보세요. 목록에 없는 정보를 임의로 추천하지 않습니다."}</p>
-            <button type="button" onClick={() => router.replace(pathname, { scroll: false })} className="mt-6 rounded-full bg-[#315640] px-6 py-3 text-sm font-semibold text-white">전체 {clinicRecommendations.length}개 항목 보기</button>
+            <button type="button" onClick={() => router.replace(pathname, { scroll: false })} className="mt-6 rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white">전체 {clinicRecommendations.length}개 항목 보기</button>
           </div>
         ) : (
           <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
             {filtered.map((item) => {
               const isSaved = savedIds.includes(item.id);
-              return <article key={item.id} id={item.id} aria-labelledby={`title-${item.id}`} className="overflow-hidden rounded-[24px] border border-[#dde6da] bg-white shadow-[0_5px_25px_rgba(45,70,40,0.03)]">
+              return <article key={item.id} id={item.id} aria-labelledby={`title-${item.id}`} className="overflow-hidden rounded-[22px] border border-[var(--color-silver-mist)] bg-white">
                 <div className="p-5 sm:p-6">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex flex-wrap items-center gap-2"><span className="text-[11px] font-semibold text-[#7b8b73]">{clinicCategoryLabels[item.category]}</span><span className={`rounded-full border px-2 py-1 text-[10px] font-semibold ${statusStyles[item.status]}`}>{clinicStatusLabels[item.status]}</span></div>
                     <button type="button" onClick={() => toggleSaved(item)} aria-label={`${item.title} ${isSaved ? "저장 해제" : "저장"}`} aria-pressed={isSaved} className={`-mr-2 -mt-2 shrink-0 rounded-full p-2.5 ${isSaved ? "bg-[#f0f5e9] text-[#507744]" : "text-[#929f89] hover:bg-[#f5f7f0]"}`}><BookmarkIcon filled={isSaved} /></button>
                   </div>
                   <h3 id={`title-${item.id}`} className="mt-4 text-xl font-semibold !leading-snug text-[#31492e]">{item.title}</h3>
-                  {item.guide_href && <Link href={item.guide_href} className="mt-3 inline-block text-sm font-semibold text-[#315640] underline underline-offset-4">자세히 보기 →</Link>}
+                  {item.guide_href && <Link href={item.guide_href} className="mt-3 inline-block text-sm font-semibold text-[var(--brand)] underline underline-offset-4">자세히 보기 →</Link>}
                   <div className="mt-5 space-y-4">
                     {(firsthandOnly ? item.providers.filter((provider) => provider.experience) : item.providers).map((provider, index) => <div key={`${provider.clinic}-${index}`} className={index ? "border-t border-[#eef1e9] pt-4" : ""}>
-                      <p className="flex flex-wrap items-center gap-2 text-[15px] font-semibold text-[#3f5138]">{provider.clinic ?? "병원명 미확인"}{provider.partner_id && <span className="rounded-full bg-[#1f3d33] px-2 py-0.5 text-[10px] font-semibold text-white">탱글 협업</span>}</p>
+                      <p className="flex flex-wrap items-center gap-2 text-[15px] font-semibold text-[#3f5138]">{provider.clinic ?? "병원명 미확인"}{provider.region && <span className="text-[13px] font-medium text-[#8a6a2b]">({provider.region})</span>}</p>
                       <p className="mt-1 text-sm text-[#65725c]">{provider.doctors.length ? provider.doctors.map((name) => `${name} 님`).join(" · ") : "담당자 이름 미기재"}</p>
-                      {provider.location_hint && <p className="mt-2 text-xs leading-5 text-[#829078]">지역 단서: {provider.location_hint}</p>}
+                      {provider.address ? <p className="mt-2 text-xs leading-5 text-[#829078]">주소: {provider.address}</p> : provider.location_hint && <p className="mt-2 text-xs leading-5 text-[#829078]">위치: {provider.location_hint}</p>}
+                      {provider.links?.length ? <div className="mt-2 flex flex-wrap gap-1.5">{provider.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className="rounded-full border border-[#cfe0d6] bg-white px-3 py-1.5 text-xs font-semibold text-[#2f5544] hover:bg-[#eef6f1]">{link.kind === "phone" ? `전화 ${formatPhone(link.url)}` : partnerLinkLabels[link.kind].ko} ↗</a>)}</div> : null}
                       {provider.experience && <div className="mt-3 rounded-xl border border-[#f0dcc4] bg-[#fff8ef] px-3 py-3"><p className="text-[11px] font-semibold tracking-[0.08em] text-[#9a6430]">운영진 직접 경험</p><p className="mt-1 text-[13px] leading-6 text-[#5d4630]">{provider.experience}</p></div>}
                       {provider.note && <p className="mt-2 text-xs leading-5 text-[#829078]">{provider.note}</p>}
                       {partnerClinicById(provider.partner_id) && <div className="mt-3 flex flex-wrap gap-1.5">{partnerClinicById(provider.partner_id)!.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className="rounded-full border border-[#cfe0d6] bg-white px-3 py-1.5 text-xs font-semibold text-[#2f5544] hover:bg-[#eef6f1]">{partnerLinkLabels[link.kind].ko}{link.note ? ` (${link.note.ko})` : ""} ↗</a>)}</div>}
-                      {provider.clinic && <a href={`https://map.naver.com/p/search/${encodeURIComponent(`${/대구|구리|경기|부산/.test(provider.location_hint ?? "") ? "" : "서울 "}${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block rounded-md py-1 text-xs font-medium text-[#507045] underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 지도에서 이름 검색, 새 창`}>지도에서 이름 검색 ↗</a>}
+                      {provider.clinic && <span className="mt-2 flex flex-wrap gap-3 text-xs font-medium text-[#507045]"><a href={`https://map.naver.com/p/search/${encodeURIComponent(provider.address ?? `${provider.region ? provider.region + " " : /대구|구리|경기|부산/.test(provider.location_hint ?? "") ? "" : "서울 "}${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 네이버 지도에서 보기, 새 창`}>네이버 지도 ↗</a><a href={`https://map.kakao.com/?q=${encodeURIComponent(provider.address ?? `${provider.region ?? ""} ${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 카카오맵에서 보기, 새 창`}>카카오맵 ↗</a></span>}
                     </div>)}
                     {item.note && <p className={`rounded-xl px-3 py-3 text-xs leading-6 ${item.providers.length ? "bg-[#f7f9f3] text-[#7c896f]" : "bg-[#f4f5f1] text-[#707b68]"}`}>{item.note}</p>}
                   </div>
@@ -253,7 +259,7 @@ export default function ClinicRecommendationsList() {
       </section>
       <footer className="shell mt-10">
         <div className="flex flex-wrap items-start justify-between gap-5 border-t border-[#dce5d4] pt-7 text-xs leading-6 text-[#7d8973]">
-          <p className="max-w-2xl">{clinicRecommendationMeta.notice}<br />지도 링크는 이름 검색 결과이며 병원의 공식 페이지나 현재 소속 확인을 뜻하지 않습니다.</p>
+          <p className="max-w-2xl">{clinicRecommendationMeta.notice}<br />지도 링크는 이름·주소 검색 결과이며 병원의 공식 페이지나 현재 소속 확인을 뜻하지 않습니다.</p>
           <Link href="/prices" className="font-semibold text-[#4b6640] underline underline-offset-4">시술 가격 참고표도 보기 ↗</Link>
         </div>
       </footer>

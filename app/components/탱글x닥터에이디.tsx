@@ -14,7 +14,6 @@ export default function TangleXDrAidee({ variant = "feature", placement }: Props
           <span className="flex -space-x-2" aria-hidden="true">
             {drAideePartner.models.map((model) => <Image key={model.src} src={model.src} alt="" width={64} height={64} className="h-8 w-8 rounded-full border-2 border-white object-cover object-top" />)}
           </span>
-          <span className="rounded-full border border-[rgba(32,34,31,0.12)] px-2 py-0.5 text-[10px] font-semibold tracking-[0.12em] text-[var(--color-muted)]">{drAideePartner.label}</span>
           <strong className="text-[14px] font-normal text-[var(--color-carbon)]">탱글 × <span className="font-draidee text-[15px]">Doctor Aidee</span></strong>
           <span className="text-[var(--color-muted)]">{drAideePartner.tagline}</span>
         </div>
@@ -44,7 +43,6 @@ export default function TangleXDrAidee({ variant = "feature", placement }: Props
         </div>
       </div>
       <p className="mt-2 flex flex-wrap items-center gap-x-2 px-1 text-[11px] leading-5 text-[var(--color-muted)]">
-        <span className="font-semibold tracking-[0.12em]">{drAideePartner.label}</span>
         <span>{drAideePartner.disclosure}</span>
       </p>
     </aside>

@@ -13,8 +13,8 @@ delete process.env.QUOTE_WORKFLOW_ENABLED;
 const root = path.resolve(import.meta.dirname, "..");
 const recommendations = require(path.join(root, "lib/서울경험추천.ts"));
 const items = recommendations.clinicRecommendations;
-assert.equal(items.length, 31);
-assert.equal(new Set(items.map((item) => item.id)).size, 31);
+assert.equal(items.length, 33);
+assert.equal(new Set(items.map((item) => item.id)).size, 33);
 const expected = {
   "skin-injections": ["네스트의원", "이경연"], "rituo": ["닥터미 의원", "전윤주", "이서하"],
   "gouri": ["데이터 부족"], "sofwave-toning-hair-removal": ["신사디온", "박지영"],
@@ -29,7 +29,7 @@ const expected = {
   "eyebrow-tattoo": ["드보라 성형외과"], "renuvion-general-skin": ["리뉴비온", "신사 더힐"],
   "inmode": ["시간보장", "뷰티앤영"], "ulthera-thermage-output": ["강한 출력", "뷰앤플 의원"],
   "body-care": ["모드니", "바디웰", "터한의원"], "face-custom": ["서울탑초이스의원", "덴서티"], "lip-filler": ["르디테의원", "레스틸렌 키스"],
-  "nasolabial": ["진성형외과"], "orthodontics": ["리마치과"], "global-skin": ["데이뷰의원 강남점", "데이뷰의원 명동", "세라미크의원", "이종진", "70%", "daybeau-gangnam", "ceramique-myeongdong", "우동진"],
+  "nasolabial": ["진성형외과"], "orthodontics": ["리마치과"], "implant": ["강남플란트치과의원", "상위 1%"], "whitening": ["연세미치과", "오금역", "양심적인 가격"], "global-skin": ["데이뷰의원 강남점", "데이뷰의원 명동", "세라미크의원", "이종진", "70%", "daybeau-gangnam", "ceramique-myeongdong", "우동진"],
   "skin-doctors-top": ["도미옥", "나의계절의원", "김근영", "비엘성형외과", "조한결"], "massage": ["레비나스", "드네의원", "어메이징빅토리아", "금단비가", "약손명가", "위뷰티"],
 };
 for (const [id, keywords] of Object.entries(expected)) {
@@ -43,6 +43,12 @@ assert.equal(items.filter((row) => row.status === "withheld").length, 1);
 assert.ok(items.filter((row) => ["insufficient", "withheld"].includes(row.status)).every((row) => row.providers.length === 0));
 assert.equal(items.find((row) => row.id === "acne-hair-removal").providers[0].clinic, null);
 assert.equal(items.find((row) => row.id === "nose").providers.length, 4);
+assert.deepEqual(items.filter((row) => row.category === "dental").map((row) => row.id), ["orthodontics", "implant", "whitening"]);
+assert.equal(recommendations.getClinicRecommendations("", "dental").length, 3);
+assert.deepEqual(recommendations.clinicGroups.map((group) => group.id), ["skin", "surgery", "dental"]);
+assert.ok(items.flatMap((row) => row.providers).filter((p) => /대구/.test(p.location_hint ?? "") || /대구/.test(p.address ?? "")).every((p) => p.region === "대구"), "대구 병원은 (대구) 표시");
+assert.ok(!JSON.stringify(recommendations.clinicRecommendationMeta).includes("서울 한정"));
+assert.ok(recommendations.clinicRecommendationMeta.trust_note.includes("광고"));
 assert.equal(items.filter(recommendations.hasFirsthand).length, 6);
 assert.equal(items.flatMap((row) => row.providers).filter((p) => p.experience).length, 7);
 const privateWords = ["남편", "시부모", "막내", "아이돌", "1억", "지인 친척"];
@@ -138,5 +144,5 @@ for (const lang of languages) assert.ok(i18n.translations[lang]["nav.global"], "
 const partner = require(path.join(root, "lib/파트너.ts"));
 assert.ok(partner.drAideePartner.disclosure.includes("운영진") && partner.drAideePartner.disclosure.includes("광고"), "운영진 브랜드의 광고임을 밝혀야 함");
 assert.ok(partner.partnerShopHref("test").startsWith("https://doctoraidee.com/"));
-console.log("경험 추천 31개 분야·가슴성형 가이드·파트너 표기 원문·검색·정보상태, 인증권한·외부전송 차단 검증 통과");
+console.log("추천 병원 33개 분야·가슴성형 가이드·파트너 표기 원문·검색·정보상태, 인증권한·외부전송 차단 검증 통과");
 console.log("추천 105개 조건 검증 통과: 결과 " + successCount + "개, 자료 부족 " + noResultCount + "개");

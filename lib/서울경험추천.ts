@@ -1,6 +1,6 @@
 import source from "../data/서울-경험추천-2026-10.json";
 
-export type ClinicCategory = "skin" | "surgery" | "body";
+export type ClinicCategory = "skin" | "surgery" | "body" | "dental";
 export type ClinicStatus = "experience" | "confirm" | "insufficient" | "withheld";
 export type ClinicProvider = {
   clinic: string | null;
@@ -9,8 +9,12 @@ export type ClinicProvider = {
   note: string | null;
   /** 탱글 운영진이 직접 수술·시술을 받은 경험 요약 */
   experience?: string;
-  /** 탱글 협업 병원 id (lib/협업병원.ts) */
+  /** 링크 정보가 있는 병원 id (lib/협업병원.ts) */
   partner_id?: string;
+  /** 서울 밖 병원의 지역 (예: 대구) */
+  region?: string;
+  address?: string;
+  links?: { kind: "website" | "booking" | "kakao" | "instagram" | "phone"; url: string }[];
 };
 export type ClinicRecommendation = {
   id: string;
@@ -30,12 +34,13 @@ export const clinicRecommendationMeta = source.metadata;
 export const hasFirsthand = (item: ClinicRecommendation) => item.providers.some((provider) => Boolean(provider.experience));
 export const clinicRecommendations = source.recommendations as ClinicRecommendation[];
 export const clinicCategoryLabels: Record<ClinicCategory, string> = {
-  skin: "피부", surgery: "성형", body: "체형·경락",
+  skin: "피부", surgery: "성형", body: "체형·경락", dental: "치과",
 };
 /** 화면에서는 피부(피부 시술 + 체형·경락)와 성형 두 갈래로 크게 나눕니다. */
 export const clinicGroups: readonly { id: ClinicCategory; label: string; detail: string; categories: readonly ClinicCategory[] }[] = [
   { id: "skin", label: "피부", detail: "주사·리프팅·레이저·관리", categories: ["skin", "body"] },
   { id: "surgery", label: "성형", detail: "눈·코·윤곽·가슴·거상·모발이식", categories: ["surgery"] },
+  { id: "dental", label: "치과", detail: "임플란트·교정·미백·일반 진료", categories: ["dental"] },
 ];
 
 export const clinicStatusLabels: Record<ClinicStatus, string> = {
@@ -49,7 +54,7 @@ export function normalizeClinicSearch(value: string): string {
 function searchText(item: ClinicRecommendation): string {
   return normalizeClinicSearch([
     item.title, ...item.treatments, ...item.aliases,
-    ...item.providers.flatMap((provider) => [provider.clinic ?? "", ...provider.doctors, provider.location_hint ?? "", provider.note ?? "", provider.experience ?? ""]),
+    ...item.providers.flatMap((provider) => [provider.clinic ?? "", ...provider.doctors, provider.location_hint ?? "", provider.note ?? "", provider.experience ?? "", provider.region ?? "", provider.address ?? ""]),
     item.source_text,
   ].join(" "));
 }
@@ -100,7 +105,7 @@ export function formatClinicRecommendationContext(query?: string): string {
   const items = query === undefined ? clinicRecommendations : getClinicRecommendationsForQuestion(query);
   if (!items.length) return "";
   return [
-    "[서울 중심 개인 경험 참고자료 / 외부 검증 전]",
+    "[탱글 추천 병원 — 개인 경험 참고자료 / 외부 검증 전]",
     clinicRecommendationMeta.source_claim,
     clinicRecommendationMeta.scope_note,
     clinicRecommendationMeta.notice,
@@ -114,8 +119,8 @@ export function findClinicRecommendationText(query: string): string {
   const items = getClinicRecommendationsForQuestion(query);
   if (!items.length) return "";
   return [
-    "사용자가 공유한 서울 개인 경험 목록에는 다음 내용이 있습니다. 병원명·현재 소속·운영 여부는 외부 검증 전이며, 추천 순위나 안전성·효과를 보장하지 않습니다.",
+    "탱글 추천 병원 목록에는 다음 내용이 있습니다. 병원명·현재 소속·운영 여부는 외부 검증 전이며, 추천 순위나 안전성·효과를 보장하지 않습니다.",
     formatEntries(items),
-    `전체 ${clinicRecommendations.length}개 항목과 원문은 경험 추천(/clinics)에서 확인할 수 있습니다.`,
+    `전체 ${clinicRecommendations.length}개 항목과 원문은 추천 병원(/clinics)에서 확인할 수 있습니다.`,
   ].join("\n\n");
 }

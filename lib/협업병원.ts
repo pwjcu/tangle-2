@@ -1,6 +1,6 @@
 import type { SupportedLanguage } from "./i18n";
 
-/** 탱글과 협업하는 병원. 링크는 각 병원 공식 사이트·공식 링크모음에서 확인한 주소만 넣습니다. */
+/** 공식 링크를 연결한 병원. 링크는 각 병원 공식 사이트·공식 링크모음에서 확인한 주소만 넣습니다. */
 export type LocalizedText = Record<SupportedLanguage, string>;
 export type PartnerLinkKind = "website" | "booking" | "naverBooking" | "instagram" | "whatsapp" | "line" | "kakao" | "price" | "phone";
 export type PartnerLink = { kind: PartnerLinkKind; url: string; note?: LocalizedText };

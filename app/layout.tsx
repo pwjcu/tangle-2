@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ChatBot from "./components/ChatBot";
-import LanguageDock from "./components/LanguageDock";
 import LanguageProvider from "./components/LanguageProvider";
 import Link from "next/link";
+import TangleLogo from "./components/탱글로고";
 import TangleXDrAidee from "./components/탱글x닥터에이디";
 import FooterPartnerStrip from "./components/푸터파트너띠";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://tangle.kr"),
   title: {
-    default: "탱글 | 서울 병원 경험 추천과 시술 가격 비교",
+    default: "탱글 | 광고 없는 추천 병원과 시술 가격",
     template: "%s | Tangle",
   },
   description:
-    "사람과 정보, 병원을 잇는 탱글. 광고·후기가 아닌 경험과 추천을 바탕으로 시술별 병원·원장 정보와 참고 가격을 정리해 상담과 선택을 돕습니다.",
+    "병원 가기 전, 탱글에서 먼저. 직접 받아 본 경험으로 거른 피부·성형·치과 추천 병원과 시술 가격을 정리했습니다. 광고·가짜 후기는 뺐습니다.",
+  openGraph: {
+    type: "website",
+    siteName: "탱글 tangle",
+    title: "탱글 | 광고 없는 추천 병원과 시술 가격",
+    description: "직접 받아 본 경험으로 거른 피부·성형·치과 추천 병원과 시술 가격. 광고·가짜 후기는 뺐습니다.",
+    locale: "ko_KR",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({
@@ -24,19 +32,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+      </head>
       <body>
         <LanguageProvider>
-          <LanguageDock />
           {children}
           <footer className="shell pb-28 pt-8 text-sm text-[var(--color-muted)]">
             <div className="flex flex-wrap items-center justify-between gap-5 border-t border-[var(--color-silver-mist)] pt-6">
-              <Link href="/" className="text-xl font-bold text-[var(--color-carbon)]">탱글 <span className="text-xs font-medium">Tangle</span></Link>
+              <TangleLogo size="sm" />
               <nav aria-label="서비스 바로가기" className="flex flex-wrap gap-x-5 gap-y-3">
                 <Link href="/clinics?category=skin">피부</Link>
                 <Link href="/clinics?category=surgery">성형</Link>
-                <Link href="/global">Global patients · 외국인 안내</Link>
-                <Link href="/prices">시술 가격표</Link>
+                <Link href="/clinics?category=dental">치과</Link>
+                <Link href="/prices">시술 가격</Link>
+                <Link href="/global">Global patients</Link>
                 <Link href="/recommend">조건별 추천</Link>
+                <Link href="/request">견적 요청</Link>
+                <Link href="/booking">상담 준비</Link>
+                <Link href="/hospital">병원 센터</Link>
                 <Link href="/my">내 요청</Link>
               </nav>
             </div>

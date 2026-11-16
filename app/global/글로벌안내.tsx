@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import Image from "next/image";
+import SiteHeader from "../components/사이트헤더";
 import { useEffect, useState } from "react";
-import LanguageSwitcher from "../components/LanguageSwitcher";
 import { useLanguage } from "../components/LanguageProvider";
 import { globalGuideCopy as copy, globalGuideSections, staffPhrases, tipsFor, type VisitPlan, type VisitStay } from "@/lib/글로벌가이드";
 import { partnerClinics, partnerLinkLabels } from "@/lib/협업병원";
@@ -59,17 +59,17 @@ export default function GlobalGuide() {
 
   return (
     <main className="min-h-screen pb-28">
-      <header className="border-b border-[#dce8e2] bg-white/90">
-        <div className="shell flex flex-wrap items-center justify-between gap-3 py-5">
-          <Link href="/" className="text-2xl font-semibold tracking-[-0.06em] text-[#244e3e]" aria-label="Tangle home">tangle<span className="text-[#8caa80]">.</span></Link>
-          <LanguageSwitcher />
-        </div>
-      </header>
+      <SiteHeader />
 
-      <section className="shell pb-8 pt-10 sm:pt-14" aria-labelledby="global-title">
-        <p className="mb-5 text-xs font-semibold tracking-[0.16em] text-[#4a705d]">{L(copy.eyebrow)}</p>
-        <h1 id="global-title" className="whitespace-pre-line text-[2.2rem] font-semibold !leading-[1.18] text-[#243f33] sm:text-[3.4rem]">{L(copy.title)}</h1>
-        <p className="mt-6 max-w-2xl text-[15px] leading-7 text-[#4f5f55] sm:text-[16px]">{L(copy.intro)}</p>
+      <section className="shell grid items-center gap-8 pb-10 pt-10 sm:pt-14 lg:grid-cols-[1.1fr_0.9fr]" aria-labelledby="global-title">
+        <div>
+          <p className="eyebrow mb-5"><span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />{L(copy.eyebrow)}</p>
+          <h1 id="global-title" className="type-title whitespace-pre-line">{L(copy.title)}</h1>
+          <p className="mt-6 max-w-2xl text-[16px] leading-8 text-[var(--color-muted)]">{L(copy.intro)}</p>
+        </div>
+        <div className="overflow-hidden rounded-[28px]">
+          <Image src="/images/global.webp" alt="" width={1000} height={750} priority sizes="(min-width: 1024px) 520px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
+        </div>
       </section>
 
       <div className="shell space-y-10">
@@ -77,13 +77,13 @@ export default function GlobalGuide() {
           <fieldset>
             <legend className="text-sm font-semibold text-[#304a3a]">{L(copy.planQuestion)}</legend>
             <div className="mt-3 grid gap-2">
-              {(["skin", "surgery"] as const).map((value) => <button key={value} type="button" aria-pressed={plan === value} onClick={() => setPlan(value)} className={`rounded-2xl border px-4 py-3 text-left text-sm font-medium ${plan === value ? "border-[#315640] bg-[#315640] text-white" : "border-[#e0e6db] text-[#4c604d] hover:bg-[#f3f6ee]"}`}>{L(copy.plans[value])}</button>)}
+              {(["skin", "surgery"] as const).map((value) => <button key={value} type="button" aria-pressed={plan === value} onClick={() => setPlan(value)} className={`rounded-2xl border px-4 py-3 text-left text-sm font-medium ${plan === value ? "border-[var(--brand)] bg-[var(--brand)] text-white" : "border-[#e0e6db] text-[#4c604d] hover:bg-[#f3f6ee]"}`}>{L(copy.plans[value])}</button>)}
             </div>
           </fieldset>
           <fieldset>
             <legend className="text-sm font-semibold text-[#304a3a]">{L(copy.stayQuestion)}</legend>
             <div className="mt-3 grid gap-2">
-              {(["short", "long"] as const).map((value) => <button key={value} type="button" aria-pressed={stay === value} onClick={() => setStay(value)} className={`rounded-2xl border px-4 py-3 text-left text-sm font-medium ${stay === value ? "border-[#315640] bg-[#315640] text-white" : "border-[#e0e6db] text-[#4c604d] hover:bg-[#f3f6ee]"}`}>{L(copy.stays[value])}</button>)}
+              {(["short", "long"] as const).map((value) => <button key={value} type="button" aria-pressed={stay === value} onClick={() => setStay(value)} className={`rounded-2xl border px-4 py-3 text-left text-sm font-medium ${stay === value ? "border-[var(--brand)] bg-[var(--brand)] text-white" : "border-[#e0e6db] text-[#4c604d] hover:bg-[#f3f6ee]"}`}>{L(copy.stays[value])}</button>)}
             </div>
           </fieldset>
         </section>
@@ -99,7 +99,7 @@ export default function GlobalGuide() {
                   return (
                     <li key={id}>
                       <label className="flex cursor-pointer gap-3 rounded-xl px-2 py-2 text-[14px] leading-6 text-[#3f5138] hover:bg-[#f6f9f3]">
-                        <input type="checkbox" checked={isChecked} onChange={() => setChecked(toggle(checked, id))} className="mt-1 h-4 w-4 shrink-0 accent-[#315640]" />
+                        <input type="checkbox" checked={isChecked} onChange={() => setChecked(toggle(checked, id))} className="mt-1 h-4 w-4 shrink-0 accent-[var(--brand)]" />
                         <span className={isChecked ? "text-[#9aa595] line-through" : ""}>{L(tip.text)}</span>
                       </label>
                     </li>
@@ -117,7 +117,7 @@ export default function GlobalGuide() {
           <div className="mt-4 flex flex-wrap gap-2">
             {visiblePhrases.map((phrase) => {
               const active = phrases.includes(phrase.id);
-              return <button key={phrase.id} type="button" aria-pressed={active} onClick={() => setPhrases(toggle(phrases, phrase.id))} className={`rounded-full border px-4 py-2 text-left text-sm ${active ? "border-[#315640] bg-[#315640] text-white" : "border-[#cfe0d6] bg-white text-[#3f5138] hover:bg-[#f6faf7]"}`}>{L(phrase.text)}</button>;
+              return <button key={phrase.id} type="button" aria-pressed={active} onClick={() => setPhrases(toggle(phrases, phrase.id))} className={`rounded-full border px-4 py-2 text-left text-sm ${active ? "border-[var(--brand)] bg-[var(--brand)] text-white" : "border-[#cfe0d6] bg-white text-[#3f5138] hover:bg-[#f6faf7]"}`}>{L(phrase.text)}</button>;
             })}
           </div>
           <button type="button" onClick={() => setShowCard(true)} disabled={!selectedPhrases.length} className="mt-5 w-full rounded-2xl bg-[#243f33] px-6 py-4 text-base font-semibold text-white disabled:opacity-40 sm:w-auto">{L(copy.staffShow)} ({selectedPhrases.length})</button>
@@ -130,14 +130,13 @@ export default function GlobalGuide() {
           <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {partnerClinics.map((clinic) => (
               <article key={clinic.id} className="flex flex-col rounded-[24px] border border-[#dde6da] bg-white p-5 sm:p-6">
-                <span className="w-fit rounded-full bg-[#1f3d33] px-2.5 py-1 text-[10px] font-semibold text-white">{L(copy.partnerBadge)}</span>
                 <h3 className="mt-3 text-lg font-semibold text-[#31492e]">{L(clinic.name)}</h3>
                 {language !== "ko" && <p className="text-xs text-[#8a9786]">{clinic.name.ko}</p>}
                 <p className="mt-2 text-sm text-[#65725c]">{L(clinic.area)}</p>
                 {clinic.doctor && <p className="mt-1 text-sm text-[#65725c]">{L(clinic.doctor)}</p>}
                 <p className="mt-3 flex-1 text-[14px] leading-6 text-[#3f5138]">{L(clinic.highlights)}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
-                  {clinic.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className={`rounded-full px-3 py-1.5 text-xs font-semibold ${link.kind === "whatsapp" || link.kind === "booking" ? "bg-[#315640] text-white hover:bg-[#244530]" : "border border-[#cfe0d6] text-[#2f5544] hover:bg-[#eef6f1]"}`}>{L(partnerLinkLabels[link.kind])}{link.note ? ` (${L(link.note)})` : ""} ↗</a>)}
+                  {clinic.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className={`rounded-full px-3 py-1.5 text-xs font-semibold ${link.kind === "whatsapp" || link.kind === "booking" ? "bg-[var(--brand)] text-white hover:bg-[#0f2b24]" : "border border-[#cfe0d6] text-[#2f5544] hover:bg-[#eef6f1]"}`}>{L(partnerLinkLabels[link.kind])}{link.note ? ` (${L(link.note)})` : ""} ↗</a>)}
                 </div>
               </article>
             ))}

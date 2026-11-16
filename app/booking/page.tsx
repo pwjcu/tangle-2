@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
+import TangleLogo from "../components/탱글로고";
 import { useLanguage } from "../components/LanguageProvider";
 
 export default function BookingPage() {
   const { language } = useLanguage();
   const ko = language === "ko";
   const steps = ko ? [
-    { title: "후보를 찾기", text: "서울 경험 추천에서 관심 시술과 의료진을 찾아보고, 현재 소속과 진료 여부를 확인해 주세요.", href: "/clinics", action: "서울 추천 살펴보기" },
+    { title: "후보를 찾기", text: "추천 병원에서 관심 시술과 의료진을 찾아보고, 현재 소속과 진료 여부를 확인해 주세요.", href: "/clinics", action: "추천 병원 살펴보기" },
     { title: "조건을 비교하기", text: "같은 샷수·용량·회차인지 확인하고, 포함 항목과 추가 비용을 상담 때 물어보세요.", href: "/prices", action: "규격별 가격 보기" },
     { title: "상담을 준비하기", text: "예산, 원하는 변화와 회복 가능 시간을 메모로 정리해 두세요.", href: "/request", action: "상담 메모 만들기" },
   ] : [
@@ -15,7 +16,7 @@ export default function BookingPage() {
     { title: "Prepare questions", text: "Organize your budget, goals and available recovery time before contacting the clinic.", href: "/request", action: "Prepare consultation notes" },
   ];
   return <main className="shell pb-16 pt-7">
-    <nav aria-label={ko ? "상담 안내 메뉴" : "Consultation navigation"} className="flex items-center justify-between gap-4"><Link href="/" className="text-2xl font-semibold text-[#244e3e]">tangle.</Link><Link href="/clinics" className="ghost-link">{ko ? "서울 경험 추천" : "Seoul guide"} →</Link></nav>
+    <nav aria-label={ko ? "상담 안내 메뉴" : "Consultation navigation"} className="flex items-center justify-between gap-4"><TangleLogo /><Link href="/clinics" className="ghost-link">{ko ? "서울 경험 추천" : "Seoul guide"} →</Link></nav>
     <section className="mt-8 rounded-[32px] bg-[#183e34] p-6 text-white sm:p-10">
       <p className="text-xs tracking-widest text-[#c5e2d2]">BEFORE YOUR CONSULTATION</p>
       <h1 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl">{ko ? "상담 예약 전, 차근차근." : "Prepare your clinic consultation."}</h1>
