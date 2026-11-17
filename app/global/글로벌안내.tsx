@@ -121,6 +121,7 @@ export default function GlobalGuide() {
             })}
           </div>
           <button type="button" onClick={() => setShowCard(true)} disabled={!selectedPhrases.length} className="mt-5 w-full rounded-2xl bg-[#243f33] px-6 py-4 text-base font-semibold text-white disabled:opacity-40 sm:w-auto">{L(copy.staffShow)} ({selectedPhrases.length})</button>
+          <a href="/ai#translate" className="mt-3 block rounded-2xl border border-[var(--color-silver-mist)] bg-white px-5 py-4 text-[15px] font-semibold text-[var(--brand)] hover:bg-[var(--cream)]"><span className="mr-2 rounded-md bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-bold text-white">AI</span>{L({ ko: "원하는 문장이 없나요? AI 병원 번역으로 직접 써 보세요 →", en: "Need another sentence? Write it with the AI clinic interpreter →", zh: "没有想要的句子？用 AI 医院翻译自己写 →", ja: "必要な文がない？AIクリニック通訳で書いてみましょう →", th: "ไม่มีประโยคที่ต้องการ? ลองใช้ AI ล่ามคลินิก →" })}</a>
           {!selectedPhrases.length && <p className="mt-2 text-xs text-[#6b7867]">{L(copy.staffEmpty)}</p>}
         </section>
 

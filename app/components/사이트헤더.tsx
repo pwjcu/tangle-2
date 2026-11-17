@@ -11,11 +11,13 @@ const koLinks = [
   { href: "/clinics?category=dental", label: "치과" },
   { href: "/prices", label: "시술 가격" },
   { href: "/global", label: "외국인 안내" },
+  { href: "/ai", label: "AI 상담" },
 ];
 const globalLinks = [
   { href: "/global", label: "nav.global" },
   { href: "/clinics", label: "Recommended clinics" },
   { href: "/prices", label: "nav.prices" },
+  { href: "/ai#translate", label: "AI" },
 ];
 
 /** 모든 화면 공통 상단. 오른쪽 끝에 로그인 버튼 등을 넣을 수 있습니다. */

@@ -10,6 +10,7 @@ require.extensions[".ts"] = (module, filename) => module._compile(ts.transpileMo
 delete process.env.NEXT_PUBLIC_SUPABASE_URL;
 delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 delete process.env.QUOTE_WORKFLOW_ENABLED;
+delete process.env.OPENAI_API_KEY; // 테스트는 외부 AI 없이 대체 로직만 검증합니다.
 const root = path.resolve(import.meta.dirname, "..");
 const recommendations = require(path.join(root, "lib/서울경험추천.ts"));
 const items = recommendations.clinicRecommendations;
@@ -109,6 +110,21 @@ for (const [query, expectedText] of [["리쥬란 병원", "네스트"], ["써마
  const body = await response.json();
  assert.ok(body.reply.includes(expectedText), query + ": " + body.reply);
  assert.equal(body.aiAvailable, false);
+}
+{
+ const questions = await route("ai/questions").POST(request({ treatment: "리쥬란", concern: "모공", language: "ko" }));
+ assert.equal(questions.status, 200);
+ const sheet = (await questions.json()).sheet;
+ assert.ok(sheet.sections.length >= 4 && sheet.sections.every((section) => section.items.length > 0), "질문지 기본 섹션");
+ assert.equal((await route("ai/questions").POST(request({ treatment: "", language: "ko" }))).status, 400);
+ const enSheet = await (await route("ai/questions").POST(request({ treatment: "Thermage", language: "en" }))).json();
+ assert.ok(/doctor/i.test(JSON.stringify(enSheet.sheet)), "영문 질문지");
+ const ad = await (await route("ai/review-check").POST(request({ text: "체험단으로 소정의 원고료를 받아 작성했어요. 인생병원 무조건 강추! 예약은 링크로", language: "ko" }))).json();
+ const honest = await (await route("ai/review-check").POST(request({ text: "작년 3월에 코 재수술 받았어요. 붓기가 3주 정도 가서 불편했고 비용은 650만원. 아쉬운 점은 상담이 짧았던 것.", language: "ko" }))).json();
+ assert.ok(ad.result.score >= 60 && honest.result.score < 35, "후기 광고 판별 기본 규칙 " + ad.result.score + "/" + honest.result.score);
+ assert.equal((await route("ai/review-check").POST(request({ text: "a".repeat(3001) }))).status, 400);
+ assert.equal((await route("ai/translate").POST(request({ text: "I am allergic to anesthesia", language: "en", direction: "toKorean" }))).status, 503);
+ assert.equal((await route("ai/translate").POST(request({ text: "hi", direction: "sideways" }))).status, 400);
 }
 const imageRequest = request({ image: "PRIVATE_IMAGE_NOT_TO_BE_READ" });
 assert.equal((await route("image-consult").POST(imageRequest)).status, 503);

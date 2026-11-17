@@ -3,7 +3,9 @@ import { type SupportedLanguage } from "../../../lib/i18n";
 import { standardTreatmentPrices } from "../../../lib/시술표준가격";
 import { loadConsultTreatments, type ConsultTreatment } from "../../../lib/상담시술자료";
 import { ConsultInputError, normalizeConsultLanguage, readConsultBody, readConsultText } from "../../../lib/상담입력검증";
-import { findClinicRecommendationText } from "../../../lib/서울경험추천";
+import { clinicRecommendations, findClinicRecommendationText, formatClinicRecommendationContext } from "../../../lib/서울경험추천";
+import { aiRateLimited, askAI, languageNames, TANGLE_AI_RULES } from "../../../lib/탱글AI";
+import { partnerClinics } from "../../../lib/협업병원";
 import { formatBreastGuideText } from "../../../lib/가슴성형가이드";
 
 function normalized(value: string) {
@@ -54,6 +56,39 @@ function localReply(message: string, language: SupportedLanguage, treatments: Co
   return guidance[language];
 }
 
+function readHistory(value: unknown) {
+  if (!Array.isArray(value)) return "";
+  return value.slice(-6).flatMap((row) => {
+    if (!row || typeof row !== "object") return [];
+    const { role, text } = row as { role?: unknown; text?: unknown };
+    if ((role !== "user" && role !== "guide") || typeof text !== "string") return [];
+    return [`${role === "user" ? "User" : "Tangle"}: ${text.slice(0, 600)}`];
+  }).join("\n");
+}
+
+function aiContext(message: string, local: string, treatments: ConsultTreatment[]) {
+  const query = normalized(message);
+  const matched = treatments.filter((item) => query.includes(normalized(item.name))).slice(0, 4)
+    .map((item) => `${item.name} (${item.category}): ${item.description} / 회복: ${item.recovery || "미기재"} / 주의: ${item.side_effects || "미기재"} / 주기: ${item.cycle || "미기재"}`);
+  const prices = priceReferences(message).slice(0, 12)
+    .map((price) => `${price.treatment_name} · ${price.variant}: ${price.min_price_manwon}~${price.max_price_manwon}만원`);
+  const clinics = formatClinicRecommendationContext(message);
+  const topics = clinicRecommendations.map((item) => item.title).join(", ");
+  const partners = partnerClinics.map((clinic) => `${clinic.name.ko} (${clinic.area.ko}): ${clinic.highlights.ko}`).join("\n");
+  return [
+    `검색 결과 요약:
+${local}`,
+    matched.length ? `시술 정보:
+${matched.join("\n")}` : "",
+    prices.length ? `참고 가격(VAT 별도):
+${prices.join("\n")}` : "",
+    clinics,
+    `탱글 추천 병원 분야 목록: ${topics}`,
+    `외국인 환자 상담이 가능한 병원:
+${partners}`,
+  ].filter(Boolean).join("\n\n").slice(0, 14_000);
+}
+
 export async function POST(req: Request) {
   let language: SupportedLanguage = "ko";
   try {
@@ -61,8 +96,22 @@ export async function POST(req: Request) {
     language = normalizeConsultLanguage(body.language);
     const message = readConsultText(body.message, "질문", 2_000);
     const treatments = await loadConsultTreatments();
-    // Search stored references locally. Questions are never sent to an external AI provider.
-    return NextResponse.json({ reply: localReply(message, language, treatments), source: "reference", aiAvailable: false });
+    const local = localReply(message, language, treatments);
+    const history = readHistory(body.history);
+    // AI는 탱글 자료만 근거로 답하고, 쓸 수 없으면(키 없음·크레딧 부족·오류·호출 제한) 저장 자료 검색 결과를 그대로 돌려줍니다.
+    const ai = aiRateLimited(req) ? null : await askAI({
+      system: `${TANGLE_AI_RULES}
+Answer in ${languageNames[language]}. Keep it under 12 short lines. When useful, point to Tangle pages: /clinics (recommended clinics), /prices (price table), /guide/breast, /global (guide for international patients), /ai (AI tools). Mention that prices exclude VAT and may differ from the clinic's current quote when you quote prices.`,
+      user: `[Tangle reference data]
+${aiContext(message, local, treatments)}
+
+[Recent conversation]
+${history || "(none)"}
+
+[User question]
+${message}`,
+    });
+    return NextResponse.json({ reply: ai ?? local, source: ai ? "ai" : "reference", aiAvailable: Boolean(ai) });
   } catch (error) {
     const known = error instanceof ConsultInputError;
     return NextResponse.json({ reply: known ? error.message : localIntro[language], source: "error" }, { status: known ? error.status : 500 });

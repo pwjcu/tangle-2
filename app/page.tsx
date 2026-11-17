@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { openTangleChat } from "./components/AI열기";
 import Image from "next/image";
 import SiteHeader from "./components/사이트헤더";
 import TangleXDrAidee from "./components/탱글x닥터에이디";
@@ -495,6 +496,35 @@ export default function Home() {
             </div>
           </section>
         )}
+
+        <section className="shell pb-16 lg:pb-24" aria-labelledby="ai-title">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="eyebrow"><span className="rounded-md bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-bold text-white">AI</span>TANGLE AI</p>
+              <h2 id="ai-title" className="type-section mt-3">{ko ? "광고 없는 데이터로 답하는 탱글 AI" : "Tangle AI, built on ad-free data"}</h2>
+              <p className="mt-3 max-w-[620px] text-[15px] leading-7 text-[var(--color-muted)]">{ko ? "검증된 추천 병원과 시술 가격 데이터만 근거로 답해요. 상담 준비부터 광고 후기 거르기, 외국어 통역까지." : "Answers only from Tangle's verified clinic notes and prices — from consultation prep to spotting sponsored reviews and interpreting at the clinic."}</p>
+            </div>
+            <Link href="/ai" className="text-[14px] font-semibold text-[var(--brand)] underline-offset-4 hover:underline">{ko ? "AI 도구 전체 →" : "All AI tools →"}</Link>
+          </div>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <button type="button" onClick={openTangleChat} className="rounded-[22px] bg-[var(--brand)] p-5 text-left text-white hover:opacity-95">
+              <p className="text-[12px] font-bold text-white/70">01</p>
+              <p className="mt-2 text-[17px] font-bold">{ko ? "AI 상담 도우미" : "AI consultation guide"}</p>
+              <p className="mt-2 text-[14px] leading-6 text-white/80">{ko ? "고민을 적으면 추천 병원·가격으로 정리해요." : "Ask about clinics and prices in your language."}</p>
+            </button>
+            {[
+              ["02", "/ai#questions", ko ? "AI 상담 질문지" : "AI question sheet", ko ? "내 상황에 맞는 상담 질문을 만들어요." : "Questions to bring to your consultation."],
+              ["03", "/ai#review", ko ? "AI 후기 광고 체크" : "Sponsored-review check", ko ? "체험단·광고 후기일 가능성을 알려 줘요." : "See how likely a review is an ad."],
+              ["04", "/ai#translate", ko ? "AI 병원 번역" : "AI clinic interpreter", ko ? "외국인 환자가 직원과 바로 대화해요." : "Show Korean sentences to clinic staff."],
+            ].map(([num, href, title, body]) => (
+              <Link key={href} href={href} className="rounded-[22px] border border-[var(--color-silver-mist)] bg-white p-5 hover:shadow-[0_10px_30px_rgba(23,58,49,0.08)]">
+                <p className="text-[12px] font-bold text-[var(--accent)]">{num}</p>
+                <p className="mt-2 text-[17px] font-bold text-[var(--color-carbon)]">{title}</p>
+                <p className="mt-2 text-[14px] leading-6 text-[var(--color-muted)]">{body}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
 
         <section className={ko ? "bg-[var(--brand)] py-16 text-white lg:py-20" : "shell pb-16"} aria-labelledby="global-title">
           <div className={ko ? "shell grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]" : "grid items-center gap-10 overflow-hidden rounded-[28px] bg-[var(--brand)] p-6 text-white sm:p-10 lg:grid-cols-[1.1fr_0.9fr]"}>
