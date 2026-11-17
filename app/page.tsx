@@ -410,15 +410,15 @@ export default function Home() {
             )}
           </div>
 
-          <div className="relative mx-auto w-full max-w-[560px]">
+          <div className="relative mx-auto w-full max-w-[440px] lg:max-w-[560px]">
             <div className="overflow-hidden rounded-[28px] bg-[var(--sand)]">
-              <Image src="/images/hero-main.webp" alt="" width={900} height={1080} priority sizes="(min-width: 1024px) 560px, 100vw" className="aspect-[5/6] h-auto w-full object-cover" />
+              <Image src="/images/hero-main.webp" alt="" width={1086} height={1303} priority quality={85} sizes="(min-width: 1024px) 560px, (min-width: 480px) 440px, 100vw" className="aspect-[5/6] h-auto w-full object-cover object-[50%_25%]" />
             </div>
-            <div className="absolute -left-4 bottom-8 hidden w-[38%] overflow-hidden rounded-[22px] border-4 border-[var(--cream)] sm:block lg:-left-10">
-              <Image src="/images/hero-face.webp" alt="" width={600} height={600} sizes="220px" className="aspect-square h-auto w-full object-cover" />
+            <div className="absolute -left-10 bottom-8 hidden w-[38%] overflow-hidden rounded-[22px] border-4 border-[var(--cream)] xl:block">
+              <Image src="/images/hero-face.webp" alt="" width={869} height={869} quality={85} sizes="220px" className="aspect-square h-auto w-full object-cover" />
             </div>
             {ko && (
-              <div className="absolute -right-2 top-6 rounded-2xl bg-white px-4 py-3 shadow-[0_12px_30px_rgba(23,58,49,0.12)] sm:-right-6">
+              <div className="absolute right-3 top-3 rounded-2xl bg-white px-4 py-3 shadow-[0_12px_30px_rgba(23,58,49,0.12)] xl:-right-6 xl:top-6">
                 <p className="text-[11px] font-semibold text-[var(--accent)]">운영진이 직접 받은 곳</p>
                 <p className="mt-0.5 text-[15px] font-bold text-[var(--color-carbon)]">{clinicRecommendations.flatMap((item) => item.providers).filter((p) => p.experience).length}곳</p>
               </div>
@@ -441,7 +441,7 @@ export default function Home() {
                 return (
                   <article key={group.id} className="group overflow-hidden rounded-[24px] border border-[var(--color-silver-mist)] bg-white">
                     <Link href={`/clinics?category=${group.id}`} className="relative block overflow-hidden">
-                      <Image src={groupImages[group.id]} alt="" width={720} height={900} sizes="(min-width: 640px) 33vw, 100vw" className="aspect-[4/3] h-auto w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[4/5]" />
+                      <Image src={groupImages[group.id]} alt="" width={900} height={900} quality={85} sizes="(min-width: 1360px) 430px, (min-width: 640px) 33vw, 100vw" className="aspect-[4/3] h-auto w-full object-cover object-[50%_30%] transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[4/5]" />
                       <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-5 pb-4 pt-16 text-white">
                         <span className="flex items-baseline justify-between"><span className="text-[26px] font-bold">{group.label}</span><span className="text-[13px] opacity-90">{count}개 분야 →</span></span>
                       </span>
@@ -459,8 +459,8 @@ export default function Home() {
         {ko && (
           <section className="bg-white py-16 lg:py-24" aria-labelledby="how-title">
             <div className="shell grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-              <div className="overflow-hidden rounded-[28px]">
-                <Image src="/images/story.webp" alt="" width={900} height={1080} sizes="(min-width: 1024px) 480px, 100vw" className="aspect-[4/3] h-auto w-full object-cover lg:aspect-[5/6]" />
+              <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[28px] lg:max-w-none">
+                <Image src="/images/story.webp" alt="" width={1086} height={1303} quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover object-[50%_22%] lg:aspect-[5/6]" />
               </div>
               <div>
                 <p className="eyebrow">탱글이 고르는 방법</p>
@@ -510,8 +510,8 @@ export default function Home() {
               <p className="mt-5 max-w-[520px] text-[15px] leading-7 text-white/80">{globalGuideCopy.intro[language]}</p>
               <Link href="/global" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-[15px] font-semibold text-[var(--brand)] hover:opacity-90">{t("nav.global")} →</Link>
             </div>
-            <div className="overflow-hidden rounded-[24px]">
-              <Image src="/images/global.webp" alt="" width={1000} height={750} sizes="(min-width: 1024px) 480px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
+            <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[24px] lg:max-w-none">
+              <Image src="/images/global.webp" alt="" width={900} height={675} quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
             </div>
           </div>
         </section>
