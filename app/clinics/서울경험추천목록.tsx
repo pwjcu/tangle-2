@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { categoryImages } from "../../lib/카테고리이미지";
 import Link from "next/link";
 import SiteHeader from "../components/사이트헤더";
 import { useMemo, useState, useSyncExternalStore } from "react";
@@ -20,7 +21,6 @@ import {
 import { partnerClinicById, partnerLinkLabels } from "@/lib/협업병원";
 
 const SAVED_KEY = "tangle:clinic-saved:v1";
-const groupImages: Record<string, string> = { skin: "/images/cat-skin.webp", surgery: "/images/cat-surgery.webp", dental: "/images/cat-dental.webp" };
 const SAVED_EVENT = "tangle:clinic-saved-change";
 let memorySaved = "[]";
 let useMemoryStorage = false;
@@ -177,7 +177,7 @@ export default function ClinicRecommendationsList() {
             const count = clinicRecommendations.filter((item) => group.categories.includes(item.category)).length;
             return <button key={group.id} type="button" aria-pressed={active} onClick={() => updateFilters({ category: active ? "all" : group.id })} className={`group overflow-hidden rounded-[20px] border text-left sm:rounded-[24px] ${active ? "border-[var(--brand)] ring-2 ring-[var(--brand)]" : "border-[var(--color-silver-mist)] hover:border-[var(--brand)]"} bg-white`}>
               <span className="relative block overflow-hidden">
-                <Image src={groupImages[group.id]} alt="" width={900} height={900} quality={85} sizes="(min-width: 1360px) 430px, 33vw" className="aspect-square h-auto w-full object-cover object-[50%_30%] transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[16/10]" />
+                <Image src={categoryImages[group.id].src} alt="" width={1086} height={1448} quality={85} sizes="(min-width: 1360px) 430px, 33vw" style={{ objectPosition: categoryImages[group.id].focus }} className="aspect-square h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[16/10]" />
                 {active && <span className="absolute right-2 top-2 rounded-full bg-[var(--brand)] px-2 py-0.5 text-[10px] font-semibold text-white">선택됨</span>}
               </span>
               <span className="block p-3 sm:p-5">

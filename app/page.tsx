@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import type { SupportedLanguage } from "../lib/i18n";
 import { displayCategoryName, treatmentCategories } from "../lib/siteContent";
+import { categoryImages } from "../lib/카테고리이미지";
 import { clinicCategoryLabels, clinicGroups, clinicRecommendations, hasFirsthand } from "../lib/서울경험추천";
 import { globalGuideCopy } from "../lib/글로벌가이드";
 import { useLanguage } from "./components/LanguageProvider";
@@ -365,7 +366,6 @@ export default function Home() {
   };
 
   const firsthand = clinicRecommendations.filter(hasFirsthand).slice(0, 6);
-  const groupImages: Record<string, string> = { skin: "/images/cat-skin.webp", surgery: "/images/cat-surgery.webp", dental: "/images/cat-dental.webp" };
   const groupChips: Record<string, string[]> = {
     skin: ["리쥬란", "입술필러", "써마지", "여드름 흉터"],
     surgery: ["눈", "코재수술", "가슴", "모발이식"],
@@ -435,7 +435,7 @@ export default function Home() {
                 return (
                   <article key={group.id} className="group overflow-hidden rounded-[24px] border border-[var(--color-silver-mist)] bg-white">
                     <Link href={`/clinics?category=${group.id}`} className="relative block overflow-hidden">
-                      <Image src={groupImages[group.id]} alt="" width={900} height={900} quality={85} sizes="(min-width: 1360px) 430px, (min-width: 640px) 33vw, 100vw" className="aspect-[4/3] h-auto w-full object-cover object-[50%_30%] transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[4/5]" />
+                      <Image src={categoryImages[group.id].src} alt="" width={1086} height={1448} quality={85} sizes="(min-width: 1360px) 430px, (min-width: 640px) 33vw, 100vw" style={{ objectPosition: categoryImages[group.id].focus }} className="aspect-[4/3] h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[4/5]" />
                       <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-5 pb-4 pt-16 text-white">
                         <span className="flex items-baseline justify-between"><span className="text-[26px] font-bold">{group.label}</span><span className="text-[13px] opacity-90">{count}개 분야 →</span></span>
                       </span>
