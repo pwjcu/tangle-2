@@ -43,13 +43,13 @@ const homeContent: Record<
     heroEyebrow: "광고 없는 병원 추천",
     heroTitle: ["병원 가기 전,", "탱글에서 먼저", "확인하세요."],
     heroBody:
-      "직접 받아 본 경험으로 거른 추천 병원과 시술 가격. 광고·가짜 후기는 뺐습니다.",
+      "검증된 경험 후기와 직접 다녀 본 곳을 바탕으로 필터링한 추천 병원과 시술 가격. 광고·가짜 후기는 뺐습니다.",
     primaryCta: "추천 병원 보기",
     secondaryCta: "시술 가격 비교하기",
     helper: "",
     imageAlt: "카메라로 얼굴을 업로드하고 고민 부위를 표시한 뒤 병원에게만 공개하는 탱글 기능 안내",
     metrics: [
-      { label: "추천 병원", value: `${clinicRecommendations.length}개 분야`, body: "광고 없이, 직접 받아 본 경험으로 고른 피부·성형·치과" },
+      { label: "추천 병원", value: `${clinicRecommendations.length}개 분야`, body: "검증된 경험 후기와 직접 다녀 본 곳으로 고른 피부·성형·치과" },
       { label: "조건을 맞춘 가격 비교", value: "78개 규격", body: "샷수, 용량, 회차, 패키지를 구분한 참고가" },
       { label: "나에게 맞는 후보 탐색", value: "5개 질문", body: "고민·예산·나이대·목표·회복 기간으로 정리" },
     ],
@@ -415,14 +415,8 @@ export default function Home() {
               <Image src="/images/hero-main.webp" alt="" width={1086} height={1303} priority quality={85} sizes="(min-width: 1024px) 560px, (min-width: 480px) 440px, 100vw" className="aspect-[5/6] h-auto w-full object-cover object-[50%_25%]" />
             </div>
             <div className="absolute -left-10 bottom-8 hidden w-[38%] overflow-hidden rounded-[22px] border-4 border-[var(--cream)] xl:block">
-              <Image src="/images/hero-face.webp" alt="" width={869} height={869} quality={85} sizes="220px" className="aspect-square h-auto w-full object-cover" />
+              <Image src="/images/hero-face.webp" alt="" width={840} height={840} quality={85} sizes="220px" className="aspect-square h-auto w-full object-cover" />
             </div>
-            {ko && (
-              <div className="absolute right-3 top-3 rounded-2xl bg-white px-4 py-3 shadow-[0_12px_30px_rgba(23,58,49,0.12)] xl:-right-6 xl:top-6">
-                <p className="text-[11px] font-semibold text-[var(--accent)]">운영진이 직접 받은 곳</p>
-                <p className="mt-0.5 text-[15px] font-bold text-[var(--color-carbon)]">{clinicRecommendations.flatMap((item) => item.providers).filter((p) => p.experience).length}곳</p>
-              </div>
-            )}
           </div>
         </section>
 
@@ -511,7 +505,7 @@ export default function Home() {
               <Link href="/global" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-[15px] font-semibold text-[var(--brand)] hover:opacity-90">{t("nav.global")} →</Link>
             </div>
             <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[24px] lg:max-w-none">
-              <Image src="/images/global.webp" alt="" width={900} height={675} quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
+              <Image src="/images/global.webp" alt="" width={784} height={588} quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
             </div>
           </div>
         </section>

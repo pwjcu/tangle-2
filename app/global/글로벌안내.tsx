@@ -68,7 +68,7 @@ export default function GlobalGuide() {
           <p className="mt-6 max-w-2xl text-[16px] leading-8 text-[var(--color-muted)]">{L(copy.intro)}</p>
         </div>
         <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[28px] lg:max-w-none">
-          <Image src="/images/global.webp" alt="" width={900} height={675} priority quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
+          <Image src="/images/global.webp" alt="" width={784} height={588} priority quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
         </div>
       </section>
 

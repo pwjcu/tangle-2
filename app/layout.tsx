@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     template: "%s | Tangle",
   },
   description:
-    "병원 가기 전, 탱글에서 먼저. 직접 받아 본 경험으로 거른 피부·성형·치과 추천 병원과 시술 가격을 정리했습니다. 광고·가짜 후기는 뺐습니다.",
+    "병원 가기 전, 탱글에서 먼저. 검증된 경험 후기와 직접 다녀 본 곳을 바탕으로 필터링한 피부·성형·치과 추천 병원과 시술 가격을 정리했습니다. 광고·가짜 후기는 뺐습니다.",
   openGraph: {
     type: "website",
     siteName: "탱글 tangle",
     title: "탱글 | 광고 없는 추천 병원과 시술 가격",
-    description: "직접 받아 본 경험으로 거른 피부·성형·치과 추천 병원과 시술 가격. 광고·가짜 후기는 뺐습니다.",
+    description: "검증된 경험 후기와 직접 다녀 본 곳을 바탕으로 필터링한 피부·성형·치과 추천 병원과 시술 가격. 광고·가짜 후기는 뺐습니다.",
     locale: "ko_KR",
   },
   twitter: { card: "summary_large_image" },
