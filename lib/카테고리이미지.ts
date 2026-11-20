@@ -2,5 +2,5 @@
 export const categoryImages: Record<string, { src: string; focus: string }> = {
   skin: { src: "/images/cat-skin.webp", focus: "50% 10%" },
   surgery: { src: "/images/cat-surgery.webp", focus: "50% 48%" },
-  dental: { src: "/images/cat-dental.webp", focus: "50% 38%" },
+  dental: { src: "/images/cat-dental.webp", focus: "50% 34%" },
 };

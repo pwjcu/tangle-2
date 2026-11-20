@@ -8,210 +8,310 @@
     "source_claim": "원문 작성자는 내돈내산, 20년 경험·2억 원 인사이트라고 소개했습니다. 지출·기간·시술 이력은 별도로 확인하지 않았습니다.",
     "verification_status": "외부 검증 전",
     "scope_note": "지역 구분 없이 모았고, 서울 밖 병원은 (대구)처럼 지역을 표시합니다. 병원명, 의료진의 현재 소속, 지점과 장비 운영 여부는 방문 전에 확인해 주세요.",
-    "notice": "개인의 경험을 정리한 참고 목록이며 진료 실력의 순위나 안전성·효과를 보장하지 않습니다. 목록에 없다는 이유로 의료진의 전문성을 판단하지 않습니다.",
+    "notice": "개인 경험을 모은 참고 정보예요. 효과나 안전을 보장하지 않으니, 방문 전에 병원 정보를 한 번 확인해 주세요.",
     "missing_information_policy": "원문에 없는 병원명, 소속, 주소, 가격, 장비 현황은 추정하지 않았습니다. 데이터 부족과 비공개는 그대로 남겼습니다.",
     "updated_at": "2026-11-13",
     "firsthand_note": "‘운영진 직접 경험’은 탱글 운영진이 실제로 수술·시술을 받은 곳입니다. 가격보다 누가, 어떻게 수술·시술하느냐를 기준으로 고른 곳이며, 개인적인 내용은 빼고 정보만 남겼습니다.",
-    "trust_note": "광고비를 받고 올린 곳이 아닙니다. 직접 다녀오거나 오래 다닌 사람의 경험만 모았고, 체험단·광고성 후기는 거릅니다."
+    "trust_note": "광고비를 받고 올린 곳이 아니에요. 직접 다녀오거나 오래 다닌 사람의 경험만 모았고, 체험단·광고 후기는 걸렀어요."
   },
   "recommendations": [
     {
-      "id": "skin-injections", "category": "skin", "title": "스킨보톡스·리쥬란 등 주사시술",
-      "treatments": ["스킨보톡스", "리쥬란", "주사시술"], "aliases": ["스킨 보톡스"], "status": "experience",
+      "id": "skin-injections", "category": "skin", "title": "스킨보톡스·리쥬란 등 주사시술", "summary": "스킨보톡스·리쥬란 같은 주사 시술을 믿고 맡긴 원장님이에요.",
+      "treatments": ["스킨보톡스", "리쥬란", "주사시술"],
+      "aliases": ["스킨 보톡스"],
+      "status": "experience",
       "providers": [{"clinic": "네스트의원", "doctors": ["이경연"], "location_hint": null, "note": null}],
-      "note": null, "source_text": "스킨보톡스, 리쥬란 등 주사시술 : 네스트의원 이경연 님"
+      "note": null,
+      "source_text": "스킨보톡스, 리쥬란 등 주사시술 : 네스트의원 이경연 님"
     },
     {
-      "id": "rituo", "category": "skin", "title": "리투오",
-      "treatments": ["리투오"], "aliases": [], "status": "experience",
+      "id": "rituo", "category": "skin", "title": "리투오", "summary": "피부 재생 시술 리투오로 추천받은 원장님들이에요.",
+      "treatments": ["리투오"],
+      "aliases": [],
+      "status": "experience",
       "providers": [{"clinic": "닥터미 의원", "doctors": ["전윤주", "이서하"], "location_hint": null, "note": null}],
-      "note": null, "source_text": "리투오 : 닥터미 의원 전윤주, 이서하님"
+      "note": null,
+      "source_text": "리투오 : 닥터미 의원 전윤주, 이서하님"
     },
     {
-      "id": "gouri", "category": "skin", "title": "고우리",
-      "treatments": ["고우리"], "aliases": [], "status": "insufficient",
+      "id": "gouri", "category": "skin", "title": "고우리", "summary": "고우리 추천 정보는 아직 모으는 중이에요.",
+      "treatments": ["고우리"],
+      "aliases": [],
+      "status": "insufficient",
       "providers": [],
-      "note": "원문에 추천할 병원·의료진 정보가 없습니다.", "source_text": "고우리 : 데이터 부족"
+      "note": null,
+      "source_text": "고우리 : 데이터 부족"
     },
     {
-      "id": "sofwave-toning-hair-removal", "category": "skin", "title": "소프웨이브·토닝·제모",
-      "treatments": ["소프웨이브", "토닝", "제모"], "aliases": ["소프 웨이브"], "status": "experience",
+      "id": "sofwave-toning-hair-removal", "category": "skin", "title": "소프웨이브·토닝·제모", "summary": "소프웨이브 리프팅부터 토닝·제모까지 한곳에서 받은 곳이에요.",
+      "treatments": ["소프웨이브", "토닝", "제모"],
+      "aliases": ["소프 웨이브"],
+      "status": "experience",
       "providers": [{"clinic": "신사디온", "doctors": ["박지영"], "location_hint": "신사", "note": null}],
-      "note": null, "source_text": "소프웨이브, 토닝, 제모: 신사디온 박지영 님"
+      "note": null,
+      "source_text": "소프웨이브, 토닝, 제모: 신사디온 박지영 님"
     },
     {
-      "id": "custom-hand-injections", "category": "skin", "title": "개인 커스텀·손주사",
-      "treatments": ["개인 커스텀", "손주사"], "aliases": ["맞춤 시술", "손 주사"], "status": "experience",
+      "id": "custom-hand-injections", "category": "skin", "title": "개인 커스텀·손주사", "summary": "얼굴에 맞춰 손으로 직접 주사하는 원장님들이에요.",
+      "treatments": ["개인 커스텀", "손주사"],
+      "aliases": ["맞춤 시술", "손 주사"],
+      "status": "experience",
       "providers": [{"clinic": "드네의원", "doctors": ["신예진"], "location_hint": null, "note": null}, {"clinic": "소은의원", "doctors": ["김소은"], "location_hint": null, "note": null}],
-      "note": "원문에서 개인 맞춤과 손주사 경험으로 추천한 항목입니다.", "source_text": "개인 커스텀 , 손주사 맛집 : 드네의원 신예진 님, 소은의원 김소은 님"
+      "note": null,
+      "source_text": "개인 커스텀 , 손주사 맛집 : 드네의원 신예진 님, 소은의원 김소은 님"
     },
     {
-      "id": "thread-lifting-fillers", "category": "skin", "title": "실리프팅·필러",
-      "treatments": ["실리프팅", "압토스", "필러"], "aliases": ["실 리프팅"], "status": "experience",
+      "id": "thread-lifting-fillers", "category": "skin", "title": "실리프팅·필러", "summary": "실리프팅(압토스 포함)과 필러로 추천받은 원장님들이에요.",
+      "treatments": ["실리프팅", "압토스", "필러"],
+      "aliases": ["실 리프팅"],
+      "status": "experience",
       "providers": [{"clinic": "페이스플러스", "doctors": ["박정근"], "location_hint": null, "note": null}, {"clinic": "창피부과", "doctors": ["김창식"], "location_hint": null, "note": null}],
-      "note": "원문은 압토스를 실리프팅 항목에 포함했습니다. 병원별 세부 시술 가능 여부는 미확인입니다.", "source_text": "실리프팅 (압토스 포함), 필러 : 페이스플러스 박정근 님 , 창피부과 김창식 님"
+      "note": null,
+      "source_text": "실리프팅 (압토스 포함), 필러 : 페이스플러스 박정근 님 , 창피부과 김창식 님"
     },
     {
-      "id": "acne-scars", "category": "skin", "title": "여드름 흉터",
-      "treatments": ["여드름 흉터"], "aliases": ["여드름흉터", "흉터"], "status": "experience",
+      "id": "acne-scars", "category": "skin", "title": "여드름 흉터", "summary": "여드름 흉터 치료로 추천받은 원장님이에요.",
+      "treatments": ["여드름 흉터"],
+      "aliases": ["여드름흉터", "흉터"],
+      "status": "experience",
       "providers": [{"clinic": "창피부과", "doctors": ["김창식"], "location_hint": null, "note": null}],
-      "note": null, "source_text": "여드름 흉터 : 창피부과 김창식 님"
+      "note": null,
+      "source_text": "여드름 흉터 : 창피부과 김창식 님"
     },
     {
-      "id": "acne-hair-removal", "category": "skin", "title": "여드름·제모",
-      "treatments": ["여드름", "제모"], "aliases": ["선릉 라엘르", "라엘르"], "status": "confirm",
-      "providers": [{"clinic": null, "doctors": ["채선경"], "location_hint": "구 선릉 라엘르, 현 대치동? (원문 기억)", "note": "현재 병원 이름과 소속·위치는 미확인입니다. 과거 병원을 현재 소속으로 표시하지 않았습니다."}],
-      "note": "원문 작성자가 병원명을 기억하지 못한 항목입니다.", "source_text": "여드름, 제모 : 채선경 님 (병원 이름 까먹음, 구 선릉 라엘르, 현 대치동?)"
+      "id": "acne-hair-removal", "category": "skin", "title": "여드름·제모", "summary": "여드름 치료와 제모로 오래 다닌 원장님이에요.",
+      "treatments": ["여드름", "제모"],
+      "aliases": ["선릉 라엘르", "라엘르"],
+      "status": "confirm",
+      "providers": [{"clinic": null, "doctors": ["채선경"], "location_hint": "대치동 (확인 중)", "note": "현재 병원은 확인 중이에요 (예전 선릉 라엘르)."}],
+      "note": null,
+      "source_text": "여드름, 제모 : 채선경 님 (병원 이름 까먹음, 구 선릉 라엘르, 현 대치동?)"
     },
     {
-      "id": "hair-transplant", "category": "surgery", "title": "모발이식",
-      "treatments": ["모발이식", "비절개 모발이식", "헤어라인 모발이식"], "aliases": ["비절개", "모발 이식", "헤어라인", "M자", "이마 축소 대신"], "status": "experience",
-      "providers": [{"clinic": "참닥터", "doctors": ["김주용"], "location_hint": null, "note": "비절개 모발이식 추천입니다."}, {"clinic": "뉴헤어모발성형외과", "doctors": [], "location_hint": "강남역", "note": "공개 자료상 원장은 김진오(탈모 관련 저서·학회 활동). 원문에 집도의 이름은 없습니다.", "experience": "헤어라인 1,693모낭. 상담 2곳 후 결정. 공개 학술활동·저서·사례·영상 등 실력을 판단할 객관적 자료가 많아서 선택. 넓은 이마와 M자 때문에 했고 만족도가 매우 높은 편. 이식 후 빠짐(암흑기)이 거의 없었고, 이마축소 대신 모발이식을 하길 잘했다는 평.", "address": "서울 강남구 테헤란로 115 서림빌딩 15층", "links": [{"kind": "phone", "url": "tel:+8225572022"}]}],
-      "note": null, "source_text": "모발이식(비절개) : 참닥터 김주용 님 / 운영진 경험: 모발이식(헤어라인) — 뉴헤어성형외과(강남역)"
+      "id": "hair-transplant", "category": "surgery", "title": "모발이식", "summary": "비절개·절개 모발이식. 운영진이 직접 받은 곳이 함께 있어요.",
+      "treatments": ["모발이식", "비절개 모발이식", "헤어라인 모발이식"],
+      "aliases": ["비절개", "모발 이식", "헤어라인", "M자", "이마 축소 대신"],
+      "status": "experience",
+      "providers": [{"clinic": "참닥터", "doctors": ["김주용"], "location_hint": null, "note": "비절개 모발이식"}, {"clinic": "뉴헤어모발성형외과", "doctors": [], "location_hint": "강남역", "note": "대표원장 김진오", "experience": "헤어라인 1,693모낭. 학술 활동·사례가 많아 선택했고, 이식 후 빠짐(암흑기)이 거의 없어 만족도가 높아요.", "address": "서울 강남구 테헤란로 115 서림빌딩 15층", "links": [{"kind": "phone", "url": "tel:+8225572022"}]}],
+      "note": null,
+      "source_text": "모발이식(비절개) : 참닥터 김주용 님 / 운영진 경험: 모발이식(헤어라인) — 뉴헤어성형외과(강남역)"
     },
     {
-      "id": "nose", "category": "surgery", "title": "코",
-      "treatments": ["코", "코재수술"], "aliases": ["코 성형", "자가늑", "코 재수술", "실리콘 제거", "진피", "코끝 연골"], "status": "experience",
-      "providers": [{"clinic": "4월31일성형외과", "doctors": ["김찬우"], "location_hint": "학동역", "note": "병원명은 원문 표기, 원장 소속은 공개 프로필 기준입니다.", "experience": "코재수술: 기존 실리콘 제거 + 귀 뒤 진피 + 코끝 연골. 상담 3곳 비교 후 선택. 원하는 방향을 말하면 수술 방법을 명확하게 설명해 줬고, 실리콘 때문에 살짝 침식된 콧등 뼈도 함께 정리. 결과가 훨씬 자연스러워져 만족.", "address": "서울 강남구 논현로 707", "links": [{"kind": "phone", "url": "tel:+8225406777"}]}, {"clinic": "뷔엘성형외과", "doctors": ["이지성"], "location_hint": "신논현역", "note": "원문에 자가늑을 함께 언급했습니다. 뷔엘성형외과 대표원장(전 에이비성형외과).", "address": "서울 서초구 강남대로 437 대원빌딩 3층"}, {"clinic": "에이비성형외과", "doctors": ["안승현", "김주연"], "location_hint": "강남역", "note": "두 원장 모두 에이비성형외과 소속입니다.", "address": "서울 서초구 서초대로77길 17 2~4층", "links": [{"kind": "phone", "url": "tel:+8225121288"}]}],
-      "note": "운영진 직접 수술 1곳과 추천받은 원장 3명(뷔엘성형외과·에이비성형외과)이 함께 있습니다.", "source_text": "코 : 이지성 님 (자가늑), 안승현 님 , 김주연 님 / 운영진 경험: 코재수술 — 4월31일 성형외과 김찬우 원장(학동역)"
+      "id": "nose", "category": "surgery", "title": "코", "summary": "코 성형·재수술. 운영진이 직접 수술받은 곳과 추천 원장님들이에요.",
+      "treatments": ["코", "코재수술"],
+      "aliases": ["코 성형", "자가늑", "코 재수술", "실리콘 제거", "진피", "코끝 연골"],
+      "status": "experience",
+      "providers": [{"clinic": "4월31일성형외과", "doctors": ["김찬우"], "location_hint": "학동역", "note": null, "experience": "코재수술(실리콘 제거 + 귀 뒤 진피 + 코끝 연골). 수술 방법을 명확하게 설명해 줬고, 결과가 훨씬 자연스러워졌어요.", "address": "서울 강남구 논현로 707", "links": [{"kind": "phone", "url": "tel:+8225406777"}]}, {"clinic": "뷔엘성형외과", "doctors": ["이지성"], "location_hint": "신논현역", "note": "자가늑 코 성형", "address": "서울 서초구 강남대로 437 대원빌딩 3층"}, {"clinic": "에이비성형외과", "doctors": ["안승현", "김주연"], "location_hint": "강남역", "note": null, "address": "서울 서초구 서초대로77길 17 2~4층", "links": [{"kind": "phone", "url": "tel:+8225121288"}]}],
+      "note": null,
+      "source_text": "코 : 이지성 님 (자가늑), 안승현 님 , 김주연 님 / 운영진 경험: 코재수술 — 4월31일 성형외과 김찬우 원장(학동역)"
     },
     {
-      "id": "facial-contouring", "category": "surgery", "title": "윤곽",
-      "treatments": ["윤곽"], "aliases": ["윤곽 성형"], "status": "confirm",
-      "providers": [{"clinic": "에이비성형외과", "doctors": ["안승현"], "location_hint": "강남역", "note": "에이비성형외과 대표원장. 코·안면윤곽 전문.", "address": "서울 서초구 서초대로77길 17 2~4층", "links": [{"kind": "phone", "url": "tel:+8225121288"}]}, {"clinic": null, "doctors": ["박정근"], "location_hint": null, "note": "윤곽 항목에는 병원명이 없습니다. 다른 시술에 등장한 병원을 현재 소속으로 추정하지 않았습니다."}],
-      "note": null, "source_text": "윤곽 : 안승현 님, 박정근 님"
+      "id": "facial-contouring", "category": "surgery", "title": "윤곽", "summary": "광대·턱 윤곽 수술로 추천받은 원장님들이에요.",
+      "treatments": ["윤곽"],
+      "aliases": ["윤곽 성형"],
+      "status": "confirm",
+      "providers": [{"clinic": "에이비성형외과", "doctors": ["안승현"], "location_hint": "강남역", "note": "대표원장 · 코·윤곽", "address": "서울 서초구 서초대로77길 17 2~4층", "links": [{"kind": "phone", "url": "tel:+8225121288"}]}, {"clinic": null, "doctors": ["박정근"], "location_hint": null, "note": null}],
+      "note": null,
+      "source_text": "윤곽 : 안승현 님, 박정근 님"
     },
     {
-      "id": "eyes", "category": "surgery", "title": "눈",
-      "treatments": ["눈", "쌍꺼풀", "앞트임", "뒷밑트임"], "aliases": ["눈 성형", "매몰", "빵트임", "뒤트임", "밑트임", "쌍수"], "status": "experience",
-      "providers": [{"clinic": "에이비성형외과", "doctors": ["배인호"], "location_hint": "강남역", "note": "에이비성형외과 소속 원장입니다.", "address": "서울 서초구 서초대로77길 17 2~4층", "links": [{"kind": "phone", "url": "tel:+8225121288"}]}, {"clinic": "조셉성형외과", "doctors": [], "location_hint": "구리역 (경기 구리)", "note": "담당 원장 이름은 원문에 없습니다.", "experience": "쌍꺼풀(매몰)·앞트임. 약 14년이 지났는데 매몰이 풀리지 않았고 앞트임 흉도 없이 자연스럽게 자리 잡음. 풀리면 재수술도 여기서 하겠다는 평.", "region": "경기 구리"}, {"clinic": "디엠성형외과", "doctors": [], "location_hint": "압구정역", "note": "공개 자료상 대표원장은 유원민·이주홍. 원문에 집도의 이름은 없습니다.", "experience": "비절개 뒷밑트임(일명 빵트임). 눈꼬리를 옆으로 트기보다 라인을 사선 아래로 내리는 방식. 비절개라 시간이 지나며 어느 정도 돌아왔지만, 하기 전보다 확실히 커진 상태.", "address": "서울 강남구 압구정로 158 2층"}],
-      "note": "에이비성형외과 배인호 원장과 운영진 직접 수술 2곳입니다.", "source_text": "눈 : 배인호 님 / 운영진 경험: 쌍꺼풀·앞트임 — 조셉성형외과(구리역), 뒷밑트임 — 디엠성형외과(압구정역)"
+      "id": "eyes", "category": "surgery", "title": "눈", "summary": "쌍꺼풀·트임 수술. 운영진이 직접 받은 곳 2곳이 있어요.",
+      "treatments": ["눈", "쌍꺼풀", "앞트임", "뒷밑트임"],
+      "aliases": ["눈 성형", "매몰", "빵트임", "뒤트임", "밑트임", "쌍수"],
+      "status": "experience",
+      "providers": [{"clinic": "에이비성형외과", "doctors": ["배인호"], "location_hint": "강남역", "note": null, "address": "서울 서초구 서초대로77길 17 2~4층", "links": [{"kind": "phone", "url": "tel:+8225121288"}]}, {"clinic": "조셉성형외과", "doctors": [], "location_hint": "구리역 (경기 구리)", "note": null, "experience": "쌍꺼풀(매몰)·앞트임. 14년이 지나도 풀리지 않았고 흉 없이 자연스러워요.", "region": "경기 구리"}, {"clinic": "디엠성형외과", "doctors": [], "location_hint": "압구정역", "note": "대표원장 유원민·이주홍", "experience": "비절개 뒷밑트임(빵트임). 시간이 지나며 조금 돌아왔지만, 하기 전보다 눈이 확실히 커졌어요.", "address": "서울 강남구 압구정로 158 2층"}],
+      "note": null,
+      "source_text": "눈 : 배인호 님 / 운영진 경험: 쌍꺼풀·앞트임 — 조셉성형외과(구리역), 뒷밑트임 — 디엠성형외과(압구정역)"
     },
     {
-      "id": "breast", "category": "surgery", "title": "가슴 (보형물 상담)",
-      "treatments": ["가슴", "가슴성형", "가슴확대"], "aliases": ["가슴 성형", "가슴 확대", "가슴보형물", "보형물", "멘토", "모티바", "바운스"], "status": "experience",
+      "id": "breast", "category": "surgery", "title": "가슴 (보형물 상담)", "summary": "운영진이 직접 상담을 다녀온 병원 10곳이에요. 보형물 비교는 가이드에서 볼 수 있어요.",
+      "treatments": ["가슴", "가슴성형", "가슴확대"],
+      "aliases": ["가슴 성형", "가슴 확대", "가슴보형물", "보형물", "멘토", "모티바", "바운스"],
+      "status": "experience",
       "providers": [{"clinic": "더 성형외과", "doctors": ["옥재진"], "location_hint": null, "note": null}, {"clinic": "디테 성형외과", "doctors": ["이준욱"], "location_hint": null, "note": null}, {"clinic": "포레성형외과", "doctors": ["김민영"], "location_hint": null, "note": null}, {"clinic": "유앤유 성형외과", "doctors": ["김기갑"], "location_hint": null, "note": null}, {"clinic": "아틀리에 성형외과", "doctors": ["고주영"], "location_hint": null, "note": null}, {"clinic": "우아 성형외과", "doctors": ["김우정"], "location_hint": null, "note": null}, {"clinic": "바노바기 성형외과", "doctors": ["반재상"], "location_hint": null, "note": null}, {"clinic": "위시 성형외과", "doctors": [], "location_hint": null, "note": "여성 원장님"}, {"clinic": "나나 성형외과", "doctors": ["양은진"], "location_hint": null, "note": null}, {"clinic": "윈느 성형외과", "doctors": ["김의건"], "location_hint": null, "note": null}],
-      "note": "2026년 11월 탱글 운영진이 직접 상담을 다녀온 병원입니다. 수술 후기가 아닌 상담 경험이며, 방문 순서일 뿐 순위가 아닙니다. 보형물 5종 비교와 상담 체크리스트는 가슴성형 가이드에 정리했습니다.", "guide_href": "/guide/breast", "source_text": "가슴 : 상담 다녀온 곳 — 더 성형외과(옥재진), 디테 성형외과(이준욱), 포레성형외과(김민영), 유앤유(김기갑), 아틀리에(고주영), 우아(김우정), 바노바기(반재상), 위시(여원장님, 이름 기억 안 남), 나나(양은진), 윈느(김의건)"
+      "note": null,
+      "guide_href": "/guide/breast",
+      "source_text": "가슴 : 상담 다녀온 곳 — 더 성형외과(옥재진), 디테 성형외과(이준욱), 포레성형외과(김민영), 유앤유(김기갑), 아틀리에(고주영), 우아(김우정), 바노바기(반재상), 위시(여원장님, 이름 기억 안 남), 나나(양은진), 윈느(김의건)"
     },
     {
-      "id": "fat-removal", "category": "surgery", "title": "지방흡입·지방제거",
-      "treatments": ["지방흡입", "지방제거"], "aliases": ["지방 흡입", "지방 제거"], "status": "withheld",
+      "id": "fat-removal", "category": "surgery", "title": "지방흡입·지방제거", "summary": "추천 정보는 곧 공개할 예정이에요.",
+      "treatments": ["지방흡입", "지방제거"],
+      "aliases": ["지방 흡입", "지방 제거"],
+      "status": "withheld",
       "providers": [],
-      "note": "원문 작성자가 아직 공개하지 않은 항목입니다. 병원이나 의료진을 추정하지 않았습니다.", "source_text": "지방흡입, 지방제거 : ?? 아직 비공개"
+      "note": null,
+      "source_text": "지방흡입, 지방제거 : ?? 아직 비공개"
     },
     {
-      "id": "under-eyes", "category": "surgery", "title": "눈밑지",
-      "treatments": ["눈밑지"], "aliases": ["눈밑"], "status": "insufficient",
+      "id": "under-eyes", "category": "surgery", "title": "눈밑지", "summary": "눈밑지방 재배치 추천 정보는 모으는 중이에요.",
+      "treatments": ["눈밑지"],
+      "aliases": ["눈밑"],
+      "status": "insufficient",
       "providers": [],
-      "note": "원문 표기인 ‘눈밑지’를 유지했습니다. 세부 시술명과 추천 정보가 없습니다.", "source_text": "눈밑지 : 데이터 부족"
+      "note": null,
+      "source_text": "눈밑지 : 데이터 부족"
     },
     {
-      "id": "face-lift", "category": "surgery", "title": "거상",
-      "treatments": ["거상"], "aliases": ["안면거상"], "status": "experience",
-      "providers": [{"clinic": "온리프", "doctors": [], "location_hint": null, "note": "원문에 담당 의료진이 지정되지 않았습니다."}, {"clinic": "제이준", "doctors": [], "location_hint": null, "note": "원문에 담당 의료진이 지정되지 않았습니다."}, {"clinic": "브라운", "doctors": [], "location_hint": null, "note": "원문에 담당 의료진이 지정되지 않았습니다."}, {"clinic": "닥터미", "doctors": [], "location_hint": null, "note": "원문에 담당 의료진이 지정되지 않았습니다."}],
-      "note": null, "source_text": "거상 : 온리프, 제이준, 브라운, 닥터미"
+      "id": "face-lift", "category": "surgery", "title": "거상", "summary": "안면거상 수술로 추천받은 병원들이에요.",
+      "treatments": ["거상"],
+      "aliases": ["안면거상"],
+      "status": "experience",
+      "providers": [{"clinic": "온리프", "doctors": [], "location_hint": null, "note": null}, {"clinic": "제이준", "doctors": [], "location_hint": null, "note": null}, {"clinic": "브라운", "doctors": [], "location_hint": null, "note": null}, {"clinic": "닥터미", "doctors": [], "location_hint": null, "note": null}],
+      "note": null,
+      "source_text": "거상 : 온리프, 제이준, 브라운, 닥터미"
     },
     {
-      "id": "profound", "category": "skin", "title": "프로파운드",
-      "treatments": ["프로파운드"], "aliases": [], "status": "confirm",
-      "providers": [{"clinic": "닥터스의원 신사", "doctors": ["성현철"], "location_hint": "신사", "note": "원문에 ‘기계 없앤다함’이라는 전언이 있습니다. 현재 장비 보유·시술 운영 여부는 미확인입니다."}],
-      "note": "장비 처분 여부를 확인된 사실로 표시하지 않았습니다.", "source_text": "프로파운드 : 닥터스의원 신사 성현철 님  (근데 기계 없앤다함 ㅠ )"
+      "id": "profound", "category": "skin", "title": "프로파운드", "summary": "프로파운드로 추천받은 곳이에요. 장비 운영 여부는 방문 전에 확인해 주세요.",
+      "treatments": ["프로파운드"],
+      "aliases": [],
+      "status": "confirm",
+      "providers": [{"clinic": "닥터스의원 신사", "doctors": ["성현철"], "location_hint": "신사", "note": null}],
+      "note": null,
+      "source_text": "프로파운드 : 닥터스의원 신사 성현철 님  (근데 기계 없앤다함 ㅠ )"
     },
     {
-      "id": "thermage", "category": "skin", "title": "써마지",
-      "treatments": ["써마지"], "aliases": [], "status": "experience",
-      "providers": [{"clinic": "바비리팅 의원", "doctors": [], "location_hint": null, "note": "원문의 ‘원장님들’ 표현을 유지하며 개별 이름은 제공되지 않았습니다."}],
-      "note": "병원명은 원문 표기를 그대로 사용했습니다.", "source_text": "써마지 : 바비리팅 의원 원장님들"
+      "id": "thermage", "category": "skin", "title": "써마지", "summary": "써마지를 받아 본 경험으로 추천하는 곳이에요.",
+      "treatments": ["써마지"],
+      "aliases": [],
+      "status": "experience",
+      "providers": [{"clinic": "바비리팅 의원", "doctors": [], "location_hint": null, "note": null}],
+      "note": null,
+      "source_text": "써마지 : 바비리팅 의원 원장님들"
     },
     {
-      "id": "shape-consulting", "category": "skin", "title": "전체적인 윤곽 컨설팅·쉐잎",
-      "treatments": ["윤곽 컨설팅", "쉐잎"], "aliases": ["셰이프", "전체적인 윤곽"], "status": "experience",
+      "id": "shape-consulting", "category": "skin", "title": "전체적인 윤곽 컨설팅·쉐잎", "summary": "얼굴 전체 비율을 보고 시술 방향을 잡아 주는 원장님이에요.",
+      "treatments": ["윤곽 컨설팅", "쉐잎"],
+      "aliases": ["셰이프", "전체적인 윤곽"],
+      "status": "experience",
       "providers": [{"clinic": "창피부과", "doctors": ["김창식"], "location_hint": null, "note": null}],
-      "note": null, "source_text": "전체적인 윤곽 컨설팅, 쉐잎 : 창피부과 김창식 님"
+      "note": null,
+      "source_text": "전체적인 윤곽 컨설팅, 쉐잎 : 창피부과 김창식 님"
     },
     {
-      "id": "eyebrow-tattoo", "category": "surgery", "title": "눈썹문신",
-      "treatments": ["눈썹문신"], "aliases": ["눈썹 문신"], "status": "experience",
-      "providers": [{"clinic": "드보라 성형외과", "doctors": [], "location_hint": null, "note": "원문에 담당자가 지정되지 않았습니다."}],
-      "note": "분야 구분은 원문의 목록 편제를 따른 탐색용 분류입니다.", "source_text": "눈썹문신 : 드보라 성형외과"
+      "id": "eyebrow-tattoo", "category": "surgery", "title": "눈썹문신", "summary": "자연스러운 눈썹문신으로 추천받은 곳이에요.",
+      "treatments": ["눈썹문신"],
+      "aliases": ["눈썹 문신"],
+      "status": "experience",
+      "providers": [{"clinic": "드보라 성형외과", "doctors": [], "location_hint": null, "note": null}],
+      "note": null,
+      "source_text": "눈썹문신 : 드보라 성형외과"
     },
     {
-      "id": "renuvion-general-skin", "category": "skin", "title": "리뉴비온·일반피부·최신기계 진료",
-      "treatments": ["리뉴비온", "일반피부진료", "최신기계진료"], "aliases": ["일반 피부", "최신 기계", "신사 더힐"], "status": "experience",
-      "providers": [{"clinic": "신사 더힐", "doctors": [], "location_hint": "신사", "note": "원문에 담당 의료진이 지정되지 않았습니다. 최신 장비라는 표현은 원문 작성자의 표현입니다."}],
-      "note": null, "source_text": "리뉴비온, 일반피부진료, 최신기계진료 : 신사 더힐"
+      "id": "renuvion-general-skin", "category": "skin", "title": "리뉴비온·일반피부·최신기계 진료", "summary": "리뉴비온과 최신 장비 피부 진료로 추천받은 곳이에요.",
+      "treatments": ["리뉴비온", "일반피부진료", "최신기계진료"],
+      "aliases": ["일반 피부", "최신 기계", "신사 더힐"],
+      "status": "experience",
+      "providers": [{"clinic": "신사 더힐", "doctors": [], "location_hint": "신사", "note": null}],
+      "note": null,
+      "source_text": "리뉴비온, 일반피부진료, 최신기계진료 : 신사 더힐"
     },
     {
-      "id": "inmode", "category": "skin", "title": "인모드 — 시간 관련 경험",
-      "treatments": ["인모드"], "aliases": ["시간보장 인모드", "시간 보장"], "status": "experience",
-      "providers": [{"clinic": "뷰티앤영", "doctors": [], "location_hint": null, "note": "원문 작성자의 ‘시간보장’ 경험 표현입니다. 현재 시술 시간이나 보장 정책은 미확인입니다."}],
-      "note": null, "source_text": "시간보장  인모드 : 뷰티앤영"
+      "id": "inmode", "category": "skin", "title": "인모드 — 시간 관련 경험", "summary": "인모드 시술 시간을 충분히 보장받은 경험이 있는 곳이에요.",
+      "treatments": ["인모드"],
+      "aliases": ["시간보장 인모드", "시간 보장"],
+      "status": "experience",
+      "providers": [{"clinic": "뷰티앤영", "doctors": [], "location_hint": null, "note": null}],
+      "note": null,
+      "source_text": "시간보장  인모드 : 뷰티앤영"
     },
     {
-      "id": "ulthera-thermage-output", "category": "skin", "title": "울쎄라·써마지 — 출력 관련 경험",
-      "treatments": ["울쎄라", "써마지"], "aliases": ["강한 출력", "울세라"], "status": "experience",
-      "providers": [{"clinic": "뷰앤플 의원", "doctors": [], "location_hint": null, "note": "‘강한 출력’은 원문 작성자의 경험 표현입니다. 출력 강도를 권장하거나 효과·안전성의 기준으로 평가하지 않습니다."}],
-      "note": null, "source_text": "강한 출력 울쎄라, 써마지 : 뷰앤플 의원"
+      "id": "ulthera-thermage-output", "category": "skin", "title": "울쎄라·써마지 — 출력 관련 경험", "summary": "울쎄라·써마지 출력을 아끼지 않는다는 경험담이 있는 곳이에요.",
+      "treatments": ["울쎄라", "써마지"],
+      "aliases": ["강한 출력", "울세라"],
+      "status": "experience",
+      "providers": [{"clinic": "뷰앤플 의원", "doctors": [], "location_hint": null, "note": null}],
+      "note": null,
+      "source_text": "강한 출력 울쎄라, 써마지 : 뷰앤플 의원"
     },
     {
-      "id": "body-care", "category": "body", "title": "체형 관리",
-      "treatments": ["체형 관리"], "aliases": ["체형관리", "한의원"], "status": "experience",
+      "id": "body-care", "category": "body", "title": "체형 관리", "summary": "체형 관리로 꾸준히 다닌 한의원들이에요.",
+      "treatments": ["체형 관리"],
+      "aliases": ["체형관리", "한의원"],
+      "status": "experience",
       "providers": [{"clinic": "삼성 모드니 한의원", "doctors": [], "location_hint": "삼성", "note": null}, {"clinic": "삼성 바디웰 한의원", "doctors": [], "location_hint": "삼성", "note": null}, {"clinic": "대치 터한의원", "doctors": [], "location_hint": "대치", "note": null}],
-      "note": "원문에 세부 관리 방식과 담당자가 지정되지 않았습니다.", "source_text": "체형 관리 : 삼성 모드니 한의원, 삼성 바디웰 한의원 대치 터한의원"
+      "note": null,
+      "source_text": "체형 관리 : 삼성 모드니 한의원, 삼성 바디웰 한의원 대치 터한의원"
     },
     {
-      "id": "massage", "category": "body", "title": "경락",
-      "treatments": ["경락"], "aliases": ["레비나스"], "status": "experience",
-      "providers": [{"clinic": "드네의원", "doctors": ["신예진"], "location_hint": null, "note": "원문에 ‘레비나스’를 함께 언급했습니다."}, {"clinic": "어메이징빅토리아", "doctors": [], "location_hint": "압구정", "note": null}, {"clinic": "금단비가", "doctors": [], "location_hint": "잠실", "note": null}, {"clinic": "약손명가", "doctors": [], "location_hint": "청담", "note": null}, {"clinic": "위뷰티", "doctors": [], "location_hint": null, "note": null}],
-      "note": "원문에 의료기관과 관리 업체가 함께 포함되어 있습니다. 지점 표기는 원문에 나온 범위만 유지했습니다.", "source_text": "경락 : 레비나스 드네의원 신예진 님, 어메이징빅토리아(압구정), 금단비가(잠실), 약손명가 (청담), 위뷰티"
+      "id": "massage", "category": "body", "title": "경락", "summary": "경락·바디 관리로 다닌 곳들이에요.",
+      "treatments": ["경락"],
+      "aliases": ["레비나스"],
+      "status": "experience",
+      "providers": [{"clinic": "드네의원", "doctors": ["신예진"], "location_hint": null, "note": "레비나스 관리"}, {"clinic": "어메이징빅토리아", "doctors": [], "location_hint": "압구정", "note": null}, {"clinic": "금단비가", "doctors": [], "location_hint": "잠실", "note": null}, {"clinic": "약손명가", "doctors": [], "location_hint": "청담", "note": null}, {"clinic": "위뷰티", "doctors": [], "location_hint": null, "note": null}],
+      "note": null,
+      "source_text": "경락 : 레비나스 드네의원 신예진 님, 어메이징빅토리아(압구정), 금단비가(잠실), 약손명가 (청담), 위뷰티"
     },
     {
-      "id": "face-custom", "category": "skin", "title": "얼굴 맞춤시술 (필러·리프팅·보톡스)",
-      "treatments": ["얼굴 맞춤시술", "앞볼 필러", "관자 필러", "눈밑 꺼짐", "덴서티", "셀르디엠", "보톡스"], "aliases": ["앞볼꺼짐", "관자필러", "눈밑꺼짐", "접촉성피부염", "주사피부염", "피부질환"], "status": "experience",
-      "providers": [{"clinic": "서울탑초이스의원", "doctors": [], "location_hint": "신사역", "note": "원장 이름은 원문에 없습니다. 20년 이상 경력의 피부과 출신 원장이라는 전언입니다.", "experience": "7년 이상 다닌 곳. 앞볼·관자·눈밑 꺼짐 필러, 덴서티, 셀르디엠, 보톡스 등. 지금 이 상태에서 왜 이 치료·시술을 고르는지 원인부터 명확히 설명. 접촉성피부염·주사피부염도 이곳에서 치료. 과한 것보다 안전하게 접근하는 편."}],
-      "note": null, "source_text": "얼굴 맞춤시술(앞볼꺼짐, 관자필러, 눈밑꺼짐, 덴서티, 셀르디엠, 보톡스 등) — 서울탑초이스의원(신사역), 운영진 7년 이상 진료"
+      "id": "face-custom", "category": "skin", "title": "얼굴 맞춤시술 (필러·리프팅·보톡스)", "summary": "운영진이 7년 넘게 다닌 얼굴 맞춤 시술(필러·리프팅·보톡스) 병원이에요.",
+      "treatments": ["얼굴 맞춤시술", "앞볼 필러", "관자 필러", "눈밑 꺼짐", "덴서티", "셀르디엠", "보톡스"],
+      "aliases": ["앞볼꺼짐", "관자필러", "눈밑꺼짐", "접촉성피부염", "주사피부염", "피부질환"],
+      "status": "experience",
+      "providers": [{"clinic": "서울탑초이스의원", "doctors": [], "location_hint": "신사역", "note": "20년 이상 경력의 피부과 출신 원장님", "experience": "7년 넘게 다닌 곳. 필러·덴서티·보톡스 등을 왜 하는지 원인부터 설명해 주고, 과하지 않게 안전하게 접근해요."}],
+      "note": null,
+      "source_text": "얼굴 맞춤시술(앞볼꺼짐, 관자필러, 눈밑꺼짐, 덴서티, 셀르디엠, 보톡스 등) — 서울탑초이스의원(신사역), 운영진 7년 이상 진료"
     },
     {
-      "id": "lip-filler", "category": "skin", "title": "입술필러",
-      "treatments": ["입술필러", "레스틸렌 키스"], "aliases": ["입술 필러", "립필러"], "status": "experience",
-      "providers": [{"clinic": "르디테의원", "doctors": [], "location_hint": "신사역", "note": "원장 이름은 원문에 없습니다.", "experience": "레스틸렌 키스 1cc. 스레드에서 사례 사진과 글을 보고 상담 먼저 다녀온 뒤 다른 날 시술. 결과가 예쁘고 꼼꼼하며 리터치도 받음. 원장님이 섬세한 편이라 얼굴 전체 상담을 거침없이 받아 보고 싶다면 만족할 곳."}],
-      "note": null, "source_text": "입술필러(레스틸렌 키스 1cc) — 르디테의원(신사역)"
+      "id": "lip-filler", "category": "skin", "title": "입술필러", "summary": "운영진이 직접 받은 입술필러 병원이에요.",
+      "treatments": ["입술필러", "레스틸렌 키스"],
+      "aliases": ["입술 필러", "립필러"],
+      "status": "experience",
+      "providers": [{"clinic": "르디테의원", "doctors": [], "location_hint": "신사역", "note": null, "experience": "레스틸렌 키스 1cc. 결과가 예쁘고 꼼꼼하며 리터치까지 챙겨 줘요. 얼굴 전체 상담도 섬세하게 받아요."}],
+      "note": null,
+      "source_text": "입술필러(레스틸렌 키스 1cc) — 르디테의원(신사역)"
     },
     {
-      "id": "nasolabial", "category": "surgery", "title": "팔자주름",
-      "treatments": ["팔자주름"], "aliases": ["팔자 주름", "팔자"], "status": "confirm",
-      "providers": [{"clinic": "진성형외과", "doctors": [], "location_hint": null, "note": "원문에 시술 방법과 담당 원장 이름이 없습니다."}],
-      "note": "병원 이름만 공유된 항목입니다.", "source_text": "진성형외과 — 팔자주름"
+      "id": "nasolabial", "category": "surgery", "title": "팔자주름", "summary": "팔자주름 개선으로 추천받은 병원이에요.",
+      "treatments": ["팔자주름"],
+      "aliases": ["팔자 주름", "팔자"],
+      "status": "confirm",
+      "providers": [{"clinic": "진성형외과", "doctors": [], "location_hint": null, "note": null}],
+      "note": null,
+      "source_text": "진성형외과 — 팔자주름"
     },
     {
-      "id": "global-skin", "category": "skin", "title": "외국인 환자 많은 피부과",
-      "treatments": ["외국인 피부과", "제모", "리프팅", "안티에이징"], "aliases": ["글로벌", "외국인", "foreign", "global", "데이뷰", "세라미크"], "status": "experience",
-      "providers": [{"clinic": "데이뷰의원 강남점", "doctors": ["임정욱"], "location_hint": "신논현역 (강남대로 494)", "note": "대표 시술: 리프팅·보톡스·필러·스킨부스터·레이저 제모(젠틀맥스 프로플러스). 원장 이름은 공식 사이트 기준입니다.", "partner_id": "daybeau-gangnam", "address": "서울 강남구 강남대로 494"}, {"clinic": "데이뷰의원 명동 더프리미엄점", "doctors": [], "location_hint": "명동 (남대문로 90 세미콜론 명동 6층)", "note": "왓츠앱·라인·카카오톡으로 외국어 상담. 원장 이름은 확인하지 못했습니다.", "partner_id": "daybeau-myeongdong", "address": "서울 중구 남대문로 90 세미콜론 명동 6층"}, {"clinic": "세라미크의원 강남점", "doctors": ["이종진"], "location_hint": "강남역 (봉은사로2길 29)", "note": "대표원장 이종진, 미용해부학 박사. 해부학 기반 리프팅·안티에이징과 레이저 제모.", "partner_id": "ceramique-gangnam", "address": "서울 강남구 봉은사로2길 29"}, {"clinic": "세라미크 글로벌의원 명동", "doctors": ["우동진"], "location_hint": "명동 (명동8길 27 엠플라자 4층)", "note": "세라미크 명동 지점. 보톡스·필러·리프팅·레이저·스킨부스터·제모·수액. 원장 이름은 공식 사이트 기준입니다.", "partner_id": "ceramique-myeongdong", "address": "서울 중구 명동8길 27 엠플라자 4층"}],
-      "note": "운영진 전언: 외국인 환자 비중이 약 70%로 높고, 외국인·국내 환자 모두 만족도가 높은 편. 비중 수치는 병원 공식 자료로 확인하지 않았습니다. 외국인 환자용 안내는 /global에 있습니다.", "source_text": "외국인 환자 비중 약 70%, 글로벌·국내 환자 만족도 높음 — 데이뷰의원(강남·명동), 세라미크의원(강남·명동) (링크·원장·대표 시술은 공식 사이트로 보충)"
+      "id": "global-skin", "category": "skin", "title": "외국인 환자 많은 피부과", "summary": "외국인 환자가 많아 외국어 상담이 편한 피부과예요.",
+      "treatments": ["외국인 피부과", "제모", "리프팅", "안티에이징"],
+      "aliases": ["글로벌", "외국인", "foreign", "global", "데이뷰", "세라미크"],
+      "status": "experience",
+      "providers": [{"clinic": "데이뷰의원 강남점", "doctors": ["임정욱"], "location_hint": "신논현역 (강남대로 494)", "note": "리프팅·보톡스·필러·스킨부스터·레이저 제모", "partner_id": "daybeau-gangnam", "address": "서울 강남구 강남대로 494"}, {"clinic": "데이뷰의원 명동 더프리미엄점", "doctors": [], "location_hint": "명동 (남대문로 90 세미콜론 명동 6층)", "note": "왓츠앱·라인·카카오톡 외국어 상담", "partner_id": "daybeau-myeongdong", "address": "서울 중구 남대문로 90 세미콜론 명동 6층"}, {"clinic": "세라미크의원 강남점", "doctors": ["이종진"], "location_hint": "강남역 (봉은사로2길 29)", "note": "미용해부학 박사 · 리프팅·안티에이징", "partner_id": "ceramique-gangnam", "address": "서울 강남구 봉은사로2길 29"}, {"clinic": "세라미크 글로벌의원 명동", "doctors": ["우동진"], "location_hint": "명동 (명동8길 27 엠플라자 4층)", "note": "보톡스·필러·리프팅·스킨부스터·제모", "partner_id": "ceramique-myeongdong", "address": "서울 중구 명동8길 27 엠플라자 4층"}],
+      "note": null,
+      "source_text": "외국인 환자 비중 약 70%, 글로벌·국내 환자 만족도 높음 — 데이뷰의원(강남·명동), 세라미크의원(강남·명동) (링크·원장·대표 시술은 공식 사이트로 보충)"
     },
     {
-      "id": "skin-doctors-top", "category": "skin", "title": "오래 진료받은 피부과 원장님",
-      "treatments": ["피부과", "피부 관리", "스킨보톡스"], "aliases": ["피부과 원장", "TOP5", "대구 피부과"], "status": "experience",
-      "providers": [{"clinic": "청담고운세상닥터지피부과", "doctors": ["도미옥"], "location_hint": "압구정로데오 (논현동)", "note": "원문 표기는 ‘청담고운세상피부과’입니다.", "address": "서울 강남구 도산대로 326 대동타워 5층"}, {"clinic": "나의계절의원", "doctors": ["김근영"], "location_hint": "대구 반월당", "note": null, "region": "대구", "address": "대구 중구 명륜로23길 106 반월당역클래시아 2차 5층", "links": [{"kind": "phone", "url": "tel:+82534247575"}]}, {"clinic": "비엘성형외과", "doctors": ["조한결"], "location_hint": "대구", "note": "원문 ‘지금은 비엘’ — 현재 소속으로 공유된 곳입니다. 공개 프로필상 소속 정보가 엇갈려 방문 전 확인이 필요합니다.", "region": "대구"}],
-      "note": "운영진이 수십 곳을 다닌 끝에 꼽은 TOP 5 중 다른 항목에 이미 있는 두 분(실리프팅·여드름 흉터, 개인 커스텀 항목)은 이곳에서 뺐습니다. 실력과 함께 진료 대화를 가장 깊고 오래 나눈 분들이라는 평입니다.", "source_text": "기억에 남는 피부과 원장님 TOP 5 중 — 청담고운세상피부과 도미옥, 대구 나의계절의원 김근영, 대구 지금은 비엘 조한결 (나머지 두 분은 다른 항목에 있음)"
+      "id": "skin-doctors-top", "category": "skin", "title": "오래 진료받은 피부과 원장님", "summary": "운영진이 수십 곳을 다닌 끝에 꼽은, 오래 진료받은 피부과 원장님이에요.",
+      "treatments": ["피부과", "피부 관리", "스킨보톡스"],
+      "aliases": ["피부과 원장", "TOP5", "대구 피부과"],
+      "status": "experience",
+      "providers": [{"clinic": "청담고운세상닥터지피부과", "doctors": ["도미옥"], "location_hint": "압구정로데오 (논현동)", "note": null, "address": "서울 강남구 도산대로 326 대동타워 5층"}, {"clinic": "나의계절의원", "doctors": ["김근영"], "location_hint": "대구 반월당", "note": null, "region": "대구", "address": "대구 중구 명륜로23길 106 반월당역클래시아 2차 5층", "links": [{"kind": "phone", "url": "tel:+82534247575"}]}, {"clinic": "비엘성형외과", "doctors": ["조한결"], "location_hint": "대구", "note": "소속은 방문 전에 확인해 주세요.", "region": "대구"}],
+      "note": null,
+      "source_text": "기억에 남는 피부과 원장님 TOP 5 중 — 청담고운세상피부과 도미옥, 대구 나의계절의원 김근영, 대구 지금은 비엘 조한결 (나머지 두 분은 다른 항목에 있음)"
     },
     {
-      "id": "orthodontics", "category": "dental", "title": "치아교정",
-      "treatments": ["치아교정"], "aliases": ["교정", "철길", "반투명 교정", "치과"], "status": "experience",
-      "providers": [{"clinic": "리마치과", "doctors": [], "location_hint": "강남역", "note": "공개 정보상 상호는 ‘서울리마치과의원’입니다. 원장 이름은 원문에 없습니다.", "experience": "반투명 브라켓 교정. 가격 부담이 크지 않았고 오래 다니는 동안 관리가 괜찮았음. 실력과 함께 체계적이고 깔끔한 안내가 인상적.", "address": "서울 서초구 서초대로 396 강남빌딩 8층"}],
-      "note": null, "source_text": "치아교정(반투명 브라켓) — 리마치과(강남역)"
+      "id": "orthodontics", "category": "dental", "title": "치아교정", "summary": "운영진이 직접 교정한 치과예요.",
+      "treatments": ["치아교정"],
+      "aliases": ["교정", "철길", "반투명 교정", "치과"],
+      "status": "experience",
+      "providers": [{"clinic": "리마치과", "doctors": [], "location_hint": "강남역", "note": "정식 상호 서울리마치과의원", "experience": "반투명 브라켓 교정. 가격 부담이 크지 않고, 체계적이고 깔끔한 관리가 인상적이에요.", "address": "서울 서초구 서초대로 396 강남빌딩 8층"}],
+      "note": null,
+      "source_text": "치아교정(반투명 브라켓) — 리마치과(강남역)"
     },
     {
-      "id": "implant", "category": "dental", "title": "임플란트·일반 치과진료",
-      "treatments": ["임플란트", "일반 치과진료", "치과"], "aliases": ["플란트", "임플란트 잘하는 곳", "대구 치과", "대구 임플란트"], "status": "experience",
-      "providers": [{"clinic": "강남플란트치과의원", "doctors": [], "location_hint": "대구", "region": "대구", "note": "공식 홈페이지·카카오 채널은 확인 중입니다. 방문 전 주소와 전화를 확인해 주세요."}],
-      "note": "운영진 추천: 임플란트 실력이 상위 1%로 꼽히는 곳. 합리적인 가격과 실력, 깔끔한 인테리어와 서비스를 모두 갖췄고 일반 치과진료도 가능합니다.", "source_text": "대구 강남플란트치과의원 — 임플란트 상위 1% 실력, 합리적인 가격과 실력, 깔끔한 인테리어, 서비스. 일반 치과진료 가능"
+      "id": "implant", "category": "dental", "title": "임플란트·일반 치과진료", "summary": "임플란트 실력 상위 1%로 꼽히는 곳. 합리적인 가격과 깔끔한 진료, 일반 진료도 가능해요.",
+      "treatments": ["임플란트", "일반 치과진료", "치과"],
+      "aliases": ["플란트", "임플란트 잘하는 곳", "대구 치과", "대구 임플란트"],
+      "status": "experience",
+      "providers": [{"clinic": "강남플란트치과의원", "doctors": [], "location_hint": "대구", "region": "대구", "note": null}],
+      "note": null,
+      "source_text": "대구 강남플란트치과의원 — 임플란트 상위 1% 실력, 합리적인 가격과 실력, 깔끔한 인테리어, 서비스. 일반 치과진료 가능"
     },
     {
-      "id": "whitening", "category": "dental", "title": "치아미백·일반 치과진료",
-      "treatments": ["치아미백", "일반 치과진료", "치과"], "aliases": ["미백", "치아 미백", "오금역 치과", "송파 치과"], "status": "experience",
-      "providers": [{"clinic": "연세미치과", "doctors": [], "location_hint": "오금역", "note": "공식 홈페이지·카카오 채널은 확인 중입니다. 방문 전 주소와 전화를 확인해 주세요."}],
-      "note": "운영진 추천: 친절하고 양심적인 가격, 깔끔한 치료. 치아미백과 일반 치과진료로 추천합니다.", "source_text": "연세미치과 (서울 오금역) — 치아미백, 일반 치과진료 추천. 친절, 양심적인 가격, 깔끔한 치료"
+      "id": "whitening", "category": "dental", "title": "치아미백·일반 치과진료", "summary": "친절하고 양심적인 가격, 깔끔한 치료. 미백과 일반 진료로 추천해요.",
+      "treatments": ["치아미백", "일반 치과진료", "치과"],
+      "aliases": ["미백", "치아 미백", "오금역 치과", "송파 치과"],
+      "status": "experience",
+      "providers": [{"clinic": "연세미치과", "doctors": [], "location_hint": "오금역", "note": null}],
+      "note": null,
+      "source_text": "연세미치과 (서울 오금역) — 치아미백, 일반 치과진료 추천. 친절, 양심적인 가격, 깔끔한 치료"
     }
   ]
 }

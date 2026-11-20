@@ -42,3 +42,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# 홍보 영상 원본 (용량이 커서 저장소에 올리지 않음)
+promo/*.mp4

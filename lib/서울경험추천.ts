@@ -20,6 +20,8 @@ export type ClinicRecommendation = {
   id: string;
   category: ClinicCategory;
   title: string;
+  /** 앱에 보여 줄 한 줄 소개 */
+  summary: string;
   treatments: string[];
   aliases: string[];
   status: ClinicStatus;
@@ -94,9 +96,9 @@ export function getClinicRecommendationsForQuestion(query: string): ClinicRecomm
 function formatEntries(items: ClinicRecommendation[]): string {
   return items.map((item) => [
     `• ${item.title} [${clinicStatusLabels[item.status]}]`,
-    `원문: ${item.source_text}`,
+    item.summary,
     item.note,
-    ...item.providers.map((provider) => provider.note),
+    ...item.providers.map((provider) => `- ${provider.clinic ?? "병원 확인 중"}${provider.region ? ` (${provider.region})` : ""}${provider.doctors.length ? ` · ${provider.doctors.join("·")} 원장` : ""}${provider.note ? ` · ${provider.note}` : ""}`),
     ...item.providers.filter((provider) => provider.experience).map((provider) => `운영진 직접 경험(${provider.clinic}): ${provider.experience}`),
   ].filter(Boolean).join("\n")).join("\n\n");
 }
@@ -119,8 +121,8 @@ export function findClinicRecommendationText(query: string): string {
   const items = getClinicRecommendationsForQuestion(query);
   if (!items.length) return "";
   return [
-    "탱글 추천 병원 목록에는 다음 내용이 있습니다. 병원명·현재 소속·운영 여부는 외부 검증 전이며, 추천 순위나 안전성·효과를 보장하지 않습니다.",
+    "탱글 추천 병원에서 찾았어요. 개인 경험을 모은 참고 정보이니, 방문 전 병원 정보를 한 번 확인해 주세요.",
     formatEntries(items),
-    `전체 ${clinicRecommendations.length}개 항목과 원문은 추천 병원(/clinics)에서 확인할 수 있습니다.`,
+    `전체 ${clinicRecommendations.length}개 분야는 추천 병원(/clinics)에서 볼 수 있어요.`,
   ].join("\n\n");
 }

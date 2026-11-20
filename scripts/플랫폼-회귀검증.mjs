@@ -65,7 +65,8 @@ assert.equal(recommendations.getClinicRecommendations("", "body").length, 2);
 assert.ok(!recommendations.getClinicRecommendationsForQuestion("코스 추천").some((item) => item.id === "nose"));
 assert.ok(!recommendations.getClinicRecommendationsForQuestion("눈썹문신").some((item) => item.id === "eyes"));
 assert.ok(recommendations.getClinicRecommendationsForQuestion("코 수술").some((item) => item.id === "nose"));
-assert.ok(recommendations.findClinicRecommendationText("프로파운드").includes("미확인"));
+assert.ok(recommendations.findClinicRecommendationText("프로파운드").includes("장비 운영 여부는 방문 전에 확인"));
+assert.ok(recommendations.clinicRecommendations.every((item) => item.summary && item.summary.length <= 60), "모든 분야에 짧은 소개");
 
 const { safeReturnPath, approvedPartner, positivePrice } = require(path.join(root, "lib/견적권한.ts"));
 for (const value of ["https://evil.test", "//evil.test", "/\\evil.test", "/auth/callback", "/\nother"]) assert.equal(safeReturnPath(value), "/");
@@ -104,7 +105,7 @@ for (const budget of [true, null, {}, "", "Infinity", -1, 10001]) {
 const chat = route("chat").POST;
 assert.equal((await chat(request({ message: "" }))).status, 400);
 assert.equal((await chat(request({ message: "a".repeat(18000) }))).status, 413);
-for (const [query, expectedText] of [["리쥬란 병원", "네스트"], ["써마지 가격", "만원"], ["채선경 원장", "미확인"], ["고우리 병원", "데이터 부족"], ["가슴 보형물 뭐가 좋아요", "/guide/breast"], ["모티바 병원", "바노바기"]]) {
+for (const [query, expectedText] of [["리쥬란 병원", "네스트"], ["써마지 가격", "만원"], ["채선경 원장", "확인 중"], ["고우리 병원", "데이터 부족"], ["가슴 보형물 뭐가 좋아요", "/guide/breast"], ["모티바 병원", "바노바기"]]) {
  const response = await chat(request({ message: query }));
  assert.equal(response.status, 200);
  const body = await response.json();

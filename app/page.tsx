@@ -535,7 +535,7 @@ export default function Home() {
               <Link href="/global" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-[15px] font-semibold text-[var(--brand)] hover:opacity-90">{t("nav.global")} →</Link>
             </div>
             <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[24px] lg:max-w-none">
-              <Image src="/images/global.webp" alt="" width={784} height={588} quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
+              <Image src="/images/global.webp" alt="" width={1448} height={1086} quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
             </div>
           </div>
         </section>
