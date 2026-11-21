@@ -3,8 +3,8 @@ import { Suspense } from "react";
 import 서울경험추천목록 from "./서울경험추천목록";
 
 export const metadata: Metadata = {
-  title: "검증된 추천 병원 — 피부·성형·치과",
-  description: "광고 없이, 검증된 경험 후기와 직접 다녀 본 곳을 바탕으로 필터링한 피부·성형·치과 추천 병원. 체험단·가짜 후기는 뺐습니다. 병원·원장·시술명으로 검색해 보세요.",
+  title: "추천 병원 화이트리스트 — 피부·성형·치과",
+  description: "내돈내산 경험으로 고른 피부·성형·치과 병원 화이트리스트. 직접 받은 경험과 상담에서 확인할 점을 병원·원장·시술명으로 검색해 보세요.",
   alternates: { canonical: "/clinics" },
 };
 

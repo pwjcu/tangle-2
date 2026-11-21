@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useLanguage } from "./LanguageProvider";
 import { OPEN_CHAT_EVENT } from "./AI열기";
 
@@ -74,9 +74,23 @@ export default function ChatBot() {
         <button type="button" aria-label={t("chat.close")} onClick={() => { setIsOpen(false); toggleRef.current?.focus(); }} className="h-9 w-9 rounded-full hover:bg-white/10">✕</button>
       </div>
       <div ref={scrollRef} role="log" aria-live="polite" aria-relevant="additions" className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4">
-        <div className="rounded-2xl bg-[#f0f7f3] p-4 text-sm leading-7">{ko ? "고민을 편하게 적어 보세요. 탱글 AI가 검증된 추천 병원·참고 가격·시술 정보만 근거로 답해요. 의료 진단은 하지 않아요." : "Ask anything about treatments or clinics in Korea. Tangle AI answers only from Tangle's verified clinic notes, reference prices and treatment data. No medical diagnosis."}</div>
+        <div className="rounded-2xl bg-[#f0f7f3] p-4 text-sm leading-7">{ko ? "궁금한 시술이나 상담 내용을 적어 보세요. 탱글의 추천 메모와 공개 시술 가격을 바탕으로 답해요." : "Ask about treatments or clinics in Korea. Tangle uses its clinic notes and published reference prices."}</div>
         {messages.length === 0 && <div className="flex flex-wrap gap-2">{(ko ? ["코 재수술 병원 추천", "리쥬란 가격", "여드름 흉터 어디가 좋아요?", "써마지 회복 기간"] : ["Skin clinic for foreigners", "Rejuran price", "What to bring to a clinic"]).map((query) => <button key={query} onClick={() => void send(query)} disabled={loading} className="rounded-full border px-3 py-2 text-xs hover:bg-[#f0f7f3]">{query}</button>)}</div>}
-        {messages.map((message, index) => <div key={index} className={message.role === "user" ? "flex justify-end" : "flex justify-start"}><p className={"max-w-[94%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-7 " + (message.role === "user" ? "bg-[#183e34] text-white" : "border border-[#dce9e7] bg-white")}>{message.ai && <span className="mb-1 block text-[10px] font-bold tracking-wider text-[var(--accent)]">TANGLE AI</span>}{message.text}</p></div>)}
+        {messages.map((message, index) => (
+          <div key={index} className={message.role === "user" ? "flex justify-end" : "flex justify-start"}>
+            <p className={"max-w-[94%] whitespace-pre-wrap break-words rounded-2xl px-4 py-3 text-sm leading-7 " + (message.role === "user" ? "bg-[#183e34] text-white" : "border border-[#dce9e7] bg-white")}>
+              {message.ai && <span className="mb-1 block text-[10px] font-bold tracking-wider text-[var(--accent)]">TANGLE AI</span>}
+              {message.role === "user" ? message.text : message.text.split("\n").map((line, lineIndex) => (
+                <Fragment key={lineIndex}>
+                  {lineIndex > 0 && "\n"}
+                  {/^\/prices\/(?:%[0-9a-f]{2}|[\w-])+$/i.test(line) ? (
+                    <Link href={line} className="font-semibold text-[var(--brand)] underline underline-offset-4">{ko ? "규격별 가격과 원문 보기 →" : "Open prices and sources →"}</Link>
+                  ) : line}
+                </Fragment>
+              ))}
+            </p>
+          </div>
+        ))}
         {loading && <p role="status" className="text-xs text-stone-500">{t("chat.loading")}</p>}
         {failedQuery && <div role="alert" className="rounded-2xl bg-amber-50 p-3 text-sm"><p>{t("chat.error")}</p><button onClick={() => void send(failedQuery)} className="mt-2 font-semibold underline">{ko ? "다시 시도" : "Retry"}</button></div>}
       </div>

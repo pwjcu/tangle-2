@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { type SupportedLanguage } from "../../../lib/i18n";
 import { standardTreatmentPrices } from "../../../lib/시술표준가격";
+import { findPublicPriceAnswer } from "../../../lib/공개시술가격";
 import { loadConsultTreatments, type ConsultTreatment } from "../../../lib/상담시술자료";
 import { ConsultInputError, normalizeConsultLanguage, readConsultBody, readConsultText } from "../../../lib/상담입력검증";
 import { clinicRecommendations, findClinicRecommendationText, formatClinicRecommendationContext } from "../../../lib/서울경험추천";
@@ -29,7 +30,7 @@ const localIntro: Record<SupportedLanguage, string> = {
 function localReply(message: string, language: SupportedLanguage, treatments: ConsultTreatment[]) {
   const prices = priceReferences(message);
   const clinicText = findClinicRecommendationText(message);
-  if (/가슴|보형물|멘토|모티바|바운스|breast|implant/i.test(message)) {
+  if (/가슴|보형물|멘토|모티바|바운스|breast/i.test(message)) {
     return `${localIntro[language]}\n\n${formatBreastGuideText()}${clinicText ? `\n\n${clinicText}` : ""}\n\n전체 가이드: /guide/breast`;
   }
   const isClinicQuestion = /병원|원장|의사|의원|명의|클리닉|어디|clinic|doctor/i.test(message);
@@ -95,15 +96,19 @@ export async function POST(req: Request) {
     const body = await readConsultBody(req);
     language = normalizeConsultLanguage(body.language);
     const message = readConsultText(body.message, "질문", 2_000);
+    const publicPrices = findPublicPriceAnswer(message);
+    if (publicPrices && language === "ko") {
+      return NextResponse.json({ reply: publicPrices, source: "reference", aiAvailable: false });
+    }
     const treatments = await loadConsultTreatments();
-    const local = localReply(message, language, treatments);
+    const local = publicPrices ? `${localIntro[language]}\n\n${publicPrices}` : localReply(message, language, treatments);
     const history = readHistory(body.history);
     // AI는 탱글 자료만 근거로 답하고, 쓸 수 없으면(키 없음·크레딧 부족·오류·호출 제한) 저장 자료 검색 결과를 그대로 돌려줍니다.
     const ai = aiRateLimited(req) ? null : await askAI({
       system: `${TANGLE_AI_RULES}
-Answer in ${languageNames[language]}. Keep it under 12 short lines. When useful, point to Tangle pages: /clinics (recommended clinics), /prices (price table), /guide/breast, /global (guide for international patients), /ai (AI tools). Mention that prices exclude VAT and may differ from the clinic's current quote when you quote prices.`,
+Answer in ${languageNames[language]}. Keep it under 12 short lines. When useful, point to Tangle pages: /clinics (recommended clinics), /prices (price table), /guide/breast, /global (guide for international patients), /ai (AI tools). When quoting prices, preserve the source's tax basis, sample date and conditions. Mention that the clinic's current quote can differ.`,
       user: `[Tangle reference data]
-${aiContext(message, local, treatments)}
+${publicPrices || aiContext(message, local, treatments)}
 
 [Recent conversation]
 ${history || "(none)"}

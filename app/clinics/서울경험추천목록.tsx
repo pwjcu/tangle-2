@@ -8,6 +8,7 @@ import { useMemo, useState, useSyncExternalStore } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   clinicCategoryLabels,
+  clinicConsultationChecks,
   clinicGroups,
   clinicRecommendationMeta,
   clinicRecommendations,
@@ -145,21 +146,15 @@ export default function ClinicRecommendationsList() {
       <section className="shell pb-10 pt-10 sm:pb-14 sm:pt-16" aria-labelledby="clinic-title">
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-end">
           <div>
-            <p className="eyebrow mb-5"><span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />검증된 추천 병원</p>
+            <p className="eyebrow mb-5"><span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />병원 화이트리스트</p>
             <h1 id="clinic-title" className="type-title">추천 병원.<br /><span className="text-[var(--brand)]">광고 없이, 경험으로만.</span></h1>
             <p className="mt-6 max-w-xl text-[15px] leading-7 text-[#637066] sm:text-base">{clinicRecommendationMeta.trust_note}</p>
-            <div className="mt-6 flex flex-wrap gap-2 text-xs font-medium text-[#53665b]">
-              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">광고 아님</span>
-              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">가짜 후기 제외</span>
-              <span className="rounded-full border border-[#d4e1d5] bg-white px-3 py-2">{clinicRecommendations.length}개 시술·관리 항목</span>
-              <span className="rounded-full border border-[#e8c9a6] bg-[#fff6ec] px-3 py-2 text-[#8a5a2b]">운영진 직접 경험 {clinicRecommendations.filter(hasFirsthand).length}개</span>
-                          </div>
           </div>
           <aside className="rounded-[24px] border border-[var(--color-silver-mist)] bg-white p-6 sm:p-7" aria-label="탱글이 고르는 기준">
             <h2 className="text-lg font-semibold !leading-snug text-[var(--color-carbon)]">탱글이 고르는 기준</h2>
             <ul className="mt-4 space-y-3 text-[14px] leading-6 text-[#4d5c52]">
-              <li className="flex gap-3"><span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />광고비를 받지 않아요.</li>
-              <li className="flex gap-3"><span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" /><span><strong className="font-semibold text-[#8a5a2b]">운영진 직접 경험</strong>은 운영진이 실제로 받은 곳이에요.</span></li>
+              <li className="flex gap-3"><span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />추천 목록에 오르기 위한 광고비를 받지 않아요.</li>
+              <li className="flex gap-3"><span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />가슴 보형물 항목에는 직접 상담한 병원을 모았어요.</li>
               <li className="flex gap-3"><span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />서울 밖 병원은 (대구)처럼 지역을 표시해요.</li>
               <li className="flex gap-3"><span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />원장님 소속은 바뀔 수 있으니 방문 전에 한 번 확인해 주세요.</li>
             </ul>
@@ -200,7 +195,7 @@ export default function ClinicRecommendationsList() {
               <option value="all">모든 상태</option>
               {Object.entries(uiStatusLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
             </select>
-            <button type="button" aria-pressed={firsthandOnly} onClick={() => updateFilters({ firsthand: firsthandOnly ? null : "1" })} className={`rounded-full border px-3 py-2 text-sm ${firsthandOnly ? "border-[#c98f55] bg-[#fff1e2] text-[#7a4a1c]" : "border-[#e0e6db] text-[#647160]"}`}>운영진 직접 경험만</button>
+            <button type="button" aria-pressed={firsthandOnly} onClick={() => updateFilters({ firsthand: firsthandOnly ? null : "1" })} className={`rounded-full border px-3 py-2 text-sm ${firsthandOnly ? "border-[#c98f55] bg-[#fff1e2] text-[#7a4a1c]" : "border-[#e0e6db] text-[#647160]"}`}>직접 받은 경험만</button>
             <button type="button" aria-pressed={savedOnly} onClick={() => updateFilters({ saved: savedOnly ? null : "1" })} className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm ${savedOnly ? "border-[#78987a] bg-[#eff5e8] text-[var(--brand)]" : "border-[#e0e6db] text-[#647160]"}`}><BookmarkIcon filled={savedOnly} /> 저장한 항목 <span>{savedIds.length}</span></button>
             {(query || category !== "all" || status !== "all" || savedOnly || firsthandOnly || focusedId) && <button type="button" onClick={() => router.replace(pathname, { scroll: false })} className="ml-auto rounded-lg px-3 py-2 text-xs font-semibold text-[#6c7968] underline underline-offset-4">필터 초기화</button>}
           </div>
@@ -225,7 +220,7 @@ export default function ClinicRecommendationsList() {
               return <article key={item.id} id={item.id} aria-labelledby={`title-${item.id}`} className="overflow-hidden rounded-[22px] border border-[var(--color-silver-mist)] bg-white">
                 <div className="p-5 sm:p-6">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-2"><span className="text-[11px] font-semibold text-[#7b8b73]">{clinicCategoryLabels[item.category]}</span>{hasFirsthand(item) && <span className="rounded-full border border-[#e8c9a6] bg-[#fff6ec] px-2 py-1 text-[10px] font-semibold text-[#8a5a2b]">운영진 직접 경험</span>}{item.status !== "experience" && <span className={`rounded-full border px-2 py-1 text-[10px] font-semibold ${statusStyles[item.status]}`}>{uiStatusLabels[item.status]}</span>}</div>
+                    <div className="flex flex-wrap items-center gap-2"><span className="text-[11px] font-semibold text-[#7b8b73]">{clinicCategoryLabels[item.category]}</span>{item.status !== "experience" && <span className={`rounded-full border px-2 py-1 text-[10px] font-semibold ${statusStyles[item.status]}`}>{uiStatusLabels[item.status]}</span>}</div>
                     <button type="button" onClick={() => toggleSaved(item)} aria-label={`${item.title} ${isSaved ? "저장 해제" : "저장"}`} aria-pressed={isSaved} className={`-mr-2 -mt-2 shrink-0 rounded-full p-2.5 ${isSaved ? "bg-[#f0f5e9] text-[#507744]" : "text-[#929f89] hover:bg-[#f5f7f0]"}`}><BookmarkIcon filled={isSaved} /></button>
                   </div>
                   <h3 id={`title-${item.id}`} className="mt-4 text-xl font-semibold !leading-snug text-[#31492e]">{item.title}</h3>
@@ -237,11 +232,17 @@ export default function ClinicRecommendationsList() {
                       {provider.doctors.length > 0 && <p className="mt-1 text-sm text-[#65725c]">{provider.doctors.map((name) => `${name} 원장`).join(" · ")}</p>}
                       {provider.address ? <p className="mt-2 text-xs leading-5 text-[#829078]">주소: {provider.address}</p> : provider.location_hint && <p className="mt-2 text-xs leading-5 text-[#829078]">위치: {provider.location_hint}</p>}
                       {provider.links?.length ? <div className="mt-2 flex flex-wrap gap-1.5">{provider.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className="rounded-full border border-[#cfe0d6] bg-white px-3 py-1.5 text-xs font-semibold text-[#2f5544] hover:bg-[#eef6f1]">{link.kind === "phone" ? `전화 ${formatPhone(link.url)}` : partnerLinkLabels[link.kind].ko} ↗</a>)}</div> : null}
-                      {provider.experience && <div className="mt-3 rounded-xl border border-[#f0dcc4] bg-[#fff8ef] px-3 py-3"><p className="text-[11px] font-semibold tracking-[0.08em] text-[#9a6430]">운영진 직접 경험</p><p className="mt-1 text-[13px] leading-6 text-[#5d4630]">{provider.experience}</p></div>}
+                      {provider.experience && <div className="mt-3 rounded-xl border border-[#f0dcc4] bg-[#fff8ef] px-3 py-3"><p className="text-xs font-semibold text-[#9a6430]">직접 받은 경험 · 탱글 운영진</p><p className="mt-1 text-[13px] leading-6 text-[#5d4630]">{provider.experience}</p></div>}
                       {provider.note && <p className="mt-2 text-xs leading-5 text-[#829078]">{provider.note}</p>}
                       {partnerClinicById(provider.partner_id) && <div className="mt-3 flex flex-wrap gap-1.5">{partnerClinicById(provider.partner_id)!.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className="rounded-full border border-[#cfe0d6] bg-white px-3 py-1.5 text-xs font-semibold text-[#2f5544] hover:bg-[#eef6f1]">{partnerLinkLabels[link.kind].ko}{link.note ? ` (${link.note.ko})` : ""} ↗</a>)}</div>}
                       {provider.clinic && <span className="mt-2 flex flex-wrap gap-3 text-xs font-medium text-[#507045]"><a href={`https://map.naver.com/p/search/${encodeURIComponent(provider.address ?? `${provider.region ? provider.region + " " : /대구|구리|경기|부산/.test(provider.location_hint ?? "") ? "" : "서울 "}${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 네이버 지도에서 보기, 새 창`}>네이버 지도 ↗</a><a href={`https://map.kakao.com/?q=${encodeURIComponent(provider.address ?? `${provider.region ?? ""} ${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 카카오맵에서 보기, 새 창`}>카카오맵 ↗</a></span>}
                     </div>)}
+                    {!firsthandOnly && item.providers.some((provider) => !provider.experience) && clinicConsultationChecks[item.id] && (
+                      <div className="rounded-xl bg-[#f1f6ed] px-4 py-3 text-[13px] leading-6 text-[#4f634b]">
+                        <p className="font-semibold">{item.id === "breast" ? "상담 방문 기록 · 비교할 항목" : "상담에서 확인할 점"}</p>
+                        <p className="mt-1">{clinicConsultationChecks[item.id]}</p>
+                      </div>
+                    )}
                     {item.note && <p className={`rounded-xl px-3 py-3 text-xs leading-6 ${item.providers.length ? "bg-[#f7f9f3] text-[#7c896f]" : "bg-[#f4f5f1] text-[#707b68]"}`}>{item.note}</p>}
                   </div>
                 </div>

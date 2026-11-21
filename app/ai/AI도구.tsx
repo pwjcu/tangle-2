@@ -12,9 +12,9 @@ type Text = Record<string, string>;
 
 const copy = {
   eyebrow: { ko: "탱글 AI", en: "Tangle AI", zh: "Tangle AI", ja: "Tangle AI", th: "Tangle AI" },
-  title: { ko: "광고 없는 데이터로 답하는\n병원 상담 AI", en: "Clinic consultation AI\nbuilt on ad-free data", zh: "基于无广告数据的\n医院咨询 AI", ja: "広告なしのデータで答える\nクリニック相談AI", th: "AI ปรึกษาคลินิก\nจากข้อมูลไร้โฆษณา" },
+  title: { ko: "광고 없이 데이터로 답하는\n탱글 AI", en: "Clinic consultation AI\nbuilt on ad-free data", zh: "基于无广告数据的\n医院咨询 AI", ja: "広告なしのデータで答える\nクリニック相談AI", th: "AI ปรึกษาคลินิก\nจากข้อมูลไร้โฆษณา" },
   intro: {
-    ko: "탱글 AI는 직접 다녀 본 곳과 검증된 후기로 거른 추천 병원, 시술 가격 데이터만 근거로 답해요. 상담 전에 준비하고, 광고 후기를 거르고, 외국어로도 편하게 물어보세요.",
+    ko: "탱글 AI는 탱글의 추천 메모와 시술 가격을 바탕으로 답해요. 상담 질문을 준비하고, 후기의 광고 신호를 살펴보고, 병원에서 쓸 한국어 문장을 만들 수 있어요.",
     en: "Tangle AI answers only from Tangle's ad-free clinic notes and reference prices. Prepare for your consultation, spot sponsored reviews and talk to Korean clinic staff in your language.",
     zh: "Tangle AI 只根据 Tangle 无广告的医院记录和参考价格回答。帮助您准备面诊、识别广告评价，并用您的语言与韩国医院沟通。",
     ja: "Tangle AI は広告のないクリニック記録と参考価格だけをもとに答えます。相談の準備、広告レビューの見分け、韓国のクリニックとの会話をサポートします。",

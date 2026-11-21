@@ -10,7 +10,7 @@ import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import type { SupportedLanguage } from "../lib/i18n";
 import { displayCategoryName, treatmentCategories } from "../lib/siteContent";
 import { categoryImages } from "../lib/카테고리이미지";
-import { clinicCategoryLabels, clinicGroups, clinicRecommendations, hasFirsthand } from "../lib/서울경험추천";
+import { clinicCategoryLabels, clinicGroups, clinicRecommendations } from "../lib/서울경험추천";
 import { globalGuideCopy } from "../lib/글로벌가이드";
 import { useLanguage } from "./components/LanguageProvider";
 
@@ -45,7 +45,7 @@ const homeContent: Record<
     heroEyebrow: "광고 없는 병원 추천",
     heroTitle: ["병원 가기 전,", "탱글에서 먼저", "확인하세요."],
     heroBody:
-      "검증된 경험 후기와 직접 다녀 본 곳을 바탕으로 필터링한 추천 병원과 시술 가격. 광고·가짜 후기는 뺐습니다.",
+      "수년간 쌓인 내돈내산 경험을 바탕으로 엄선한 병원 화이트리스트를 공개합니다. 병원이 공개한 최신 시술가를 같은 조건끼리 비교해 상담 전에 비용을 가늠할 수 있어요.",
     primaryCta: "추천 병원 보기",
     secondaryCta: "시술 가격 비교하기",
     helper: "",
@@ -366,7 +366,9 @@ export default function Home() {
     await supabase.auth.signOut();
   };
 
-  const firsthand = clinicRecommendations.filter(hasFirsthand).slice(0, 6);
+  const firsthand = clinicRecommendations.flatMap((item) =>
+    item.providers.filter((provider) => provider.experience).map((provider) => ({ item, provider })),
+  );
   const groupChips: Record<string, string[]> = {
     skin: ["리쥬란", "입술필러", "써마지", "여드름 흉터"],
     surgery: ["눈", "코재수술", "가슴", "모발이식"],
@@ -398,25 +400,20 @@ export default function Home() {
               ))}
             </h1>
             <p className="mt-6 max-w-[520px] text-[16px] leading-8 text-[var(--color-muted)] sm:text-[17px]">{content.heroBody}</p>
+            {ko && (
+              <p className="mt-3 max-w-[520px] text-[15px] leading-7 text-[var(--color-muted)]">
+                광고성·가짜 후기는 제외합니다. 의심되는 후기는 <Link href="/ai#review" className="font-semibold text-[var(--brand)] underline underline-offset-4">탱글 AI</Link>로 광고 신호를 한 번 더 확인할 수 있어요.
+              </p>
+            )}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href={ko ? "/clinics" : "/global"} className="action-primary">{ko ? content.primaryCta : t("nav.global")}</Link>
               <Link href="/prices" className="action-secondary">{ko ? content.secondaryCta : t("nav.prices")}</Link>
             </div>
-            {ko && (
-              <ul className="mt-8 grid max-w-[520px] grid-cols-3 gap-3 border-t border-[var(--color-silver-mist)] pt-6 text-[13px] leading-5 text-[var(--color-muted)]">
-                <li><strong className="block text-[15px] text-[var(--color-carbon)]">광고 0원</strong>광고비로 순위를 정하지 않아요</li>
-                <li><strong className="block text-[15px] text-[var(--color-carbon)]">직접 경험</strong>받아 본 사람의 이야기만</li>
-                <li><strong className="block text-[15px] text-[var(--color-carbon)]">가짜 후기 제외</strong>체험단·광고성 후기는 걸러요</li>
-              </ul>
-            )}
           </div>
 
-          <div className="relative mx-auto w-full max-w-[440px] lg:max-w-[560px]">
+          <div className="mx-auto w-full max-w-[440px] lg:max-w-[560px]">
             <div className="overflow-hidden rounded-[28px] bg-[var(--sand)]">
               <Image src="/images/hero-main.webp" alt="" width={1086} height={1303} priority quality={85} sizes="(min-width: 1024px) 560px, (min-width: 480px) 440px, 100vw" className="aspect-[5/6] h-auto w-full object-cover object-[50%_25%]" />
-            </div>
-            <div className="absolute -left-10 bottom-8 hidden w-[38%] overflow-hidden rounded-[22px] border-4 border-[var(--cream)] xl:block">
-              <Image src="/images/hero-face.webp" alt="" width={840} height={840} quality={85} sizes="220px" className="aspect-square h-auto w-full object-cover" />
             </div>
           </div>
         </section>
@@ -459,19 +456,10 @@ export default function Home() {
               </div>
               <div>
                 <p className="eyebrow">탱글이 고르는 방법</p>
-                <h2 id="how-title" className="type-section mt-3">후기가 아니라,<br />다녀온 사람의 기억으로.</h2>
-                <ol className="mt-8 space-y-6">
-                  {[
-                    ["01", "광고비를 받지 않아요", "병원이 돈을 내고 올라오는 자리가 없어요. 순위도 매기지 않아요."],
-                    ["02", "직접 받아 본 경험만", "운영진과 오래 다닌 사람들이 실제로 수술·시술을 받은 곳만 담았어요."],
-                    ["03", "가짜 후기는 걸러요", "체험단·이벤트 후기, 확인할 수 없는 이야기는 넣지 않아요."],
-                  ].map(([no, title, body]) => (
-                    <li key={no} className="flex gap-5">
-                      <span className="text-[14px] font-bold text-[var(--accent)]">{no}</span>
-                      <div><p className="text-[18px] font-bold text-[var(--color-carbon)]">{title}</p><p className="mt-1 text-[15px] leading-7 text-[var(--color-muted)]">{body}</p></div>
-                    </li>
-                  ))}
-                </ol>
+                <h2 id="how-title" className="type-section mt-3">만들어진 후기가 아니라,<br />내돈내산 경험과 성공한 사람들의 선택을 모아서.</h2>
+                <p className="mt-6 max-w-lg text-[15px] leading-7 text-[var(--color-muted)]">
+                  어떤 곳을 골랐고 실제로 받아 보니 어땠는지 기록합니다. 새로 추천할 곳을 찾거나 안전·진료 관련 문제가 확인되면 목록을 수정합니다.
+                </p>
               </div>
             </div>
           </section>
@@ -479,20 +467,18 @@ export default function Home() {
 
         {ko && firsthand.length > 0 && (
           <section className="shell py-16 lg:py-24" aria-labelledby="firsthand-title">
-            <p className="eyebrow">운영진 직접 경험</p>
-            <h2 id="firsthand-title" className="type-section mt-3">직접 받아 보고 고른 곳</h2>
+            <p className="eyebrow">고객의 직접 경험</p>
+            <h2 id="firsthand-title" className="type-section mt-3">직접 고르고 결국 선택한 곳들</h2>
+            <p className="mt-3 text-sm leading-6 text-[var(--color-muted)]">탱글 운영진이 고객으로 직접 시술·수술을 받은 경험입니다.</p>
             <div className="snap-strip mt-8 lg:grid lg:grid-cols-3 lg:overflow-visible">
-              {firsthand.map((item) => {
-                const provider = item.providers.find((p) => p.experience)!;
-                return (
-                  <Link key={item.id} href={`/clinics?item=${item.id}`} className="snap-card flex flex-col rounded-[22px] border border-[var(--color-silver-mist)] bg-white p-6 hover:border-[var(--brand)] lg:w-auto lg:max-w-none">
+              {firsthand.map(({ item, provider }) => (
+                  <Link key={`${item.id}-${provider.clinic}`} href={`/clinics?item=${item.id}`} className="snap-card flex flex-col rounded-[22px] border border-[var(--color-silver-mist)] bg-white p-6 hover:border-[var(--brand)] lg:w-auto lg:max-w-none">
                     <span className="text-[12px] font-semibold text-[var(--accent)]">{clinicCategoryLabels[item.category]} · {item.title}</span>
                     <span className="mt-3 text-[19px] font-bold text-[var(--color-carbon)]">{provider.clinic}{provider.region ? ` (${provider.region})` : ""}</span>
                     <span className="mt-3 line-clamp-3 text-[14px] leading-6 text-[var(--color-muted)]">{provider.experience}</span>
                     <span className="mt-auto pt-5 text-[13px] font-semibold text-[var(--brand)]">자세히 보기 →</span>
                   </Link>
-                );
-              })}
+              ))}
             </div>
           </section>
         )}
@@ -501,8 +487,8 @@ export default function Home() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="eyebrow"><span className="rounded-md bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-bold text-white">AI</span>TANGLE AI</p>
-              <h2 id="ai-title" className="type-section mt-3">{ko ? "광고 없는 데이터로 답하는 탱글 AI" : "Tangle AI, built on ad-free data"}</h2>
-              <p className="mt-3 max-w-[620px] text-[15px] leading-7 text-[var(--color-muted)]">{ko ? "검증된 추천 병원과 시술 가격 데이터만 근거로 답해요. 상담 준비부터 광고 후기 거르기, 외국어 통역까지." : "Answers only from Tangle's verified clinic notes and prices — from consultation prep to spotting sponsored reviews and interpreting at the clinic."}</p>
+              <h2 id="ai-title" className="type-section mt-3">{ko ? "광고 없이 데이터로 답하는 탱글 AI" : "Tangle AI, built on ad-free data"}</h2>
+              <p className="mt-3 max-w-[620px] text-[15px] leading-7 text-[var(--color-muted)]">{ko ? "탱글 추천 메모와 시술 가격을 바탕으로 답해요. 상담 질문을 준비하거나 후기 속 광고 신호를 확인할 수 있어요." : "Ask about Tangle's clinic notes and prices, prepare consultation questions, or check reviews for advertising signals."}</p>
             </div>
             <Link href="/ai" className="text-[14px] font-semibold text-[var(--brand)] underline-offset-4 hover:underline">{ko ? "AI 도구 전체 →" : "All AI tools →"}</Link>
           </div>
@@ -535,7 +521,7 @@ export default function Home() {
               <Link href="/global" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-[15px] font-semibold text-[var(--brand)] hover:opacity-90">{t("nav.global")} →</Link>
             </div>
             <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[24px] lg:max-w-none">
-              <Image src="/images/global.webp" alt="" width={1448} height={1086} quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
+              <Image src="/images/외국인-방문안내.webp" alt="" width={1440} height={1080} quality={85} sizes="(min-width: 1024px) 520px, (min-width: 600px) 560px, 100vw" className="aspect-[4/3] h-auto w-full object-cover" />
             </div>
           </div>
         </section>
@@ -545,11 +531,16 @@ export default function Home() {
             <div>
               <p className="eyebrow">{content.categoryEyebrow === "category index" ? (ko ? "시술 가격" : "Price index") : content.categoryEyebrow}</p>
               <h2 id="price-title" className="type-section mt-3">{ko ? "상담 전에, 가격부터." : content.categoryTitle.join(" ")}</h2>
+              {ko && <p className="mt-3 max-w-xl text-[15px] leading-7 text-[var(--color-muted)]">서울 병원의 공개 가격을 샷 수·용량·회차별로 비교하세요. 일반가와 이벤트가를 함께 확인할 수 있어요.</p>}
             </div>
             <Link href="/prices" className="action-secondary !py-3">{content.secondaryCta}</Link>
           </div>
           <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {treatmentCategories.map((category) => (
+            {ko ? ["울쎄라피 프라임", "써마지", "리쥬란", "인모드", "온다 리프팅", "볼뉴머", "세르프", "포텐자"].map((name) => (
+              <Link key={name} href={`/prices/${encodeURIComponent(name)}`} className="flex items-center justify-between gap-2 rounded-[18px] border border-[var(--color-silver-mist)] bg-white p-4 text-base font-bold hover:border-[var(--brand)] sm:p-5">
+                {name}<span aria-hidden="true" className="text-[var(--brand)]">→</span>
+              </Link>
+            )) : treatmentCategories.map((category) => (
               <Link key={category.name} href={`/category/${encodeURIComponent(category.name)}`} className="rounded-[18px] border border-[var(--color-silver-mist)] bg-white p-5 hover:border-[var(--brand)]">
                 <p className="text-[17px] font-bold">{localizedCategory[displayCategoryName(category.name)]?.name ?? localizedCategory[category.name]?.name ?? displayCategoryName(category.name)}</p>
                 <p className="mt-2 line-clamp-2 text-[13px] leading-5 text-[var(--color-muted)]">{localizedCategory[displayCategoryName(category.name)]?.examples ?? localizedCategory[category.name]?.examples ?? category.examples}</p>

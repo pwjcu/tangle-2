@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PriceIndexNote from "../components/PriceIndexNote";
 import StandardPriceTable, { StandardPriceNotice } from "../components/시술표준가격";
+import PublicPriceList from "../components/공개시술가격목록";
+import { PublicPriceMethod } from "../components/공개시술가격근거";
+import { getPublicPriceSummaries, publicPriceDate, publicPriceSnapshot } from "@/lib/공개시술가격";
 import { standardTreatmentPrices } from "@/lib/시술표준가격";
 import {
   categoryLabel,
@@ -15,14 +18,14 @@ import {
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "시술 가격표 — 표준규격 참고가와 강남권 가격 지수",
+  title: "서울 시술 가격표 — 규격별 공개 가격 비교",
   description:
-    "2026년 사용자 제공 피부 시술 가격 요약을 샷수·용량·회차별로 정리했습니다. 표준규격 참고 가격과 강남권 공개 가격 근거의 중위가·분포를 각각 확인하세요.",
+    "서울 병원이 공개한 시술 가격을 샷 수·용량·회차별로 비교하세요. 일반가, 이벤트가, 평균, 세금과 병원 원문을 확인할 수 있어요.",
   alternates: { canonical: "/prices" },
   openGraph: {
-    title: "탱글 프라이스 인덱스 — 시술 가격의 기준선",
+    title: "탱글 | 서울 시술 가격표",
     description:
-      "강남권 피부 시술 가격을 중위가·분포·근거 수로 정리한 공개 지수. 수집일과 근거 유형을 함께 표기합니다.",
+      "서울 병원 공개 가격을 조건별로 비교하고 원문까지 확인하세요.",
     type: "website",
   },
 };
@@ -67,12 +70,6 @@ function gradeBadge(grade: PriceIndexEntry["confidence_grade"]) {
 export default async function PricesPage() {
   const entries = await getPriceIndexEntries();
   const groups = groupByCategory(entries);
-  const totalEvidence = entries.reduce((sum, entry) => sum + entry.evidence_count, 0);
-  const latestAsOf = entries
-    .map((entry) => entry.last_evidence_at)
-    .filter((value): value is string => Boolean(value))
-    .sort()
-    .at(-1);
   const standardCategories = [...new Set(standardTreatmentPrices.map((price) => price.category))].sort(
     (a, b) => {
       const index = (category: string) => {
@@ -126,35 +123,19 @@ export default async function PricesPage() {
             시술 가격, 규격별로 확인하세요
           </h1>
           <p className="type-copy" style={{ maxWidth: "640px" }}>
-            샷수·용량·제품·회차에 맞는 참고 가격을 먼저 확인하세요. 아래에는 기존 강남권
-            (강남·서초·송파) 공개 가격 근거의 중위가와 분포도 함께 제공합니다.
+            상담 전에 같은 제품·샷 수·용량·회차끼리 비교해 보세요. 일반가와 이벤트가부터 세금과 적용 조건까지 확인할 수 있어요.
           </p>
-          {entries.length > 0 ? (
-            <div
-              style={{
-                display: "flex",
-                gap: "10px",
-                flexWrap: "wrap",
-                marginTop: "20px",
-                fontSize: "13px",
-                color: "var(--color-muted)",
-              }}
-            >
-              <span style={{ border: "1px solid var(--color-line)", borderRadius: "999px", padding: "6px 12px" }}>
-                표준규격 {standardTreatmentPrices.length}개
-              </span>
-              <span style={{ border: "1px solid var(--color-line)", borderRadius: "999px", padding: "6px 12px" }}>
-                공개 근거 {totalEvidence}건
-              </span>
-              {latestAsOf ? (
-                <span style={{ border: "1px solid var(--color-line)", borderRadius: "999px", padding: "6px 12px" }}>
-                  최근 수집일 {formatDateKo(latestAsOf)}
-                </span>
-              ) : null}
-            </div>
-          ) : null}
+          <p className="mt-4 text-sm text-[var(--color-muted)]">
+            <time dateTime={publicPriceDate}>{publicPriceDate.replaceAll("-", ".")}</time> 확인 · 서울 병원 {publicPriceSnapshot.clinicCount}곳 · 가격 {publicPriceSnapshot.observationCount}건
+          </p>
+          <a href="#price-method" className="mt-2 inline-block text-sm font-medium text-[var(--brand)] underline underline-offset-4">가격 집계 기준</a>
         </section>
 
+        <PublicPriceList items={getPublicPriceSummaries()} />
+        <PublicPriceMethod />
+        <details id="price-archive" className="scroll-mt-24 rounded-2xl border border-[var(--color-silver-mist)] bg-white p-4 sm:p-6">
+          <summary className="cursor-pointer font-semibold text-[var(--brand)]">이전 가격 자료 보기</summary>
+          <div className="mt-6 grid min-w-0 gap-8">
         <section aria-labelledby="standard-prices-title" style={{ display: "grid", gap: "20px" }}>
           <div>
             <h2 id="standard-prices-title" className="type-section" style={{ margin: "0 0 12px" }}>
@@ -265,6 +246,10 @@ export default async function PricesPage() {
           ))
         )}
 
+          <PriceIndexNote />
+          </div>
+        </details>
+
         <section
           style={{
             border: "1px solid var(--color-line)",
@@ -292,7 +277,6 @@ export default async function PricesPage() {
           </div>
         </section>
 
-        <PriceIndexNote />
       </div>
     </main>
   );

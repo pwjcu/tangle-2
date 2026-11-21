@@ -54,6 +54,9 @@ assert.ok(!JSON.stringify(recommendations.clinicRecommendationMeta).includes("�
 assert.ok(recommendations.clinicRecommendationMeta.trust_note.includes("광고"));
 assert.equal(items.filter(recommendations.hasFirsthand).length, 6);
 assert.equal(items.flatMap((row) => row.providers).filter((p) => p.experience).length, 7);
+for (const item of items.filter((row) => row.providers.some((provider) => !provider.experience))) {
+  assert.ok(recommendations.clinicConsultationChecks[item.id], "상담 확인 항목 누락: " + item.id);
+}
 const privateWords = ["남편", "시부모", "막내", "아이돌", "1억", "지인 친척"];
 for (const word of privateWords) assert.ok(!JSON.stringify(items).includes(word), "사적인 표현 제외: " + word);
 assert.ok(!items.find((row) => row.id === "skin-doctors-top").providers.some((p) => ["창피부과", "드네의원"].includes(p.clinic)), "겹치는 병원 제외");
@@ -105,13 +108,23 @@ for (const budget of [true, null, {}, "", "Infinity", -1, 10001]) {
 const chat = route("chat").POST;
 assert.equal((await chat(request({ message: "" }))).status, 400);
 assert.equal((await chat(request({ message: "a".repeat(18000) }))).status, 413);
-for (const [query, expectedText] of [["리쥬란 병원", "네스트"], ["써마지 가격", "만원"], ["채선경 원장", "확인 중"], ["고우리 병원", "데이터 부족"], ["가슴 보형물 뭐가 좋아요", "/guide/breast"], ["모티바 병원", "바노바기"]]) {
+for (const [query, expectedText] of [["리쥬란 병원", "네스트"], ["써마지 600샷 가격", "2,279,750원"], ["치과 임플란트 가격", "임플란트"], ["채선경 원장", "확인 중"], ["고우리 병원", "데이터 부족"], ["가슴 보형물 뭐가 좋아요", "/guide/breast"], ["모티바 병원", "바노바기"]]) {
  const response = await chat(request({ message: query }));
  assert.equal(response.status, 200);
  const body = await response.json();
  assert.ok(body.reply.includes(expectedText), query + ": " + body.reply);
  assert.equal(body.aiAvailable, false);
 }
+const prices = require(path.join(root, "lib/공개시술가격.ts"));
+const thermage600 = prices.getPublicPriceGroups("써마지").filter((group) => group.variant === "FLX 600샷");
+const event = thermage600.find((group) => group.kind === "event" && group.taxKnown);
+assert.deepEqual(event.samples.map((sample) => sample.totalWon), [1969000, 2035000, 2420000, 2695000]);
+assert.equal(event.averageWon, 2279750);
+assert.equal(event.medianWon, 2227500);
+assert.equal(thermage600.find((group) => group.kind === "intro").averageWon, null);
+assert.equal(thermage600.find((group) => !group.taxKnown).averageWon, null);
+assert.ok(prices.findPublicPriceAnswer("리쥬란 아이 1cc 가격").includes("아이 1cc"));
+assert.ok(!prices.findPublicPriceAnswer("리쥬란 아이 1cc 가격").includes("HB"));
 {
  const questions = await route("ai/questions").POST(request({ treatment: "리쥬란", concern: "모공", language: "ko" }));
  assert.equal(questions.status, 200);
