@@ -12,7 +12,7 @@
     "missing_information_policy": "원문에 없는 병원명, 소속, 주소, 가격, 장비 현황은 추정하지 않았습니다. 데이터 부족과 비공개는 그대로 남겼습니다.",
     "updated_at": "2026-11-21",
     "firsthand_note": "‘운영진 직접 경험’은 탱글 운영진이 실제로 수술·시술을 받은 곳입니다. 가격보다 누가, 어떻게 수술·시술하느냐를 기준으로 고른 곳이며, 개인적인 내용은 빼고 정보만 남겼습니다.",
-    "trust_note": "광고비를 받지 않고, 내돈내산 경험을 바탕으로 추천 병원과 의료진을 골랐어요. 직접 받은 경험과 방문 전에 확인할 점을 함께 담았어요."
+    "trust_note": "광고비를 받지 않고, 내돈내산 경험을 바탕으로 추천 병원과 의료진을 골랐어요. 상담에서 참고할 내용을 함께 담았어요."
   },
   "recommendations": [
     {
@@ -88,7 +88,7 @@
       "source_text": "여드름, 제모 : 채선경 님 (병원 이름 까먹음, 구 선릉 라엘르, 현 대치동?)"
     },
     {
-      "id": "hair-transplant", "category": "surgery", "title": "모발이식", "summary": "비절개·절개 모발이식. 운영진이 직접 받은 곳이 함께 있어요.",
+      "id": "hair-transplant", "category": "surgery", "title": "모발이식", "summary": "비절개·절개 모발이식으로 추천받은 병원이에요.",
       "treatments": ["모발이식", "비절개 모발이식", "헤어라인 모발이식"],
       "aliases": ["비절개", "모발 이식", "헤어라인", "M자", "이마 축소 대신"],
       "status": "experience",
@@ -97,7 +97,7 @@
       "source_text": "모발이식(비절개) : 참닥터 김주용 님 / 운영진 경험: 모발이식(헤어라인) — 뉴헤어성형외과(강남역)"
     },
     {
-      "id": "nose", "category": "surgery", "title": "코", "summary": "코 성형·재수술. 운영진이 직접 수술받은 곳과 추천 원장님들이에요.",
+      "id": "nose", "category": "surgery", "title": "코", "summary": "코 성형과 재수술로 추천받은 병원과 원장님들이에요.",
       "treatments": ["코", "코재수술"],
       "aliases": ["코 성형", "자가늑", "코 재수술", "실리콘 제거", "진피", "코끝 연골"],
       "status": "experience",
@@ -115,7 +115,7 @@
       "source_text": "윤곽 : 안승현 님, 박정근 님"
     },
     {
-      "id": "eyes", "category": "surgery", "title": "눈", "summary": "쌍꺼풀·트임 수술. 운영진이 직접 받은 곳 2곳이 있어요.",
+      "id": "eyes", "category": "surgery", "title": "눈", "summary": "쌍꺼풀과 트임 수술로 추천받은 병원과 원장님들이에요.",
       "treatments": ["눈", "쌍꺼풀", "앞트임", "뒷밑트임"],
       "aliases": ["눈 성형", "매몰", "빵트임", "뒤트임", "밑트임", "쌍수"],
       "status": "experience",
@@ -124,7 +124,7 @@
       "source_text": "눈 : 배인호 님 / 운영진 경험: 쌍꺼풀·앞트임 — 조셉성형외과(구리역), 뒷밑트임 — 디엠성형외과(압구정역)"
     },
     {
-      "id": "breast", "category": "surgery", "title": "가슴 (보형물 상담)", "summary": "운영진이 직접 상담을 다녀온 병원 10곳이에요. 보형물 비교는 가이드에서 볼 수 있어요.",
+      "id": "breast", "category": "surgery", "title": "가슴 (보형물 상담)", "summary": "가슴 보형물 상담을 위해 방문한 병원 10곳이에요.",
       "treatments": ["가슴", "가슴성형", "가슴확대"],
       "aliases": ["가슴 성형", "가슴 확대", "가슴보형물", "보형물", "멘토", "모티바", "바운스"],
       "status": "experience",
@@ -242,7 +242,7 @@
       "source_text": "경락 : 레비나스 드네의원 신예진 님, 어메이징빅토리아(압구정), 금단비가(잠실), 약손명가 (청담), 위뷰티"
     },
     {
-      "id": "face-custom", "category": "skin", "title": "얼굴 맞춤시술 (필러·리프팅·보톡스)", "summary": "운영진이 7년 넘게 다닌 얼굴 맞춤 시술(필러·리프팅·보톡스) 병원이에요.",
+      "id": "face-custom", "category": "skin", "title": "얼굴 맞춤시술 (필러·리프팅·보톡스)", "summary": "필러·리프팅·보톡스 등 얼굴 맞춤 시술로 꾸준히 다닌 곳이에요.",
       "treatments": ["얼굴 맞춤시술", "앞볼 필러", "관자 필러", "눈밑 꺼짐", "덴서티", "셀르디엠", "보톡스"],
       "aliases": ["앞볼꺼짐", "관자필러", "눈밑꺼짐", "접촉성피부염", "주사피부염", "피부질환"],
       "status": "experience",
@@ -251,7 +251,7 @@
       "source_text": "얼굴 맞춤시술(앞볼꺼짐, 관자필러, 눈밑꺼짐, 덴서티, 셀르디엠, 보톡스 등) — 서울탑초이스의원(신사역), 운영진 7년 이상 진료"
     },
     {
-      "id": "lip-filler", "category": "skin", "title": "입술필러", "summary": "운영진이 직접 받은 입술필러 병원이에요.",
+      "id": "lip-filler", "category": "skin", "title": "입술필러", "summary": "레스틸렌 키스 입술필러로 추천받은 병원이에요.",
       "treatments": ["입술필러", "레스틸렌 키스"],
       "aliases": ["입술 필러", "립필러"],
       "status": "experience",
@@ -278,7 +278,7 @@
       "source_text": "외국인 환자 비중 약 70%, 글로벌·국내 환자 만족도 높음 — 데이뷰의원(강남·명동), 세라미크의원(강남·명동) (링크·원장·대표 시술은 공식 사이트로 보충)"
     },
     {
-      "id": "skin-doctors-top", "category": "skin", "title": "오래 진료받은 피부과 원장님", "summary": "운영진이 수십 곳을 다닌 끝에 꼽은, 오래 진료받은 피부과 원장님이에요.",
+      "id": "skin-doctors-top", "category": "skin", "title": "오래 진료받은 피부과 원장님", "summary": "여러 병원을 다녀 본 뒤 선택해 오래 진료받은 원장님들이에요.",
       "treatments": ["피부과", "피부 관리", "스킨보톡스"],
       "aliases": ["피부과 원장", "TOP5", "대구 피부과"],
       "status": "experience",
@@ -287,7 +287,7 @@
       "source_text": "기억에 남는 피부과 원장님 TOP 5 중 — 청담고운세상피부과 도미옥, 대구 나의계절의원 김근영, 대구 지금은 비엘 조한결 (나머지 두 분은 다른 항목에 있음)"
     },
     {
-      "id": "orthodontics", "category": "dental", "title": "치아교정", "summary": "운영진이 직접 교정한 치과예요.",
+      "id": "orthodontics", "category": "dental", "title": "치아교정", "summary": "반투명 브라켓 교정으로 추천받은 치과예요.",
       "treatments": ["치아교정"],
       "aliases": ["교정", "철길", "반투명 교정", "치과"],
       "status": "experience",

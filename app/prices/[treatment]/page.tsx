@@ -419,7 +419,7 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
             {dental ? "상담할 치과를 찾고 있다면" : `${name}, 내 조건 실제 견적 받아보기`}
           </h2>
           <p className="type-copy" style={{ margin: 0 }}>
-            {dental ? "병원 화이트리스트에서 치과 추천 메모와 상담에서 확인할 점을 볼 수 있어요." : "내 부위·샷 수·용량·예산을 정해 병원 역제안으로 실제 견적을 받아보세요."}
+            {dental ? "병원 화이트리스트에서 치과 추천 메모와 상담에서 참고할 점을 볼 수 있어요." : "내 부위·샷 수·용량·예산을 정해 병원 역제안으로 실제 견적을 받아보세요."}
           </p>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <Link href={dental ? "/clinics?category=dental" : requestHref} className="action-primary" style={{ textDecoration: "none" }}>

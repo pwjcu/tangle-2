@@ -469,7 +469,6 @@ export default function Home() {
           <section className="shell py-16 lg:py-24" aria-labelledby="firsthand-title">
             <p className="eyebrow">고객의 직접 경험</p>
             <h2 id="firsthand-title" className="type-section mt-3">직접 고르고 결국 선택한 곳들</h2>
-            <p className="mt-3 text-sm leading-6 text-[var(--color-muted)]">탱글 운영진이 고객으로 직접 시술·수술을 받은 경험입니다.</p>
             <div className="snap-strip mt-8 lg:grid lg:grid-cols-3 lg:overflow-visible">
               {firsthand.map(({ item, provider }) => (
                   <Link key={`${item.id}-${provider.clinic}`} href={`/clinics?item=${item.id}`} className="snap-card flex flex-col rounded-[22px] border border-[var(--color-silver-mist)] bg-white p-6 hover:border-[var(--brand)] lg:w-auto lg:max-w-none">

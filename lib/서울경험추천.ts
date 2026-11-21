@@ -36,6 +36,8 @@ export const clinicRecommendationMeta = source.metadata;
 export const hasFirsthand = (item: ClinicRecommendation) => item.providers.some((provider) => Boolean(provider.experience));
 export const clinicRecommendations = source.recommendations as ClinicRecommendation[];
 
+export const clinicConsultationLabel = "상담에서 참고할 점";
+
 /** 경험 본문이 없는 추천에서 공통으로 확인할 상담 질문. */
 export const clinicConsultationChecks: Record<string, string> = {
   "skin-injections": "스킨보톡스는 제품·부위·유닛, 리쥬란은 제품 종류·cc를 각각 확인해 보세요. 마취와 진정 관리까지 포함한 금액인지 물어보면 견적을 비교하기 쉬워요.",
@@ -130,7 +132,7 @@ function formatEntries(items: ClinicRecommendation[]): string {
     item.summary,
     item.note,
     ...item.providers.map((provider) => `- ${provider.clinic ?? "병원 확인 중"}${provider.region ? ` (${provider.region})` : ""}${provider.doctors.length ? ` · ${provider.doctors.join("·")} 원장` : ""}${provider.note ? ` · ${provider.note}` : ""}`),
-    ...item.providers.filter((provider) => provider.experience).map((provider) => `운영진 직접 경험(${provider.clinic}): ${provider.experience}`),
+    ...item.providers.filter((provider) => provider.experience).map((provider) => `${clinicConsultationLabel} (${provider.clinic}): ${provider.experience}`),
   ].filter(Boolean).join("\n")).join("\n\n");
 }
 
