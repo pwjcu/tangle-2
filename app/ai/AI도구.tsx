@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import SiteHeader from "../components/사이트헤더";
 import { useLanguage } from "../components/LanguageProvider";
 import { openTangleChat } from "../components/AI열기";
+import PhotoTool from "./사진검사도구";
 import type { QuestionSheet, ReviewCheck } from "@/lib/AI도구";
 
 type Tool = "questions" | "review" | "translate";
@@ -25,8 +26,10 @@ const copy = {
   chatCta: { ko: "AI에게 물어보기", en: "Ask Tangle AI", zh: "问 AI", ja: "AIに聞く", th: "ถาม AI" },
   questions: { ko: "AI 상담 질문지", en: "AI question sheet", zh: "AI 面诊问题清单", ja: "AI相談質問リスト", th: "AI รายการคำถาม" },
   questionsBody: { ko: "시술과 고민을 적으면 상담 때 물어볼 질문과 체크리스트를 만들어요.", en: "Get a personal list of questions and checks to bring to your consultation.", zh: "生成面诊时要问的问题和检查清单。", ja: "相談で聞くべき質問とチェックリストを作ります。", th: "สร้างรายการคำถามและเช็กลิสต์สำหรับวันปรึกษา" },
-  review: { ko: "AI 후기 광고 체크", en: "AI sponsored-review check", zh: "AI 广告评价检测", ja: "AI広告レビュー判定", th: "AI ตรวจรีวิวโฆษณา" },
-  reviewBody: { ko: "블로그·카페 후기를 붙여 넣으면 체험단·광고일 가능성을 알려 드려요.", en: "Paste a review to see how likely it is sponsored or promotional.", zh: "粘贴评价，判断是否为体验团或广告。", ja: "レビューを貼り付けると、広告・体験団の可能性を判定します。", th: "วางรีวิวเพื่อดูว่ามีโอกาสเป็นโฆษณาแค่ไหน" },
+  review: { ko: "AI 가짜 후기 필터", en: "AI fake-review filter", zh: "AI 虚假评价过滤", ja: "AI偽レビューフィルター", th: "AI กรองรีวิวปลอม" },
+  reviewBody: { ko: "광고·체험단 글, AI로 만들거나 과하게 보정한 사진까지 걸러 드려요.", en: "Spot sponsored text and AI-generated or heavily retouched photos.", zh: "识别广告、体验团文字，以及 AI 生成或过度修图的照片。", ja: "広告・体験団の文章、AI生成や過度に加工した写真を見分けます。", th: "แยกรีวิวโฆษณาและรูปที่สร้างด้วย AI หรือรีทัชหนัก" },
+  modeText: { ko: "후기 글", en: "Review text", zh: "评价文字", ja: "レビュー文", th: "ข้อความรีวิว" },
+  modePhoto: { ko: "후기 사진", en: "Review photo", zh: "评价照片", ja: "レビュー写真", th: "รูปรีวิว" },
   translate: { ko: "AI 병원 번역", en: "AI clinic interpreter", zh: "AI 医院翻译", ja: "AIクリニック通訳", th: "AI ล่ามคลินิก" },
   translateBody: { ko: "내 언어로 쓰면 병원 직원에게 보여줄 한국어 문장으로 바꿔 드려요.", en: "Write in your language and show the Korean sentence to clinic staff.", zh: "用您的语言输入，生成给医院工作人员看的韩语句子。", ja: "自分の言語で書くと、スタッフに見せる韓国語に翻訳します。", th: "พิมพ์ภาษาของคุณ แล้วแสดงประโยคภาษาเกาหลีให้เจ้าหน้าที่ดู" },
   treatment: { ko: "시술·수술 이름", en: "Treatment or surgery", zh: "项目或手术名称", ja: "施術・手術名", th: "ชื่อหัตถการหรือการผ่าตัด" },
@@ -205,6 +208,7 @@ function QuestionTool({ L, language }: ToolProps) {
 }
 
 function ReviewTool({ L, language }: ToolProps) {
+  const [mode, setMode] = useState<"text" | "photo">("text");
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -228,6 +232,13 @@ function ReviewTool({ L, language }: ToolProps) {
   return (
     <div>
       <h2 className="text-[22px] font-bold">{L(copy.review)}</h2>
+      <div className="mt-5 inline-flex rounded-full border border-[var(--color-silver-mist)] p-1" role="group">
+        {(["text", "photo"] as const).map((value) => (
+          <button key={value} type="button" aria-pressed={mode === value} onClick={() => setMode(value)}
+            className={`rounded-full px-4 py-2 text-[14px] font-semibold ${mode === value ? "bg-[var(--brand)] text-white" : "text-[var(--color-muted)]"}`}>{L(value === "text" ? copy.modeText : copy.modePhoto)}</button>
+        ))}
+      </div>
+      {mode === "photo" ? <PhotoTool L={L} language={language} /> : <>
       <form className="mt-5 grid gap-4" onSubmit={(event) => { event.preventDefault(); void submit(); }}>
         <label className="grid gap-2 text-[14px] font-semibold">{L(copy.reviewText)}
           <textarea value={text} onChange={(event) => setText(event.target.value)} maxLength={3000} rows={7} placeholder={L(copy.reviewPh)} className="field" required />
@@ -258,6 +269,7 @@ function ReviewTool({ L, language }: ToolProps) {
           </div>
         </article>
       )}
+      </>}
     </div>
   );
 }

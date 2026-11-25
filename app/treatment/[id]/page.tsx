@@ -11,6 +11,7 @@ import { localTreatments } from "../../../lib/localTreatments";
 import { useLanguage } from "../../components/LanguageProvider";
 import StandardPriceTable, { StandardPriceNotice } from "../../components/시술표준가격";
 
+import SiteHeader from "../../components/사이트헤더";
 interface TreatmentDetail {
   id: number | string;
   name: string;
@@ -182,16 +183,7 @@ export default function TreatmentDetailPage() {
 
   return (
     <div className="pb-10">
-      <header className="border-b border-[var(--color-carbon)]">
-        <div className="shell flex min-h-[64px] items-center justify-between py-3">
-          <button onClick={() => router.back()} className="ghost-link">
-            {copy.back}
-          </button>
-          <Link href="/" className="ghost-link">
-            Tangle
-          </Link>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="shell">
         <section className="grid border-x border-b border-[var(--color-carbon)] lg:grid-cols-[1.05fr_0.95fr]">

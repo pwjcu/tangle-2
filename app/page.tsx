@@ -482,6 +482,19 @@ export default function Home() {
           </section>
         )}
 
+        {ko && (
+          <section className="shell pb-16 lg:pb-24" aria-labelledby="verified-band-title">
+            <Link href="/verified" className="group flex flex-col gap-6 rounded-[28px] border border-[var(--color-silver-mist)] bg-white p-6 transition hover:shadow-[0_14px_40px_rgba(23,58,49,0.08)] sm:flex-row sm:items-center sm:justify-between sm:p-9">
+              <div>
+                <p className="eyebrow"><span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />검증 병원</p>
+                <h2 id="verified-band-title" className="type-section mt-3">자격과 이력을 서류로 확인한 원장님</h2>
+                <p className="mt-3 max-w-[620px] text-[15px] leading-7 text-[var(--color-muted)]">의사면허·정상적인 의대 졸업·범죄 경력·의료사고·행정처분·수술실 CCTV까지. 모두 통과한 곳만 올리고, 광고비로는 살 수 없어요.</p>
+              </div>
+              <span className="shrink-0 rounded-full bg-[var(--brand)] px-6 py-3 text-[15px] font-semibold text-white group-hover:opacity-90">검증 기준 보기 →</span>
+            </Link>
+          </section>
+        )}
+
         <section className="shell pb-16 lg:pb-24" aria-labelledby="ai-title">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
@@ -499,7 +512,7 @@ export default function Home() {
             </button>
             {[
               ["02", "/ai#questions", ko ? "AI 상담 질문지" : "AI question sheet", ko ? "내 상황에 맞는 상담 질문을 만들어요." : "Questions to bring to your consultation."],
-              ["03", "/ai#review", ko ? "AI 후기 광고 체크" : "Sponsored-review check", ko ? "체험단·광고 후기일 가능성을 알려 줘요." : "See how likely a review is an ad."],
+              ["03", "/ai#review", ko ? "AI 가짜 후기 필터" : "Fake-review filter", ko ? "광고 글·AI·보정 사진을 걸러 줘요." : "Spot sponsored text and AI or retouched photos."],
               ["04", "/ai#translate", ko ? "AI 병원 번역" : "AI clinic interpreter", ko ? "외국인 환자가 직원과 바로 대화해요." : "Show Korean sentences to clinic staff."],
             ].map(([num, href, title, body]) => (
               <Link key={href} href={href} className="rounded-[22px] border border-[var(--color-silver-mist)] bg-white p-5 hover:shadow-[0_10px_30px_rgba(23,58,49,0.08)]">

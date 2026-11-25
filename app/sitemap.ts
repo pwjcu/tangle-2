@@ -17,6 +17,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/guide/breast`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/global`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/ai`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${siteUrl}/verified`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${siteUrl}/privacy`, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   const publicRoutes: MetadataRoute.Sitemap = getPublicPriceNames().map((name) => ({

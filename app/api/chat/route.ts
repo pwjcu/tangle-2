@@ -9,6 +9,7 @@ import { aiRateLimited, askAI, languageNames, TANGLE_AI_RULES } from "../../../l
 import { partnerClinics } from "../../../lib/협업병원";
 import { formatBreastGuideText } from "../../../lib/가슴성형가이드";
 
+import { isCrossSite } from "../../../lib/요청출처";
 function normalized(value: string) {
   return value.normalize("NFKC").replace(/\s+/g, "").toLowerCase();
 }
@@ -91,6 +92,7 @@ ${partners}`,
 }
 
 export async function POST(req: Request) {
+  if (isCrossSite(req)) return NextResponse.json({ error: "요청 출처를 확인할 수 없습니다." }, { status: 403 });
   let language: SupportedLanguage = "ko";
   try {
     const body = await readConsultBody(req);

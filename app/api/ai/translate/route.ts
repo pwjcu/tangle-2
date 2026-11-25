@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import { ConsultInputError, normalizeConsultLanguage, readConsultBody, readConsultChoice, readConsultText } from "../../../../lib/상담입력검증";
 import { aiRateLimited, askAIJson, languageNames } from "../../../../lib/탱글AI";
 
+import { isCrossSite } from "../../../../lib/요청출처";
 type Translation = { translated: string; check: string };
 
 export async function POST(req: Request) {
+  if (isCrossSite(req)) return NextResponse.json({ error: "요청 출처를 확인할 수 없습니다." }, { status: 403 });
   try {
     const body = await readConsultBody(req, 8_192);
     const language = normalizeConsultLanguage(body.language);

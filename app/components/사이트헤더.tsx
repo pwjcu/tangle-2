@@ -9,6 +9,7 @@ const koLinks = [
   { href: "/clinics?category=skin", label: "피부" },
   { href: "/clinics?category=surgery", label: "성형" },
   { href: "/clinics?category=dental", label: "치과" },
+  { href: "/verified", label: "검증 병원" },
   { href: "/prices", label: "시술 가격" },
   { href: "/global", label: "외국인 안내" },
   { href: "/ai", label: "AI 상담" },

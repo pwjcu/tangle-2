@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 import { getCategoryMeta, normalizeCategoryName } from "../../../lib/siteContent";
 import { getLocalTreatmentsByCategory } from "../../../lib/localTreatments";
@@ -10,6 +10,7 @@ import type { SupportedLanguage } from "../../../lib/i18n";
 import { commonUi, formatPriceRange, localizeCategoryName } from "../../../lib/localizedUi";
 import { useLanguage } from "../../components/LanguageProvider";
 
+import SiteHeader from "../../components/사이트헤더";
 interface Treatment {
   id: number | string;
   name: string;
@@ -172,7 +173,6 @@ export default function CategoryPage() {
   const copy = categoryPageCopy[language];
   const ui = commonUi[language];
   const params = useParams();
-  const router = useRouter();
   const categoryName = decodeURIComponent(params.name as string);
   const dataCategoryName = normalizeCategoryName(categoryName);
   const displayName = localizeCategoryName(categoryName, language);
@@ -205,16 +205,7 @@ export default function CategoryPage() {
 
   return (
     <div className="pb-10">
-      <header className="border-b border-[var(--color-carbon)]">
-        <div className="shell flex min-h-[64px] items-center justify-between py-3">
-          <button onClick={() => router.back()} className="ghost-link">
-            {copy.back}
-          </button>
-          <Link href="/" className="ghost-link">
-            Tangle
-          </Link>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="shell">
         <section className="grid border-x border-b border-[var(--color-carbon)] lg:grid-cols-[0.92fr_1.08fr]">

@@ -6,6 +6,7 @@ import type { SupportedLanguage } from "../../lib/i18n";
 import { commonUi, formatPrice, localizeCategoryName } from "../../lib/localizedUi";
 import { useLanguage } from "../components/LanguageProvider";
 
+import SiteHeader from "../components/사이트헤더";
 type QuestionKey = "concern" | "budget" | "age" | "goal" | "downtime";
 
 interface Option {
@@ -566,17 +567,7 @@ export default function RecommendPage() {
 
   return (
     <div className="pb-12">
-      <header className="sticky top-4 z-30">
-        <div className="shell flex min-h-[64px] items-center justify-between rounded-full border border-[rgba(23,21,14,0.08)] bg-white/88 px-4 py-2 backdrop-blur">
-          <Link href="/" className="ghost-link">
-            Tangle
-          </Link>
-          <Link href="/clinics" className="ghost-link">{language === "ko" ? "추천 병원" : "Recommended clinics"}</Link>
-          <button onClick={handleRestart} className="ghost-link">
-            {ui.restart}
-          </button>
-        </div>
-      </header>
+      <SiteHeader right={<button onClick={handleRestart} className="ghost-link hidden sm:inline-flex">{ui.restart}</button>} />
 
       <main className="shell pt-8">
         <section className="grid gap-5 xl:grid-cols-[0.72fr_1.28fr]">

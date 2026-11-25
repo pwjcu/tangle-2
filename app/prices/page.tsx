@@ -6,6 +6,7 @@ import PublicPriceList from "../components/공개시술가격목록";
 import { PublicPriceMethod } from "../components/공개시술가격근거";
 import { getPublicPriceSummaries, publicPriceDate, publicPriceSnapshot } from "@/lib/공개시술가격";
 import { standardTreatmentPrices } from "@/lib/시술표준가격";
+import SiteHeader from "../components/사이트헤더";
 import {
   categoryLabel,
   formatDateKo,
@@ -82,39 +83,7 @@ export default async function PricesPage() {
 
   return (
     <main>
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          background: "rgba(255, 255, 255, 0.86)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid var(--color-line)",
-          zIndex: 10,
-        }}
-      >
-        <div
-          className="shell"
-          style={{
-            padding: "16px 24px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Link href="/" style={{ fontWeight: 700, letterSpacing: "-0.02em" }}>
-            Tangle
-          </Link>
-          <nav style={{ display: "flex", gap: "18px", alignItems: "center" }}>
-            <Link href="/clinics" className="ghost-link">추천 병원</Link>
-            <Link href="/recommend" className="ghost-link">
-              AI 추천
-            </Link>
-            <Link href="/request" className="ghost-link">
-              견적 요청
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <div className="shell" style={{ padding: "48px 24px 72px", display: "grid", gap: "36px" }}>
         <section>

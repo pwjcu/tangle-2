@@ -45,7 +45,9 @@ export default function RootLayout({
                 <Link href="/clinics?category=skin">피부</Link>
                 <Link href="/clinics?category=surgery">성형</Link>
                 <Link href="/clinics?category=dental">치과</Link>
+                <Link href="/verified">검증 병원</Link>
                 <Link href="/prices">시술 가격</Link>
+                <Link href="/ai">탱글 AI</Link>
                 <Link href="/global">Global patients</Link>
                 <Link href="/recommend">조건별 추천</Link>
                 <Link href="/request">견적 요청</Link>
@@ -56,6 +58,7 @@ export default function RootLayout({
             </div>
             <FooterPartnerStrip><TangleXDrAidee variant="strip" placement="footer" /></FooterPartnerStrip>
             <p className="mt-4 max-w-3xl text-xs leading-6">경험 추천과 참고 가격은 상담 준비를 위한 정보입니다. 개인별 시술 적합성·비용·현재 진료 여부는 의료기관에 확인해 주세요.</p>
+            <p className="mt-2 text-xs"><Link href="/privacy" className="font-semibold text-[var(--color-carbon)] underline underline-offset-4">개인정보처리방침</Link></p>
           </footer>
           <ChatBot />
         </LanguageProvider>

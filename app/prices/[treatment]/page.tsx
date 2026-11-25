@@ -5,6 +5,7 @@ import PublicPriceEvidence, { PublicPriceMethod } from "../../components/공개�
 import StandardPriceTable, { StandardPriceNotice } from "../../components/시술표준가격";
 import { getPublicPriceGroups, getPublicPriceNames, getPublicPriceTreatment, publicPriceDate } from "@/lib/공개시술가격";
 import { getStandardPricesForTreatment, getStandardPriceTreatmentNames } from "@/lib/시술표준가격";
+import SiteHeader from "../../components/사이트헤더";
 import {
   EVIDENCE_KIND_LABELS,
   SOURCE_TYPE_LABELS,
@@ -260,38 +261,7 @@ export default async function PriceTreatmentPage({ params }: PageProps) {
   return (
     <main>
       {jsonLd ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /> : null}
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          background: "rgba(255, 255, 255, 0.86)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid var(--color-line)",
-          zIndex: 10,
-        }}
-      >
-        <div
-          className="shell"
-          style={{
-            padding: "16px 24px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Link href="/" style={{ fontWeight: 700, letterSpacing: "-0.02em" }}>
-            Tangle
-          </Link>
-          <nav style={{ display: "flex", gap: "18px", alignItems: "center" }}>
-            <Link href="/prices" className="ghost-link">
-              가격 지수
-            </Link>
-            <Link href="/request" className="ghost-link">
-              견적 요청
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <div className="shell" style={{ padding: "48px 24px 72px", display: "grid", gap: "36px", maxWidth: "860px" }}>
         <section>

@@ -64,6 +64,7 @@ const reviewRules: { pattern: RegExp; weight: number; label: string }[] = [
   { pattern: /체험단|협찬|원고료|소정의|제공받아|지원받아|무료로\s*(받|시술)|광고\s*포함|유료\s*광고|sponsored|#ad\b|gifted/i, weight: 45, label: "협찬·체험단 표시가 있어요" },
   { pattern: /이벤트|할인\s*코드|쿠폰|예약은|문의는|링크|카톡\s*상담|DM\s*주세요/i, weight: 15, label: "예약·이벤트 유도 문구가 있어요" },
   { pattern: /인생\s*(병원|시술)|무조건|100\s*%|전혀\s*안\s*아|하나도\s*안\s*아|부작용\s*(전혀|하나도)\s*없|강력\s*추천|완전\s*강추|최고의/i, weight: 15, label: "과장된 표현이 많아요" },
+  { pattern: /리뷰\s*이벤트|후기\s*이벤트|포인트\s*적립|적립금|사진\s*후기\s*(작성|조건)|모델\s*(모집|할인|가)|할인\s*받고|무료\s*시술\s*이벤트/, weight: 25, label: "후기 이벤트·모델 할인으로 쓴 글일 수 있어요" },
   { pattern: /실장님|상담실장/i, weight: 8, label: "상담실장 이름을 강조해요" },
   { pattern: /(원장님|선생님).{0,20}(원장님|선생님).{0,20}(원장님|선생님)/, weight: 6, label: "원장 칭찬이 반복돼요" },
 ];

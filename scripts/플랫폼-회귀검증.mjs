@@ -140,6 +140,37 @@ assert.ok(!prices.findPublicPriceAnswer("리쥬란 아이 1cc 가격").includes(
  assert.equal((await route("ai/translate").POST(request({ text: "I am allergic to anesthesia", language: "en", direction: "toKorean" }))).status, 503);
  assert.equal((await route("ai/translate").POST(request({ text: "hi", direction: "sideways" }))).status, 400);
 }
+{
+ // 다른 사이트에서 AI API를 대신 부르면 거부
+ const cross = new Request("http://localhost/api/chat", { method: "POST", headers: { origin: "https://evil.example", "content-type": "application/json" }, body: JSON.stringify({ message: "리쥬란" }) });
+ assert.equal((await route("chat").POST(cross)).status, 403);
+ // 후기 이벤트·모델 할인 글
+ const event = await (await route("ai/review-check").POST(request({ text: "리뷰 이벤트로 모델 할인 받고 다녀왔어요. 강력 추천!", language: "ko" }))).json();
+ assert.ok(event.result.signals.some((signal) => signal.includes("후기 이벤트")), "후기 이벤트 신호");
+ // 사진 검사: 동의 없이는 AI로 보내지 않음
+ assert.equal((await route("ai/photo-check").POST(request({ image: "data:image/jpeg;base64,AAAA", consent: false }))).status, 400);
+ const photo = require(path.join(root, "lib/사진검사.ts"));
+ const bytes = (text) => new TextEncoder().encode(text);
+ assert.ok(photo.inspectPhoto(bytes("xmp digitalsourcetype trainedAlgorithmicMedia"), "image/jpeg", 800, 1000).score >= 90, "AI 표준 표시");
+ assert.ok(photo.inspectPhoto(bytes("tEXtparameters a girl, Steps: 30, Sampler: Euler"), "image/png", 1024, 1024).score >= 90, "생성 설정값");
+ assert.ok(photo.inspectPhoto(bytes("Software Meitu"), "image/jpeg", 900, 1200).score >= 70, "보정 앱");
+ assert.ok(photo.inspectPhoto(bytes("plain"), "image/jpeg", 900, 1200).score < 50, "흔적 없음");
+ // 검증 병원 신청
+ const apply = route("verified-apply").POST;
+ const origin = { origin: "http://localhost", "content-type": "application/json" };
+ const applyRequest = (body) => new Request("http://localhost/api/verified-apply", { method: "POST", headers: origin, body: JSON.stringify(body) });
+ const base = { clinic: "테스트의원", doctor: "홍길동", specialty: "피부과 전문의", address: "서울 강남구 테스트로 1", contact_name: "김담당", contact_phone: "010-1234-5678", performs_surgery: false, consent: true,
+   declarations: { license: true, education: true, criminal: true, malpractice: true, sanction: true, direct: true } };
+ assert.equal((await apply(applyRequest({ ...base, declarations: { license: true } }))).status, 400, "자기신고 누락");
+ assert.equal((await apply(applyRequest({ ...base, performs_surgery: true }))).status, 400, "수술하면 CCTV 확인 필요");
+ assert.equal((await apply(applyRequest({ ...base, consent: false }))).status, 400, "동의 필요");
+ const accepted = await apply(applyRequest(base));
+ assert.equal(accepted.status, 202, "DB 연결 전에는 카카오 채널용 신청서 반환");
+ assert.ok((await accepted.json()).text.includes("테스트의원"));
+ assert.equal((await apply(new Request("http://localhost/api/verified-apply", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(base) }))).status, 403, "출처 없는 신청 거부");
+ const verified = require(path.join(root, "lib/검증병원.ts"));
+ assert.ok(!JSON.stringify(verified.verificationCriteria).match(/국적|화교|혈통/), "국적·출신은 검증 기준이 아님");
+}
 const imageRequest = request({ image: "PRIVATE_IMAGE_NOT_TO_BE_READ" });
 assert.equal((await route("image-consult").POST(imageRequest)).status, 503);
 assert.equal(imageRequest.bodyUsed, false);

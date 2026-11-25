@@ -4,6 +4,7 @@ import Image from "next/image";
 import { categoryImages } from "../../lib/카테고리이미지";
 import Link from "next/link";
 import SiteHeader from "../components/사이트헤더";
+import LinkChip from "../components/링크칩";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -39,6 +40,20 @@ function savedSnapshot() {
   if (useMemoryStorage) return memorySaved;
   try { return window.localStorage.getItem(SAVED_KEY) ?? "[]"; }
   catch { return memorySaved; }
+}
+/** 저장 목록을 기록하고, 브라우저 저장소를 쓸 수 있었는지 돌려줍니다. */
+function writeSavedIds(ids: string[]): boolean {
+  memorySaved = JSON.stringify(ids);
+  let persisted = true;
+  try {
+    window.localStorage.setItem(SAVED_KEY, memorySaved);
+    useMemoryStorage = false;
+  } catch {
+    useMemoryStorage = true;
+    persisted = false;
+  }
+  window.dispatchEvent(new Event(SAVED_EVENT));
+  return persisted;
 }
 function readSavedIds(value: string): string[] {
   try {
@@ -102,16 +117,9 @@ export default function ClinicRecommendationsList() {
   function toggleSaved(item: ClinicRecommendation) {
     const wasSaved = savedIds.includes(item.id);
     const next = wasSaved ? savedIds.filter((id) => id !== item.id) : [...savedIds, item.id];
-    memorySaved = JSON.stringify(next);
-    try {
-      window.localStorage.setItem(SAVED_KEY, memorySaved);
-      useMemoryStorage = false;
-      setMessage(wasSaved ? `${item.title} 저장을 해제했습니다.` : `${item.title} 항목을 이 브라우저에 저장했습니다.`);
-    } catch {
-      useMemoryStorage = true;
-      setMessage("브라우저 저장이 제한되어 이번 방문 동안만 보관합니다. 페이지를 새로 열면 사라질 수 있습니다.");
-    }
-    window.dispatchEvent(new Event(SAVED_EVENT));
+    setMessage(writeSavedIds(next)
+      ? (wasSaved ? `${item.title} 저장을 해제했어요.` : `${item.title} 항목을 이 기기에 저장했어요.`)
+      : "브라우저 저장이 막혀 있어 이번 방문 동안만 보관해요.");
   }
 
   async function share(item?: ClinicRecommendation) {
@@ -234,9 +242,9 @@ export default function ClinicRecommendationsList() {
                       <p className="flex flex-wrap items-center gap-2 text-[15px] font-semibold text-[#3f5138]">{provider.clinic ?? "병원 확인 중"}{provider.region && <span className="text-[13px] font-medium text-[#8a6a2b]">({provider.region})</span>}</p>
                       {provider.doctors.length > 0 && <p className="mt-1 text-sm text-[#65725c]">{provider.doctors.map((name) => `${name} 원장`).join(" · ")}</p>}
                       {provider.address ? <p className="mt-2 text-xs leading-5 text-[#829078]">주소: {provider.address}</p> : provider.location_hint && <p className="mt-2 text-xs leading-5 text-[#829078]">위치: {provider.location_hint}</p>}
-                      {provider.links?.length ? <div className="mt-2 flex flex-wrap gap-1.5">{provider.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className="rounded-full border border-[#cfe0d6] bg-white px-3 py-1.5 text-xs font-semibold text-[#2f5544] hover:bg-[#eef6f1]">{link.kind === "phone" ? `전화 ${formatPhone(link.url)}` : partnerLinkLabels[link.kind].ko} ↗</a>)}</div> : null}
+                      {provider.links?.length ? <div className="mt-2 flex flex-wrap gap-1.5">{provider.links.map((link) => <LinkChip key={link.url} href={link.url} label={link.kind === "phone" ? `전화 ${formatPhone(link.url)}` : partnerLinkLabels[link.kind].ko} />)}</div> : null}
                       {provider.note && <p className="mt-2 text-xs leading-5 text-[#829078]">{provider.note}</p>}
-                      {partnerClinicById(provider.partner_id) && <div className="mt-3 flex flex-wrap gap-1.5">{partnerClinicById(provider.partner_id)!.links.map((link) => <a key={link.url} href={link.url} target={link.kind === "phone" ? undefined : "_blank"} rel="noopener noreferrer" className="rounded-full border border-[#cfe0d6] bg-white px-3 py-1.5 text-xs font-semibold text-[#2f5544] hover:bg-[#eef6f1]">{partnerLinkLabels[link.kind].ko}{link.note ? ` (${link.note.ko})` : ""} ↗</a>)}</div>}
+                      {partnerClinicById(provider.partner_id) && <div className="mt-3 flex flex-wrap gap-1.5">{partnerClinicById(provider.partner_id)!.links.map((link) => <LinkChip key={link.url} href={link.url} label={`${partnerLinkLabels[link.kind].ko}${link.note ? ` (${link.note.ko})` : ""}`} />)}</div>}
                       {provider.clinic && <span className="mt-2 flex flex-wrap gap-3 text-xs font-medium text-[#507045]"><a href={`https://map.naver.com/p/search/${encodeURIComponent(provider.address ?? `${provider.region ? provider.region + " " : /대구|구리|경기|부산/.test(provider.location_hint ?? "") ? "" : "서울 "}${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 네이버 지도에서 보기, 새 창`}>네이버 지도 ↗</a><a href={`https://map.kakao.com/?q=${encodeURIComponent(provider.address ?? `${provider.region ?? ""} ${provider.clinic} ${provider.location_hint ?? ""}`.trim())}`} target="_blank" rel="noopener noreferrer" className="underline decoration-[#b2c2a6] underline-offset-4" aria-label={`${provider.clinic} 카카오맵에서 보기, 새 창`}>카카오맵 ↗</a></span>}
                     </div>)}
                     {(experienceNotes.length > 0 || consultationCheck) && (

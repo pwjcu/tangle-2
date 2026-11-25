@@ -6,6 +6,7 @@ import { ConsultInputError, normalizeConsultLanguage, readConsultBody, readConsu
 import { formatClinicRecommendationContext } from "../../../../lib/서울경험추천";
 import { aiRateLimited, askAIJson, languageNames, TANGLE_AI_RULES } from "../../../../lib/탱글AI";
 
+import { isCrossSite } from "../../../../lib/요청출처";
 function isSheet(value: unknown): value is QuestionSheet {
   const sheet = value as QuestionSheet;
   return Boolean(sheet && typeof sheet.title === "string" && Array.isArray(sheet.sections)
@@ -13,6 +14,7 @@ function isSheet(value: unknown): value is QuestionSheet {
 }
 
 export async function POST(req: Request) {
+  if (isCrossSite(req)) return NextResponse.json({ error: "요청 출처를 확인할 수 없습니다." }, { status: 403 });
   try {
     const body = await readConsultBody(req, 8_192);
     const language = normalizeConsultLanguage(body.language);
