@@ -14,6 +14,7 @@ import { clinicCategoryLabels, clinicGroups, clinicRecommendations } from "../li
 import { globalGuideCopy } from "../lib/글로벌가이드";
 import { useLanguage } from "./components/LanguageProvider";
 
+import Arrow from "./components/화살표";
 const homeContent: Record<
   SupportedLanguage,
   {
@@ -406,9 +407,10 @@ export default function Home() {
               </p>
             )}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href={ko ? "/clinics" : "/global"} className="action-primary">{ko ? content.primaryCta : t("nav.global")}</Link>
+              <Link href={ko ? "/clinics" : "/global"} className="action-primary">{ko ? content.primaryCta : t("nav.global")}<Arrow /></Link>
               <Link href="/prices" className="action-secondary">{ko ? content.secondaryCta : t("nav.prices")}</Link>
             </div>
+            <p className="cta-note">{ko ? <><span>무료</span><span>가입 없이 바로</span><span>광고비 0원</span></> : <><span>Free</span><span>No sign-up</span><span>No paid rankings</span></>}</p>
           </div>
 
           <div className="mx-auto w-full max-w-[440px] lg:max-w-[560px]">
@@ -490,7 +492,7 @@ export default function Home() {
                 <h2 id="verified-band-title" className="type-section mt-3">자격과 이력을 서류로 확인한 원장님</h2>
                 <p className="mt-3 max-w-[620px] text-[15px] leading-7 text-[var(--color-muted)]">의사면허·정상적인 의대 졸업·범죄 경력·의료사고·행정처분·수술실 CCTV까지. 모두 통과한 곳만 올리고, 광고비로는 살 수 없어요.</p>
               </div>
-              <span className="shrink-0 rounded-full bg-[var(--brand)] px-6 py-3 text-[15px] font-semibold text-white group-hover:opacity-90">검증 기준 보기 →</span>
+              <span className="action-primary shrink-0">검증 기준 보기<Arrow /></span>
             </Link>
           </section>
         )}

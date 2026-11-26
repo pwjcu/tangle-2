@@ -6,6 +6,7 @@ import SiteHeader from "../components/사이트헤더";
 import { useLanguage } from "../components/LanguageProvider";
 import { openTangleChat } from "../components/AI열기";
 import PhotoTool from "./사진검사도구";
+import Arrow from "../components/화살표";
 import type { QuestionSheet, ReviewCheck } from "@/lib/AI도구";
 
 type Tool = "questions" | "review" | "translate";
@@ -121,7 +122,7 @@ export default function AITools() {
           <p className="text-[12px] font-bold tracking-wider text-white/70">01</p>
           <p className="mt-2 text-[18px] font-bold">{L(copy.chat)}</p>
           <p className="mt-2 text-[14px] leading-6 text-white/80">{L(copy.chatBody)}</p>
-          <p className="mt-4 text-[14px] font-semibold">{L(copy.chatCta)} →</p>
+          <p className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold">{L(copy.chatCta)}<Arrow /></p>
         </button>
         {tabs.map((tab, index) => (
           <button key={tab.id} type="button" onClick={() => select(tab.id)} aria-pressed={tool === tab.id}
@@ -181,7 +182,7 @@ function QuestionTool({ L, language }: ToolProps) {
         <label className="grid gap-2 text-[14px] font-semibold">{L(copy.concern)}
           <textarea value={concern} onChange={(event) => setConcern(event.target.value)} maxLength={600} rows={3} placeholder={L(copy.concernPh)} className="field" />
         </label>
-        <button type="submit" disabled={loading || !treatment.trim()} className="action-primary w-full sm:w-auto disabled:opacity-50">{loading ? L(copy.loading) : L(copy.make)}</button>
+        <button type="submit" disabled={loading || !treatment.trim()} className="action-primary w-full sm:w-auto disabled:opacity-50">{loading ? <><span aria-hidden="true" className="cta-spinner" />{L(copy.loading)}</> : <>{L(copy.make)}<Arrow /></>}</button>
       </form>
       {error && <p role="alert" className="mt-4 text-[14px] text-[var(--accent)]">{error}</p>}
       {result && (
@@ -244,7 +245,7 @@ function ReviewTool({ L, language }: ToolProps) {
           <textarea value={text} onChange={(event) => setText(event.target.value)} maxLength={3000} rows={7} placeholder={L(copy.reviewPh)} className="field" required />
         </label>
         <p className="-mt-2 text-right text-[12px] text-[var(--color-muted)]">{text.length} / 3000</p>
-        <button type="submit" disabled={loading || !text.trim()} className="action-primary w-full sm:w-auto disabled:opacity-50">{loading ? L(copy.loading) : L(copy.check)}</button>
+        <button type="submit" disabled={loading || !text.trim()} className="action-primary w-full sm:w-auto disabled:opacity-50">{loading ? <><span aria-hidden="true" className="cta-spinner" />{L(copy.loading)}</> : <>{L(copy.check)}<Arrow /></>}</button>
       </form>
       {error && <p role="alert" className="mt-4 text-[14px] text-[var(--accent)]">{error}</p>}
       {result && (
@@ -316,7 +317,7 @@ function TranslateTool({ L, language }: ToolProps) {
         <label className="grid gap-2 text-[14px] font-semibold">{L(copy.translateText)}
           <textarea value={text} onChange={(event) => setText(event.target.value)} maxLength={600} rows={4} placeholder={direction === "toKorean" ? L(copy.translatePh) : "예: 수술 후 3일 동안 세안하지 마세요."} className="field" required />
         </label>
-        <button type="submit" disabled={loading || !text.trim()} className="action-primary w-full sm:w-auto disabled:opacity-50">{loading ? L(copy.loading) : L(copy.translateBtn)}</button>
+        <button type="submit" disabled={loading || !text.trim()} className="action-primary w-full sm:w-auto disabled:opacity-50">{loading ? <><span aria-hidden="true" className="cta-spinner" />{L(copy.loading)}</> : <>{L(copy.translateBtn)}<Arrow /></>}</button>
       </form>
       {error && <p role="alert" className="mt-4 text-[14px] text-[var(--accent)]">{error} {error === L(copy.unavailable) && <Link href="/global" className="font-semibold underline">/global</Link>}</p>}
       {result && (

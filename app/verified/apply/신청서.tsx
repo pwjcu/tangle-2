@@ -5,6 +5,7 @@ import { useState } from "react";
 import SiteHeader from "../../components/사이트헤더";
 import { consentText, declarationItems, requiredDocuments } from "@/lib/검증신청";
 
+import Arrow from "../../components/화살표";
 type Result = { kind: "saved" } | { kind: "text"; text: string } | null;
 
 export default function VerifiedApplyForm({ kakaoUrl }: { kakaoUrl: string | null }) {
@@ -133,7 +134,7 @@ export default function VerifiedApplyForm({ kakaoUrl }: { kakaoUrl: string | nul
         </label>
 
         {error && <p role="alert" className="text-[14px] font-semibold text-[var(--accent)]">{error}</p>}
-        <button type="submit" disabled={loading || !allChecked || !consent} className="action-primary w-full disabled:opacity-40 sm:w-auto">{loading ? "보내는 중…" : "검증 신청하기"}</button>
+        <button type="submit" disabled={loading || !allChecked || !consent} className="action-primary w-full disabled:opacity-40 sm:w-auto">{loading ? <><span aria-hidden="true" className="cta-spinner" />보내는 중…</> : <>검증 신청하기<Arrow /></>}</button>
         {!allChecked && <p className="-mt-5 text-[13px] text-[var(--color-muted)]">수술 여부를 고르고 모든 항목에 체크하면 신청할 수 있어요.</p>}
       </form>
     </main>

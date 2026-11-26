@@ -5,6 +5,7 @@ import LinkChip from "../components/링크칩";
 import { needsReverification, verificationCriteria, verificationSteps, verifiedClinics } from "@/lib/검증병원";
 import { partnerLinkLabels } from "@/lib/협업병원";
 
+import Arrow from "../components/화살표";
 export const metadata: Metadata = {
   title: "검증 병원 — 자격·이력을 서류로 확인한 원장님",
   description: "의사면허·정상적인 의대 졸업·범죄 경력·의료사고·행정처분·수술실 CCTV까지 서류로 확인한 원장님만 올립니다. 광고비로 살 수 없는 자리예요.",
@@ -99,7 +100,10 @@ export default function VerifiedPage() {
               </li>
             ))}
           </ol>
-          <Link href="/verified/apply" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-[15px] font-semibold text-[var(--brand)] hover:opacity-90">원장님 검증 신청 →</Link>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+            <Link href="/verified/apply" className="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-white px-7 text-[15px] font-semibold text-[var(--brand)] transition hover:bg-[#f3efe8] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[#f3b3a6]">원장님 검증 신청하기<Arrow /></Link>
+            <p className="flex flex-wrap gap-x-3 gap-y-1 text-[13px] text-white/75"><span>✓ 검증비 0원</span><span>✓ 신청 5분</span><span>✓ 서류는 신청 후 따로</span></p>
+          </div>
         </div>
         <p className="mt-6 text-[12px] leading-6 text-[#7d8973]">검증은 원장님이 낸 서류와 공개 자료를 기준으로 해요. 진료 결과나 효과를 보장하지 않으며, 허위가 확인되면 바로 내립니다.</p>
       </section>
