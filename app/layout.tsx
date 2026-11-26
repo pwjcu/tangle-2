@@ -1,11 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ChatBot from "./components/ChatBot";
+import BottomTabs from "./components/하단탭";
 import LanguageProvider from "./components/LanguageProvider";
 import Link from "next/link";
 import TangleLogo from "./components/탱글로고";
 import TangleXDrAidee from "./components/탱글x닥터에이디";
 import FooterPartnerStrip from "./components/푸터파트너띠";
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#f8f5f0" };
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://tangle.kr"),
@@ -61,6 +64,7 @@ export default function RootLayout({
             <p className="mt-2 text-xs"><Link href="/privacy" className="font-semibold text-[var(--color-carbon)] underline underline-offset-4">개인정보처리방침</Link></p>
           </footer>
           <ChatBot />
+          <BottomTabs />
         </LanguageProvider>
       </body>
     </html>

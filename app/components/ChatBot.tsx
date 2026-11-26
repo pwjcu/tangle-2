@@ -67,7 +67,7 @@ export default function ChatBot() {
     }
   };
 
-  return <div className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
+  return <div className="fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-4 z-50 md:bottom-6 md:right-6 print:hidden">
     {isOpen && <section id="tangle-chat" aria-label={title} className="mb-3 flex h-[min(36rem,calc(100dvh-7rem))] w-[min(25rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-[var(--color-silver-mist)] bg-white shadow-2xl">
       <div className="flex shrink-0 items-center justify-between bg-[#183e34] px-5 py-4 text-white">
         <div><p className="text-[10px] tracking-widest text-white/60">TANGLE AI</p><h2 className="mt-1 text-base font-semibold">{title}</h2></div>
@@ -103,6 +103,6 @@ export default function ChatBot() {
         <p className="mt-2 text-[10px] leading-5 text-stone-500">{ko ? "질문은 답변을 위해 OpenAI로 전송되고 저장하지 않아요. 이름·연락처는 적지 마세요." : "Questions are sent to OpenAI to answer and are not stored. Do not include personal details."}</p>
       </div>
     </section>}
-    <button ref={toggleRef} type="button" aria-label={isOpen ? t("chat.close") : title} aria-expanded={isOpen} aria-controls="tangle-chat" onClick={() => setIsOpen(!isOpen)} className="ml-auto flex h-14 items-center gap-2 rounded-full bg-[#183e34] px-5 text-sm font-semibold text-white shadow-lg hover:bg-[#245747]"><span aria-hidden="true" className="rounded-md bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-bold">AI</span>{ko ? "탱글 AI 상담" : "Ask Tangle AI"}</button>
+    <button ref={toggleRef} type="button" aria-label={isOpen ? t("chat.close") : title} aria-expanded={isOpen} aria-controls="tangle-chat" onClick={() => setIsOpen(!isOpen)} className="ml-auto flex h-12 items-center gap-2 rounded-full bg-[#183e34] px-3.5 text-sm font-semibold text-white shadow-lg hover:bg-[#245747] md:h-14 md:px-5"><span aria-hidden="true" className="rounded-md bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-bold">AI</span><span className="hidden md:inline">{ko ? "탱글 AI 상담" : "Ask Tangle AI"}</span></button>
   </div>;
 }
